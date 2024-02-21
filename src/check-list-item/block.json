@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "create-block/check-list-item",
+	"version": "0.1.0",
+	"title": "CB Check List Item",
+	"category": "text",
+	"parent": [ "create-block/check-list" ],
+	"allowedBlocks": [ "create-block/check-list" ],
+	"description": "Create a check list item.",
+	"example": {},
+	"supports": {
+		"__experimentalSelector": "li"
+	},
+	"textdomain": "multiple-blocks-plugin-textdomain",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+    "attributes": {
+		"content": {
+			"type": "rich-text",
+			"source": "rich-text",
+			"selector": "li",
+			"__experimentalRole": "content"
+		}
+    }
+}
