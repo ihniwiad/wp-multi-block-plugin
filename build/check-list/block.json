@@ -8,7 +8,7 @@
   "allowedBlocks": [
     "create-block/check-list-item"
   ],
-  "description": "Create a check (unsorted) list.",
+  "description": "Create a check list.",
   "example": {},
   "supports": {
     "__unstablePasteTextInline": true,

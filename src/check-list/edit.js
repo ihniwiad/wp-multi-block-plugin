@@ -17,6 +17,7 @@ import {
 	BlockControls,
 	InspectorControls,
 	useInnerBlocksProps,
+    InnerBlocks,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
@@ -25,6 +26,8 @@ import { PanelBody } from '@wordpress/components';
 import { useDispatch, useRegistry } from '@wordpress/data';
 
 import { useEffect } from '@wordpress/element';
+
+import metadata from './block.json';
 
 // import { createBlock } from '@wordpress/blocks';
 
@@ -54,6 +57,9 @@ import {
 
 import { migrateToListV2 } from './utils';
 
+const DEFAULT_BLOCK = {
+    name: 'create-block/check-list-item',
+};
 const TEMPLATE = [ [ 'create-block/check-list-item' ] ];
 
 /**
@@ -129,6 +135,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	const blockProps = useBlockProps( { className: 'checklist' } );
 
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+        defaultBlock: DEFAULT_BLOCK,
+        directInsert: true,
 		template: TEMPLATE,
 		templateLock: false,
 		templateInsertUpdatesSelection: true,
@@ -141,6 +149,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	} );
 
 	useMigrateOnLoad( attributes, clientId );
+
+    // console.log( 'innerBlocksProps: \n' + JSON.stringify( innerBlocksProps, null, 2 ) );
 
 	// const test = createListBlockFromDOMElement( content )
 
@@ -223,10 +233,23 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         </>
 	);
 
+  //   return (
+		// <>
+		// 	<ul allowedBlocks={ metadata.allowedBlocks } { ...innerBlocksProps } />
+		// 	{ controls }
+		// </>
+  //   );
+
+
     return (
-		<>
-			<ul { ...innerBlocksProps } />
-			{ controls }
-		</>
+        <>
+            <ul { ...innerBlocksProps }>
+                <InnerBlocks allowedBlocks={ metadata.allowedBlocks } />
+            </ul>
+            { controls }
+        </>
     );
+
+
+    
 }

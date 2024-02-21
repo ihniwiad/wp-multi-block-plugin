@@ -8,9 +8,7 @@
   "parent": [
     "create-block/check-list"
   ],
-  "allowedBlocks": [
-    "create-block/check-list"
-  ],
+  "allowedBlocks": [],
   "description": "Create a check list item.",
   "example": {},
   "supports": {
@@ -23,8 +21,8 @@
   "viewScript": "file:./view.js",
   "attributes": {
     "content": {
-      "type": "rich-text",
-      "source": "rich-text",
+      "type": "string",
+      "source": "html",
       "selector": "li",
       "__experimentalRole": "content"
     }

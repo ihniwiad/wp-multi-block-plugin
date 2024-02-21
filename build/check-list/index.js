@@ -2060,10 +2060,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/check-list/editor.scss");
-/* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
-/* harmony import */ var _functions_controls_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../_functions/controls.js */ "./src/_functions/controls.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./utils */ "./src/check-list/utils.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./block.json */ "./src/check-list/block.json");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./editor.scss */ "./src/check-list/editor.scss");
+/* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
+/* harmony import */ var _functions_controls_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./../_functions/controls.js */ "./src/_functions/controls.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utils */ "./src/check-list/utils.js");
 
 /**
  * Retrieves the translation of text.
@@ -2083,6 +2084,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 // import { createBlock } from '@wordpress/blocks';
 
 /**
@@ -2096,6 +2098,9 @@ __webpack_require__.r(__webpack_exports__);
 // import { makeSaveAttributes } from './../_functions/attributes.js';
 
 
+const DEFAULT_BLOCK = {
+  name: 'create-block/check-list-item'
+};
 const TEMPLATE = [['create-block/check-list-item']];
 
 /**
@@ -2120,7 +2125,7 @@ function useMigrateOnLoad(attributes, clientId) {
     if (!attributes.values) {
       return;
     }
-    const [newAttributes, newInnerBlocks] = (0,_utils__WEBPACK_IMPORTED_MODULE_9__.migrateToListV2)(attributes);
+    const [newAttributes, newInnerBlocks] = (0,_utils__WEBPACK_IMPORTED_MODULE_10__.migrateToListV2)(attributes);
 
     // deprecated( 'Content attribute on the BSX Check List block', {
     // 	since: '6.0',
@@ -2174,6 +2179,8 @@ function Edit({
     className: 'checklist'
   });
   const innerBlocksProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useInnerBlocksProps)(blockProps, {
+    defaultBlock: DEFAULT_BLOCK,
+    directInsert: true,
     template: TEMPLATE,
     templateLock: false,
     templateInsertUpdatesSelection: true
@@ -2185,6 +2192,8 @@ function Edit({
     // __experimentalCaptureToolbars: true,
   });
   useMigrateOnLoad(attributes, clientId);
+
+  // console.log( 'innerBlocksProps: \n' + JSON.stringify( innerBlocksProps, null, 2 ) );
 
   // const test = createListBlockFromDOMElement( content )
 
@@ -2235,7 +2244,7 @@ function Edit({
       textAlign: value
     });
   };
-  const checklistClassNames = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_7__.addClassNames)({
+  const checklistClassNames = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_8__.addClassNames)({
     marginLeft,
     marginRight,
     marginBefore,
@@ -2243,14 +2252,24 @@ function Edit({
     display,
     textAlign
   }, !!className ? 'checklist ' + className : 'checklist');
-  const controls = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, null, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_8__.textAlignToolbar)(textAlign, onChangeTextAlign)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  const controls = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, null, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.textAlignToolbar)(textAlign, onChangeTextAlign)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Appearance', 'bsx-blocks')
-  }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_8__.stateSelect)(state, onChangeState), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_8__.displaySelect)(display, onChangeDisplay)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.stateSelect)(state, onChangeState), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.displaySelect)(display, onChangeDisplay)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Margin', 'bsx-blocks')
-  }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_8__.marginLeftSelect)(marginLeft, onChangeMarginLeft, ['', '0', '1', '2', '3']), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_8__.marginRightSelect)(marginRight, onChangeMarginRight, ['', '0', '1', '2', '3']), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_8__.marginBeforeSelect)(marginBefore, onChangeMarginBefore), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_8__.marginAfterSelect)(marginAfter, onChangeMarginAfter))));
+  }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.marginLeftSelect)(marginLeft, onChangeMarginLeft, ['', '0', '1', '2', '3']), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.marginRightSelect)(marginRight, onChangeMarginRight, ['', '0', '1', '2', '3']), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.marginBeforeSelect)(marginBefore, onChangeMarginBefore), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.marginAfterSelect)(marginAfter, onChangeMarginAfter))));
+
+  //   return (
+  // <>
+  // 	<ul allowedBlocks={ metadata.allowedBlocks } { ...innerBlocksProps } />
+  // 	{ controls }
+  // </>
+  //   );
+
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
     ...innerBlocksProps
-  }), controls);
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks, {
+    allowedBlocks: _block_json__WEBPACK_IMPORTED_MODULE_6__.allowedBlocks
+  })), controls);
 }
 
 /***/ }),
@@ -2546,7 +2565,7 @@ module.exports = window["wp"]["i18n"];
   \***********************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/check-list","version":"0.1.0","title":"CB Check List","category":"text","allowedBlocks":["create-block/check-list-item"],"description":"Create a check (unsorted) list.","example":{},"supports":{"__unstablePasteTextInline":true,"__experimentalSelector":"ul","__experimentalSlashInserter":true},"textdomain":"multiple-blocks-plugin-textdomain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"values":{"type":"string","source":"html","selector":"ul","multiline":"li","__unstableMultilineWrapperTags":["ul"],"default":"","__experimentalRole":"content"},"state":{"type":"string","default":"primary"},"marginLeft":{"type":"string"},"marginRight":{"type":"string"},"marginBefore":{"type":"string"},"marginAfter":{"type":"string"},"display":{"type":"string"},"textAlign":{"type":"string","default":""}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/check-list","version":"0.1.0","title":"CB Check List","category":"text","allowedBlocks":["create-block/check-list-item"],"description":"Create a check list.","example":{},"supports":{"__unstablePasteTextInline":true,"__experimentalSelector":"ul","__experimentalSlashInserter":true},"textdomain":"multiple-blocks-plugin-textdomain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"values":{"type":"string","source":"html","selector":"ul","multiline":"li","__unstableMultilineWrapperTags":["ul"],"default":"","__experimentalRole":"content"},"state":{"type":"string","default":"primary"},"marginLeft":{"type":"string"},"marginRight":{"type":"string"},"marginBefore":{"type":"string"},"marginAfter":{"type":"string"},"display":{"type":"string"},"textAlign":{"type":"string","default":""}}}');
 
 /***/ })
 

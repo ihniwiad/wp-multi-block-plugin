@@ -21,14 +21,22 @@ export default function save( { attributes } ) {
         className,
         content,
     } = attributes;
-    
-    return (
+
+    // console.log( 'save() content: \n' + content )
+
+    /*
         <li class={ className } { ...useBlockProps.save() }>
             {
                 content && ! RichText.isEmpty( content ) && (
                     <RichText.Content value={ content } />
                 )
             }
+        </li>
+    */
+    
+    return (
+        <li { ...useBlockProps.save() }>
+            <RichText.Content value={ attributes.content } />
         </li>
     );
 }

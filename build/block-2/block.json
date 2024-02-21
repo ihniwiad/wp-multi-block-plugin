@@ -1,9 +1,9 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "create-block/multiple-blocks-plugin-2",
+  "name": "create-block/example-block-2",
   "version": "0.1.0",
-  "title": "Multiple Blocks Plugin Block 2",
+  "title": "CB Example Block 2",
   "category": "widgets",
   "icon": "smiley",
   "description": "Example block scaffolded with Create Block tool.",
