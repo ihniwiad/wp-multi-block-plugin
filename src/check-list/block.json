@@ -11,7 +11,8 @@
 	"supports": {
 		"__unstablePasteTextInline": true,
 		"__experimentalSelector": "ul",
-		"__experimentalSlashInserter": true
+		"__experimentalSlashInserter": true,
+        "__experimentalOnEnter": true
 	},
 	"textdomain": "multiple-blocks-plugin-textdomain",
 	"editorScript": "file:./index.js",

@@ -17,10 +17,15 @@ import { useMergeRefs } from '@wordpress/compose';
 
 import { addClassNames } from './../_functions/add-class-names.js';
 
-import {
-    useEnter,
-    useSpace,
-} from './hooks';
+/**
+ * Internal dependencies
+ */
+import { useOnEnter } from './use-enter';
+// import {
+//     useEnter,
+//     useSpace,
+//     useSplit,
+// } from './hooks';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,6 +34,8 @@ import {
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
+
+const name = 'create-block/check-list-item';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -48,12 +55,13 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     const blockProps = useBlockProps();
     const innerBlocksProps = useInnerBlocksProps( blockProps, {
         renderAppender: false,
-        __unstableDisableDropZone: true,
+        // __unstableDisableDropZone: true,
     } );
 
-    const useEnterRef = useEnter( { content, clientId } );
-    const useSpaceRef = useSpace( clientId );
-    
+    // const useEnterRef = useEnter( { content, clientId } );
+    // const useSpaceRef = useSpace( clientId );
+    // const onSplit = useSplit( clientId );
+
 
 
     // console.log( 'edit() content: \n' + JSON.stringify( content, null, 2 ) );
@@ -65,10 +73,34 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     const itemClassNames = addClassNames( {
     }, className );
 
-	return (
+
+
+    // return (
+    //     <li { ...innerBlocksProps }>
+    //             <RichText
+    //                 ref={ useMergeRefs( [ useEnterRef, useSpaceRef ] ) }
+    //                 identifier="content"
+    //                 tagName="span"
+    //                 onChange={ ( nextContent ) =>
+    //                     setAttributes( { content: nextContent } )
+    //                 }
+    //                 value={ content }
+    //                 aria-label={ __( 'List text' ) }
+    //                 placeholder={ __( 'List' ) }
+    //                 onSplit={ onSplit }
+    //             />
+    //             { innerBlocksProps.children }
+    //     </li>
+    // );
+
+
+    // it seems to require a parent element for the rich text editor to 
+    // work properly in the backend (be able to select parent list element
+    // or select a new block via JavaScript)
+    return (
         <li { ...innerBlocksProps }>
                 <RichText
-                    ref={ useMergeRefs( [ useEnterRef, useSpaceRef ] ) }
+                    ref={ useOnEnter( { clientId, content } ) }
                     identifier="content"
                     tagName="span"
                     onChange={ ( nextContent ) =>
@@ -77,7 +109,81 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     value={ content }
                     aria-label={ __( 'List text' ) }
                     placeholder={ __( 'List' ) }
+                    onSplit={ ( value, isOriginal ) => {
+                        console.log( 'onSplit()' )
+                        let newAttributes;
+
+                        if ( isOriginal || value ) {
+                            newAttributes = {
+                                ...attributes,
+                                content: value,
+                            };
+                        }
+
+                        const block = createBlock( name, newAttributes );
+
+                        if ( isOriginal ) {
+                            block.clientId = clientId;
+                        }
+
+                        return block;
+                    } }
+                    // onMerge={ console.log( 'onMerge()' ) }
+                    // onReplace={ console.log( 'onReplace()' ) }
+                    // onRemove={ console.log( 'onRemove()' ) }
                 />
+                { innerBlocksProps.children }
         </li>
     );
+
+    /*
+
+            onSplit={ ( value, isOriginal ) => {
+                console.log( '(attr) onSplit()' )
+                let newAttributes;
+
+                if ( isOriginal || value ) {
+                    newAttributes = {
+                        ...attributes,
+                        content: value,
+                    };
+                }
+
+                const block = createBlock( name, newAttributes );
+
+                if ( isOriginal ) {
+                    block.clientId = clientId;
+                }
+
+                return block;
+            } }
+
+            onSplit={ 
+                ( value, isAfterOriginal ) => {
+                    console.log( 'onSplit' )
+                    createBlock( 'create-block/check-list-item', { ...attributes, text: value } );
+                } 
+            }
+
+            ref={ useOnEnter( { clientId, content } ) }
+
+            ref={ useMergeRefs( [ useEnterRef ] ) }
+
+    */
+
+	// return (
+ //        <RichText
+ //            ref={ useOnEnter( { clientId, content } ) }
+ //            identifier="content"
+ //            tagName="li"
+ //            onChange={ ( nextContent ) =>
+ //                setAttributes( { content: nextContent } )
+ //            }
+ //            value={ content }
+ //            aria-label={ __( 'List text' ) }
+ //            placeholder={ __( 'List' ) }
+
+
+ //        />
+ //    );
 }
