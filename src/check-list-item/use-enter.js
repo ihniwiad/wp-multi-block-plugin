@@ -45,7 +45,7 @@ export function useOnEnter( props ) {
 		duplicateBlocks,
 		insertBlock,
 		selectionChange,
-		// updateBlockAttributes,
+		updateBlockAttributes,
 	} = useDispatch( blockEditorStore );
 	const {
 		getBlockRootClientId,

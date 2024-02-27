@@ -658,8 +658,8 @@ function useOnEnter(props) {
     replaceInnerBlocks,
     duplicateBlocks,
     insertBlock,
-    selectionChange
-    // updateBlockAttributes,
+    selectionChange,
+    updateBlockAttributes
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.store);
   const {
     getBlockRootClientId,
@@ -701,7 +701,7 @@ function useOnEnter(props) {
       // }
 
       // update existing (first) block
-      (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.updateBlockAttributes)(clientId, {
+      updateBlockAttributes(clientId, {
         content: firstContent
       });
       const wrapperClientId = getBlockRootClientId(clientId);
