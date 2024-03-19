@@ -35,17 +35,10 @@ const icon = (
  */
 registerBlockType( metadata.name, {
 	icon,
-	// merge( attributes, attributesToMerge ) {
-	// 	return {
-	// 		...attributes,
-	// 		content: attributes.content + attributesToMerge.content,
-	// 	};
-	// },
 	merge( attributes, attributesToMerge ) {
 		return {
-			content:
-				( attributes.content || '' ) +
-				( attributesToMerge.content || '' ),
+			...attributes,
+			content: attributes.content + attributesToMerge.content,
 		};
 	},
 	/**

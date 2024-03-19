@@ -26,7 +26,7 @@ export default function useEnter( props ) {
 	propsRef.current = props;
 	// const outdentListItem = useOutdentListItem();
 	return useRefEffect( ( element ) => {
-				console.log( '—— useEnter() return' )
+				// console.log( '—— useEnter() return' )
 		function onKeyDown( event ) {
 			if ( event.defaultPrevented || event.keyCode !== ENTER ) {
 				return;

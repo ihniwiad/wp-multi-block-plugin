@@ -21,7 +21,8 @@ import { useMergeRefs } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
 
 import { addClassNames } from './../_functions/add-class-names.js';
-import { createBlock } from '@wordpress/blocks';
+import { createBlock, rawHandler } from '@wordpress/blocks';
+import { useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -117,55 +118,33 @@ export default function Edit( {
     // work properly in the backend (be able to select parent list element
     // or select a new block via JavaScript)
     return (
-        <li { ...innerBlocksProps }>
-                <RichText
-                    ref={ useMergeRefs( [ useEnterRef ] ) }
-                    identifier="content"
-                    tagName="span"
-                    onChange={ ( nextContent ) =>
-                        setAttributes( { content: nextContent } )
-                    }
-                    value={ content }
-                    aria-label={ __( 'List text' ) }
-                    placeholder={ __( 'List' ) }
-                    onSplit={ ( value, isOriginal ) => {
-                        let newAttributes;
-                        console.log( '—— useSplit() callback' )
-                        console.log( 'value: ' + JSON.stringify( value, null, 2 ) );
-                        console.log( 'isOriginal: ' + JSON.stringify( isOriginal.current, null, 2 ) );
-
-                        if ( isOriginal || value ) {
-                            console.log( '——-- create new attributes for new block' )
-                            newAttributes = {
-                                ...attributes,
-                                content: value,
-                            };
-                        }
-
-                        const block = createBlock( 'create-block/check-list-item', newAttributes );
-
-                        if ( isOriginal ) {
-                            console.log( '——-- keep clientId to block' )
-                            block.clientId = clientId;
-                        }
-
-                        return block;
-                    } }
-                    onMerge={ onMerge }
-                    onReplace={
-                        onReplace
-                            ? ( blocks, ...args ) => {
-                                    onReplace(
-                                        convertToChecklistItems( blocks ),
-                                        ...args
-                                    );
-                              }
-                            : undefined
-                    }
-                    // onRemove={  }
-                />
-                { innerBlocksProps.children }
-        </li>
+        <>
+            <RichText
+                ref={ useMergeRefs( [ useEnterRef ] ) }
+                identifier="content"
+                tagName="li"
+                onChange={ ( nextContent ) =>
+                    setAttributes( { content: nextContent } )
+                }
+                value={ content }
+                aria-label={ __( 'List text' ) }
+                placeholder={ __( 'List' ) }
+                onSplit={ onSplit }
+                onMerge={ onMerge }
+                onReplace={
+                    onReplace
+                        ? ( blocks, ...args ) => {
+                                onReplace(
+                                    convertToChecklistItems( blocks ),
+                                    ...args
+                                );
+                          }
+                        : undefined
+                }
+                // onReplace={ onReplace }
+                // onRemove={  }
+            />
+        </>
     );
 
     /*

@@ -2,9 +2,13 @@
  * WordPress dependencies
  */
 import { useCallback, useRef } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
-import { store as blockEditorStore } from '@wordpress/block-editor';
+// import { useSelect } from '@wordpress/data';
+// import { store as blockEditorStore } from '@wordpress/block-editor';
 import { cloneBlock, createBlock } from '@wordpress/blocks';
+// import { useRef } from '@wordpress/element';
+import { useRefEffect } from '@wordpress/compose';
+import { useSelect, useDispatch, useRegistry, updateBlockAttributes } from '@wordpress/data';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 
 export default function useSplit( clientId ) {
 
@@ -19,12 +23,33 @@ export default function useSplit( clientId ) {
 
 			// console.log( 'isAfter: \n' + JSON.stringify( isAfter, null, 2 ) );
 
-	const { 
-		getBlock,
+	// const { 
+	// 	getBlock,
+	// 	getBlockRootClientId,
+	// 	getBlockIndex,
+	// 	getBlockOrder,
+	// } = useSelect( blockEditorStore );
+
+	const { batch } = useRegistry();
+	const {
+		moveBlocksToPosition,
+		replaceInnerBlocks,
+		duplicateBlocks,
+		insertBlock,
+		selectionChange,
+		updateBlockAttributes,
+		replaceBlocks,
+	} = useDispatch( blockEditorStore );
+	const {
 		getBlockRootClientId,
 		getBlockIndex,
 		getBlockOrder,
+		getBlockName,
+		getBlock,
+		getNextBlockClientId,
+		canInsertBlockType,
 	} = useSelect( blockEditorStore );
+
 	return useCallback(
 		( value ) => {
 					console.log( '—— useSplit() callback' )
@@ -36,6 +61,7 @@ export default function useSplit( clientId ) {
 			// get ul
 			const blockRootClientId = getBlockRootClientId( clientId );
 			const blockIndex = getBlockIndex( clientId );
+
 
 					console.log( 'blockRootClientId: ' + JSON.stringify( blockRootClientId, null, 2 ) );
 					console.log( 'blockIndex: ' + JSON.stringify( blockIndex, null, 2 ) );
@@ -50,22 +76,14 @@ export default function useSplit( clientId ) {
 
 			// updateBlockAttributes( clientId, { content: 'TEST – ' + value } );
 
+
+			// remember: returned content will be recieved by onReplace function and so converted by convertToChecklistItems()
+
 			if ( isAfter.current ) {
 						console.log( '——-- clone block' )
-				// return cloneBlock( block, {
-				// 	content: value,
-				// } );
-				return {
-  "clientId": "adbb39a2-5d17-4ac6-960b-8bfe1c89e1db",
-  "name": "create-block/check-list-item",
-  "isValid": true,
-  "originalContent": "<li class=\"wp-block-create-block-check-list-item\">Lorem</li>",
-  "validationIssues": [],
-  "attributes": {
-    "content": "TEST"
-  },
-  "innerBlocks": []
-}
+				return cloneBlock( block, {
+					content: value,
+				} );
 			}
 			isAfter.current = true;
 						console.log( '——-- create block' )

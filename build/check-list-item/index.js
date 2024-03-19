@@ -299,9 +299,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./hooks */ "./src/check-list-item/hooks/index.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./utils */ "./src/check-list-item/utils.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editor.scss */ "./src/check-list-item/editor.scss");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./hooks */ "./src/check-list-item/hooks/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./utils */ "./src/check-list-item/utils.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./editor.scss */ "./src/check-list-item/editor.scss");
 
 /**
  * Retrieves the translation of text.
@@ -316,6 +318,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
+
 
 
 
@@ -367,12 +370,12 @@ function Edit({
   // const useSpaceRef = useSpace( clientId );
   // const onSplit = useSplit( clientId );
 
-  const useEnterRef = (0,_hooks__WEBPACK_IMPORTED_MODULE_7__.useEnter)({
+  const useEnterRef = (0,_hooks__WEBPACK_IMPORTED_MODULE_8__.useEnter)({
     content,
     clientId
   });
-  const onSplit = (0,_hooks__WEBPACK_IMPORTED_MODULE_7__.useSplit)(clientId);
-  const onMerge = (0,_hooks__WEBPACK_IMPORTED_MODULE_7__.useMerge)(clientId, mergeBlocks);
+  const onSplit = (0,_hooks__WEBPACK_IMPORTED_MODULE_8__.useSplit)(clientId);
+  const onMerge = (0,_hooks__WEBPACK_IMPORTED_MODULE_8__.useMerge)(clientId, mergeBlocks);
 
   // console.log( 'edit() content: \n' + JSON.stringify( content, null, 2 ) );
 
@@ -404,43 +407,24 @@ function Edit({
   // it seems to require a parent element for the rich text editor to 
   // work properly in the backend (be able to select parent list element
   // or select a new block via JavaScript)
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
-    ...innerBlocksProps
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
     ref: (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useMergeRefs)([useEnterRef]),
     identifier: "content",
-    tagName: "span",
+    tagName: "li",
     onChange: nextContent => setAttributes({
       content: nextContent
     }),
     value: content,
     "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('List text'),
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('List'),
-    onSplit: (value, isOriginal) => {
-      let newAttributes;
-      console.log('—— useSplit() callback');
-      console.log('value: ' + JSON.stringify(value, null, 2));
-      console.log('isOriginal: ' + JSON.stringify(isOriginal.current, null, 2));
-      if (isOriginal || value) {
-        console.log('——-- create new attributes for new block');
-        newAttributes = {
-          ...attributes,
-          content: value
-        };
-      }
-      const block = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__.createBlock)('create-block/check-list-item', newAttributes);
-      if (isOriginal) {
-        console.log('——-- keep clientId to block');
-        block.clientId = clientId;
-      }
-      return block;
-    },
+    onSplit: onSplit,
     onMerge: onMerge,
     onReplace: onReplace ? (blocks, ...args) => {
-      onReplace((0,_utils__WEBPACK_IMPORTED_MODULE_8__.convertToChecklistItems)(blocks), ...args);
+      onReplace((0,_utils__WEBPACK_IMPORTED_MODULE_9__.convertToChecklistItems)(blocks), ...args);
     } : undefined
+    // onReplace={ onReplace }
     // onRemove={  }
-  }), innerBlocksProps.children);
+  }));
 
   /*
            onSplit={ ( value, isOriginal ) => {
@@ -561,7 +545,7 @@ function useEnter(props) {
   propsRef.current = props;
   // const outdentListItem = useOutdentListItem();
   return (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_2__.useRefEffect)(element => {
-    console.log('—— useEnter() return');
+    // console.log( '—— useEnter() return' )
     function onKeyDown(event) {
       if (event.defaultPrevented || event.keyCode !== _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_3__.ENTER) {
         return;
@@ -765,16 +749,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);
 /**
  * WordPress dependencies
  */
 
+// import { useSelect } from '@wordpress/data';
+// import { store as blockEditorStore } from '@wordpress/block-editor';
+
+// import { useRef } from '@wordpress/element';
 
 
 
@@ -790,12 +780,34 @@ function useSplit(clientId) {
 
   // console.log( 'isAfter: \n' + JSON.stringify( isAfter, null, 2 ) );
 
+  // const { 
+  // 	getBlock,
+  // 	getBlockRootClientId,
+  // 	getBlockIndex,
+  // 	getBlockOrder,
+  // } = useSelect( blockEditorStore );
+
   const {
-    getBlock,
+    batch
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useRegistry)();
+  const {
+    moveBlocksToPosition,
+    replaceInnerBlocks,
+    duplicateBlocks,
+    insertBlock,
+    selectionChange,
+    updateBlockAttributes,
+    replaceBlocks
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.store);
+  const {
     getBlockRootClientId,
     getBlockIndex,
-    getBlockOrder
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.store);
+    getBlockOrder,
+    getBlockName,
+    getBlock,
+    getNextBlockClientId,
+    canInsertBlockType
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.store);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(value => {
     console.log('—— useSplit() callback');
     console.log('value: ' + JSON.stringify(value, null, 2));
@@ -817,26 +829,17 @@ function useSplit(clientId) {
 
     // updateBlockAttributes( clientId, { content: 'TEST – ' + value } );
 
+    // remember: returned content will be recieved by onReplace function and so converted by convertToChecklistItems()
+
     if (isAfter.current) {
       console.log('——-- clone block');
-      // return cloneBlock( block, {
-      // 	content: value,
-      // } );
-      return {
-        "clientId": "adbb39a2-5d17-4ac6-960b-8bfe1c89e1db",
-        "name": "create-block/check-list-item",
-        "isValid": true,
-        "originalContent": "<li class=\"wp-block-create-block-check-list-item\">Lorem</li>",
-        "validationIssues": [],
-        "attributes": {
-          "content": "TEST"
-        },
-        "innerBlocks": []
-      };
+      return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.cloneBlock)(block, {
+        content: value
+      });
     }
     isAfter.current = true;
     console.log('——-- create block');
-    return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.createBlock)(block.name, {
+    return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.createBlock)(block.name, {
       ...block.attributes,
       content: value
     });
@@ -902,15 +905,10 @@ const icon = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
  */
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_5__.name, {
   icon,
-  // merge( attributes, attributesToMerge ) {
-  // 	return {
-  // 		...attributes,
-  // 		content: attributes.content + attributesToMerge.content,
-  // 	};
-  // },
   merge(attributes, attributesToMerge) {
     return {
-      content: (attributes.content || '') + (attributesToMerge.content || '')
+      ...attributes,
+      content: attributes.content + attributesToMerge.content
     };
   },
   /**
@@ -961,7 +959,7 @@ function save({
   attributes
 }) {
   const {
-    className,
+    // className,
     content
   } = attributes;
 
@@ -980,7 +978,7 @@ function save({
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
-    value: attributes.content
+    value: content
   }));
 }
 
@@ -1003,7 +1001,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function convertBlockToChecklist(block) {
-  const list = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.switchToBlockType)(block, '"create-block/check-list');
+  const list = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.switchToBlockType)(block, 'create-block/check-list');
   if (list) {
     return list;
   }
@@ -1011,21 +1009,26 @@ function convertBlockToChecklist(block) {
   if (!paragraph) {
     return null;
   }
-  return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.switchToBlockType)(paragraph, 'core/list');
+  return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.switchToBlockType)(paragraph, 'create-block/check-list');
 }
 function convertToChecklistItems(blocks) {
   const listItems = [];
   for (let block of blocks) {
-    if (block.name === '"create-block/check-list-item') {
-      listItems.push(block);
-    } else if (block.name === 'core/list') {
-      listItems.push(...block.innerBlocks);
-    } else if (block = convertBlockToChecklist(block)) {
-      for (const {
-        innerBlocks
-      } of block) {
-        listItems.push(...innerBlocks);
+    console.log('convertToChecklistItems(), iterate blocks, block: ' + JSON.stringify(block, null, 2));
+    if (typeof block !== 'undefined' && typeof block.name !== 'undefined') {
+      if (block.name === 'create-block/check-list-item') {
+        listItems.push(block);
+      } else if (block.name === 'create-block/check-list') {
+        listItems.push(...block.innerBlocks);
+      } else if (block = convertBlockToChecklist(block)) {
+        for (const {
+          innerBlocks
+        } of block) {
+          listItems.push(...innerBlocks);
+        }
       }
+    } else {
+      // skip, do nothing
     }
   }
   return listItems;

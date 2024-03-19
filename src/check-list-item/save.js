@@ -18,7 +18,7 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
 export default function save( { attributes } ) {
 
     const {
-        className,
+        // className,
         content,
     } = attributes;
 
@@ -36,7 +36,7 @@ export default function save( { attributes } ) {
     
     return (
         <li { ...useBlockProps.save() }>
-            <RichText.Content value={ attributes.content } />
+            <RichText.Content value={ content } />
         </li>
     );
 }
