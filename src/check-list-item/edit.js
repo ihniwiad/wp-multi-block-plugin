@@ -11,21 +11,29 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, RichText, useInnerBlocksProps } from '@wordpress/block-editor';
+import {
+    RichText,
+    useBlockProps,
+    useInnerBlocksProps,
+} from '@wordpress/block-editor';
 
 import { useMergeRefs } from '@wordpress/compose';
+import { useSelect } from '@wordpress/data';
 
 import { addClassNames } from './../_functions/add-class-names.js';
+import { createBlock } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
  */
-import { useOnEnter } from './use-enter';
-// import {
-//     useEnter,
-//     useSpace,
-//     useSplit,
-// } from './hooks';
+// import { useOnEnter } from './use-enter';
+import {
+    useEnter,
+    // useSpace,
+    useSplit,
+    useMerge,
+} from './hooks';
+import { convertToChecklistItems } from './utils';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -45,7 +53,13 @@ const name = 'create-block/check-list-item';
  *
  * @return {Element} Element to render.
  */
-export default function Edit( { attributes, setAttributes, clientId } ) {
+export default function Edit( { 
+    attributes,
+    setAttributes,
+    onReplace,
+    clientId,
+    mergeBlocks,
+} ) {
 
     const {
         className,
@@ -61,6 +75,10 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     // const useEnterRef = useEnter( { content, clientId } );
     // const useSpaceRef = useSpace( clientId );
     // const onSplit = useSplit( clientId );
+
+    const useEnterRef = useEnter( { content, clientId } );
+    const onSplit = useSplit( clientId );
+    const onMerge = useMerge( clientId, mergeBlocks );
 
 
 
@@ -87,7 +105,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     //                 value={ content }
     //                 aria-label={ __( 'List text' ) }
     //                 placeholder={ __( 'List' ) }
-    //                 onSplit={ onSplit }
+                    // onSplit={ onSplit }
+                    // onMerge={ onMerge }
     //             />
     //             { innerBlocksProps.children }
     //     </li>
@@ -100,7 +119,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     return (
         <li { ...innerBlocksProps }>
                 <RichText
-                    ref={ useOnEnter( { clientId, content } ) }
+                    ref={ useMergeRefs( [ useEnterRef ] ) }
                     identifier="content"
                     tagName="span"
                     onChange={ ( nextContent ) =>
@@ -110,27 +129,40 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     aria-label={ __( 'List text' ) }
                     placeholder={ __( 'List' ) }
                     onSplit={ ( value, isOriginal ) => {
-                        console.log( 'onSplit()' )
                         let newAttributes;
+                        console.log( '—— useSplit() callback' )
+                        console.log( 'value: ' + JSON.stringify( value, null, 2 ) );
+                        console.log( 'isOriginal: ' + JSON.stringify( isOriginal.current, null, 2 ) );
 
                         if ( isOriginal || value ) {
+                            console.log( '——-- create new attributes for new block' )
                             newAttributes = {
                                 ...attributes,
                                 content: value,
                             };
                         }
 
-                        const block = createBlock( name, newAttributes );
+                        const block = createBlock( 'create-block/check-list-item', newAttributes );
 
                         if ( isOriginal ) {
+                            console.log( '——-- keep clientId to block' )
                             block.clientId = clientId;
                         }
 
                         return block;
                     } }
-                    // onMerge={ console.log( 'onMerge()' ) }
-                    // onReplace={ console.log( 'onReplace()' ) }
-                    // onRemove={ console.log( 'onRemove()' ) }
+                    onMerge={ onMerge }
+                    onReplace={
+                        onReplace
+                            ? ( blocks, ...args ) => {
+                                    onReplace(
+                                        convertToChecklistItems( blocks ),
+                                        ...args
+                                    );
+                              }
+                            : undefined
+                    }
+                    // onRemove={  }
                 />
                 { innerBlocksProps.children }
         </li>

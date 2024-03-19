@@ -7,6 +7,8 @@ import { ENTER } from '@wordpress/keycodes';
 import { useSelect, useDispatch, useRegistry, updateBlockAttributes } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 
+import { splitValue } from './split-value';
+
 import {
 	hasBlockSupport,
 	createBlock,
@@ -14,26 +16,31 @@ import {
 } from '@wordpress/blocks';
 
 
-function getPosition( contentEle ) {
-    // if ( window.getSelection ) {
-    //     const sel = window.getSelection();
-    //     if ( sel.getRangeAt ) {
-    //         return sel.getRangeAt( 0 ).startOffset;
-    //     }
-    // }
-    // return null;
+function getCursorPosition( contentElem ) {
+
+	if ( typeof window.getSelection !== "undefined" ) {
 
 
-    const selection = window.getSelection();
-  //   if ( !! selection.getRangeAt( 0 ) ) {
-	const range = selection.getRangeAt( 0 );
-	const clonedRange = range.cloneRange();
-	clonedRange.selectNodeContents( contentEle );
-	clonedRange.setEnd( range.endContainer, range.endOffset );
+	    const selection = window.getSelection();
+	  //   if ( !! selection.getRangeAt( 0 ) ) {
+		const range = selection.getRangeAt( 0 );
+		const clonedRange = range.cloneRange();
 
-	const cursorPosition = clonedRange.toString().length;
-  //   }
-  	return cursorPosition;
+	    		console.log( 'range: \n' + JSON.stringify( range, null, 2 ) );
+
+		clonedRange.selectNodeContents( contentElem );
+	    		console.log( 'clonedRange: \n' + JSON.stringify( clonedRange, null, 2 ) );
+		clonedRange.setEnd( range.endContainer, range.endOffset );
+
+				console.log( 'clonedRange.toString(): \n' + JSON.stringify( clonedRange.toString(), null, 2 ) );
+
+		const cursorPosition = clonedRange.toString().length;
+
+					console.log( 'firstCEText: "' + clonedRange.toString().slice( 0, cursorPosition ) + '", secondCEText: "' + clonedRange.toString().slice( cursorPosition ) + '"' )
+	  //   }
+	  	return cursorPosition;
+  	}
+  	return null;
 }
 
 
@@ -75,14 +82,39 @@ export function useOnEnter( props ) {
 				return;
 			}
 
+			// const {
+			// 	removeEditorOnlyFormats,
+			// 	value,
+			// 	onReplace,
+			// 	onSplit,
+			// 	onChange,
+			// 	disableLineBreaks,
+			// 	onSplitAtEnd,
+			// 	onSplitAtDoubleLineEnd,
+			// } = propsRef.current;
+
+			// const _value = { ...value };
+			// _value.formats = removeEditorOnlyFormats( value );
+			// const canSplit = onReplace && onSplit;
+
+			
+    		console.log( '_value: \n' + JSON.stringify( _value, null, 2 ) );
+
 			const { content, clientId } = propsRef.current;
 
-		    		const splitIndex = getPosition( event.target );
-					console.log( 'cursor position: ' + getPosition( event.target ) + ' of "' + content + '"' )
 
-					const [ firstContent, secondContent ] = [ content.slice( 0, splitIndex ), content.slice( splitIndex ) ];
+		    		let cursorPosition = getCursorPosition( event.target );
 
-					console.log( 'firstContent: ' + firstContent + ', secondContent: ' + secondContent + '"' )
+		    		if ( cursorPosition == null ) {
+		    			// ignore cursor position, set to end of content
+		    			cursorPosition = content.length
+		    		}
+
+					console.log( 'cursor position: ' + getCursorPosition( event.target ) + ' of "' + content + '"' )
+
+					const [ firstContent, secondContent ] = [ content.slice( 0, cursorPosition ), content.slice( cursorPosition ) ];
+
+					console.log( 'firstContent: "' + firstContent + '", secondContent: "' + secondContent + '"' )
 
 			// The paragraph should be empty.
 			// if ( content.length ) {

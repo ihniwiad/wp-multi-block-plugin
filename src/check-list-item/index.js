@@ -34,14 +34,26 @@ const icon = (
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType( metadata.name, {
+	icon,
+	// merge( attributes, attributesToMerge ) {
+	// 	return {
+	// 		...attributes,
+	// 		content: attributes.content + attributesToMerge.content,
+	// 	};
+	// },
+	merge( attributes, attributesToMerge ) {
+		return {
+			content:
+				( attributes.content || '' ) +
+				( attributesToMerge.content || '' ),
+		};
+	},
 	/**
 	 * @see ./edit.js
 	 */
 	edit: Edit,
-
 	/**
 	 * @see ./save.js
 	 */
 	save,
-	icon,
 } );

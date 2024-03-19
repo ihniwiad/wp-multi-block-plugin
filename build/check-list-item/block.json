@@ -11,14 +11,7 @@
   "allowedBlocks": [],
   "description": "Create a check list item.",
   "example": {},
-  "supports": {
-    "__experimentalSelector": "li"
-  },
   "textdomain": "multiple-blocks-plugin-textdomain",
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
-  "viewScript": "file:./view.js",
   "attributes": {
     "content": {
       "type": "string",
@@ -26,5 +19,18 @@
       "selector": "li",
       "__experimentalRole": "content"
     }
-  }
+  },
+  "supports": {
+    "anchor": false,
+    "className": true,
+    "__experimentalSelector": "li",
+    "__unstablePasteTextInline": true,
+    "interactivity": {
+      "clientNavigation": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
 }
