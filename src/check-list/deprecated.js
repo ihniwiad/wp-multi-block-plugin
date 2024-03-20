@@ -1,52 +1,10 @@
-import { useBlockProps, InnerBlocks, RichText } from '@wordpress/block-editor';
+import { RichText, useBlockProps } from '@wordpress/block-editor';
 
-import { rawHandler, switchToBlockType, createBlock } from '@wordpress/blocks';
-
-import { migrateToListV2 } from './utils';
+import { rawHandler } from '@wordpress/blocks';
 
 import { addClassNames } from './../_functions/add-class-names.js';
 
 
-// v1 functions
-
-
-/**
- * At the moment, deprecations don't handle create blocks from attributes
- * (like when using CPT templates). For this reason, this hook is necessary
- * to avoid breaking templates using the old list block format.
- *
- * @param {Object} attributes Block attributes.
- * @param {string} clientId   Block client ID.
- */
-function useMigrateOnLoad( attributes, clientId ) {
-
-	// console.log( 'useMigrateOnLoad()' )
-
-	const registry = useRegistry();
-	const { updateBlockAttributes, replaceInnerBlocks } =
-		useDispatch( blockEditorStore );
-
-	useEffect( () => {
-		// As soon as the block is loaded, migrate it to the new version.
-
-		if ( ! attributes.values ) {
-			return;
-		}
-
-		const [ newAttributes, newInnerBlocks ] = migrateToListV2( attributes );
-
-		// deprecated( 'Content attribute on the BSX Check List block', {
-		// 	since: '6.0',
-		// 	version: '6.5',
-		// 	alternative: 'inner blocks',
-		// } );
-
-		registry.batch( () => {
-			updateBlockAttributes( clientId, newAttributes );
-			replaceInnerBlocks( clientId, newInnerBlocks );
-		} );
-	}, [ attributes.values ] );
-}
 
 const v1 = {
 
@@ -65,34 +23,37 @@ const v1 = {
 			__unstableMultilineWrapperTags: [ 'ul' ],
 			default: '',
 			__experimentalRole: 'content',
-		},
-		supports: {
-			__unstablePasteTextInline: true,
-			__experimentalSelector: 'ul',
-			__experimentalSlashInserter: true,
-		},
+		}
+	},
+	supports: {
+		className: false,
+		__unstablePasteTextInline: true,
+		__experimentalSelector: 'ul',
+		__experimentalSlashInserter: true,
 	},
 
-	save( { attributes } ) {
+	// save( { attributes } ) {
+	save( props ) {
 
 		const {
-	        className,
-	        values,
-	        state,
-	        marginLeft,
-	        marginRight,
-	        marginBefore,
-	        marginAfter,
-	        display,
-	        textAlign,
-		} = attributes;
+			attributes: {
+                className,
+                values,
+                state,
+                marginLeft,
+                marginRight,
+                marginBefore,
+                marginAfter,
+                display,
+                textAlign,
+			},
+        } = props;
 
 
-		console.log( 'hello from deprecation' );
+		// console.log( 'hello from deprecation' );
 
 
-		// const content = values;
-		// console.log( 'deprecated attr content: ' + content )
+		// console.log( 'values: ' + values )
 
 
 		// required content object
@@ -216,20 +177,6 @@ const v1 = {
 	                    />
 	    */
 
-	    return (
-	        <>
-	            {
-	                ( content && ! RichText.isEmpty( content ) ) && (
-	                    <RichText.Content 
-	                        tagName="ul" 
-	                        value={ content } 
-	                        className={ checklistClassNames }
-	                    />
-	                )
-	            }
-	        </>
-	    );
-
 	    // const TagName = 'ul';
 
 	 //    const test = (
@@ -244,6 +191,55 @@ const v1 = {
 		// 		<InnerBlocks.Content />
 		// 	</TagName>
 		// );
+
+	 //    const test_1 = (
+	 //        <>
+	 //            {
+	 //                ( content && ! RichText.isEmpty( content ) ) && (
+	 //                    <RichText.Content 
+	 //                        tagName="ul" 
+	 //                        value={ content } 
+	 //                        className={ checklistClassNames }
+	 //                    />
+	 //                )
+	 //            }
+	 //        </>
+		// );
+		// console.log( 'test_1: \n' + JSON.stringify( test_1, null, 2 ) );
+
+		// // create element without type
+		// const Element = props.element;
+		// const test_2 = (
+		// 	<>
+		// 		<Element { ...useBlockProps.save( { tagName: 'ul', value: content, className: checklistClassNames } ) }/>
+		// 	</>
+		// );
+		// // const test_2 = (
+		// // 	<>
+		// // 		<Element tagName="ul" value={ content } className={ checklistClassNames }/>
+		// // 	</>
+		// // );
+
+		// console.log( 'test_2: \n' + JSON.stringify( test_2, null, 2 ) );
+
+	    // return test_1;
+
+	    // RichText value now accepting HTML content
+	    return (
+	        <>
+	            {
+	                ( content && ! RichText.isEmpty( content ) ) && (
+	                    <RichText.Content 
+	                        tagName="ul" 
+	                        value={ values } 
+	                        className={ checklistClassNames }
+	                    />
+	                )
+	            }
+	        </>
+	    );
+
+
 	}
 }
 

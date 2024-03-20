@@ -578,7 +578,7 @@ function useEnter(props) {
         ...topParentListBlock,
         innerBlocks: topParentListBlock.innerBlocks.slice(0, blockIndex)
       });
-      const middle = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)('create-block/check-list-item');
+      const middle = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.getDefaultBlockName)());
       // Last list item might contain a `list` block innerBlock
       // In that case append remaining innerBlocks blocks.
       const after = [...(topParentListBlock.innerBlocks[blockIndex].innerBlocks[0]?.innerBlocks || []), ...topParentListBlock.innerBlocks.slice(blockIndex + 1)];
@@ -749,22 +749,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__);
 /**
  * WordPress dependencies
  */
 
-// import { useSelect } from '@wordpress/data';
-// import { store as blockEditorStore } from '@wordpress/block-editor';
-
-// import { useRef } from '@wordpress/element';
 
 
 
@@ -777,69 +771,27 @@ function useSplit(clientId) {
   // a flag where the first execution of the callback is false (it is the before value)
   // and the second execution is true, it is the after value.
   const isAfter = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(false);
-
-  // console.log( 'isAfter: \n' + JSON.stringify( isAfter, null, 2 ) );
-
-  // const { 
-  // 	getBlock,
-  // 	getBlockRootClientId,
-  // 	getBlockIndex,
-  // 	getBlockOrder,
-  // } = useSelect( blockEditorStore );
-
   const {
-    batch
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useRegistry)();
-  const {
-    moveBlocksToPosition,
-    replaceInnerBlocks,
-    duplicateBlocks,
-    insertBlock,
-    selectionChange,
-    updateBlockAttributes,
-    replaceBlocks
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.store);
-  const {
-    getBlockRootClientId,
-    getBlockIndex,
-    getBlockOrder,
-    getBlockName,
-    getBlock,
-    getNextBlockClientId,
-    canInsertBlockType
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.store);
+    getBlock
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.store);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(value => {
-    console.log('—— useSplit() callback');
-    console.log('value: ' + JSON.stringify(value, null, 2));
-    console.log('isAfter.current: ' + JSON.stringify(isAfter.current, null, 2));
+    // console.log( '—— useSplit() callback' )
+    // console.log( 'value: ' + JSON.stringify( value, null, 2 ) );
+    // console.log( 'isAfter.current: ' + JSON.stringify( isAfter.current, null, 2 ) );
     const block = getBlock(clientId);
     // console.log( 'block: ' + JSON.stringify( block, null, 2 ) );
-
-    // get ul
-    const blockRootClientId = getBlockRootClientId(clientId);
-    const blockIndex = getBlockIndex(clientId);
-    console.log('blockRootClientId: ' + JSON.stringify(blockRootClientId, null, 2));
-    console.log('blockIndex: ' + JSON.stringify(blockIndex, null, 2));
-
-    // TODO:
-    //	- clone parent ul
-    //	- remove item @ blockIndex
-    //	- insert blocks 1 & 2 instead
-    //	- add rest
-
-    // updateBlockAttributes( clientId, { content: 'TEST – ' + value } );
 
     // remember: returned content will be recieved by onReplace function and so converted by convertToChecklistItems()
 
     if (isAfter.current) {
       console.log('——-- clone block');
-      return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.cloneBlock)(block, {
+      return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.cloneBlock)(block, {
         content: value
       });
     }
     isAfter.current = true;
     console.log('——-- create block');
-    return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.createBlock)(block.name, {
+    return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.createBlock)(block.name, {
       ...block.attributes,
       content: value
     });

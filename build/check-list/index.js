@@ -1868,52 +1868,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils */ "./src/check-list/utils.js");
-/* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
+/* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
 
 
 
 
-
-
-// v1 functions
-
-/**
- * At the moment, deprecations don't handle create blocks from attributes
- * (like when using CPT templates). For this reason, this hook is necessary
- * to avoid breaking templates using the old list block format.
- *
- * @param {Object} attributes Block attributes.
- * @param {string} clientId   Block client ID.
- */
-function useMigrateOnLoad(attributes, clientId) {
-  // console.log( 'useMigrateOnLoad()' )
-
-  const registry = useRegistry();
-  const {
-    updateBlockAttributes,
-    replaceInnerBlocks
-  } = useDispatch(blockEditorStore);
-  useEffect(() => {
-    // As soon as the block is loaded, migrate it to the new version.
-
-    if (!attributes.values) {
-      return;
-    }
-    const [newAttributes, newInnerBlocks] = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.migrateToListV2)(attributes);
-
-    // deprecated( 'Content attribute on the BSX Check List block', {
-    // 	since: '6.0',
-    // 	version: '6.5',
-    // 	alternative: 'inner blocks',
-    // } );
-
-    registry.batch(() => {
-      updateBlockAttributes(clientId, newAttributes);
-      replaceInnerBlocks(clientId, newInnerBlocks);
-    });
-  }, [attributes.values]);
-}
 const v1 = {
   // get old attr
   attributes: {
@@ -1930,31 +1889,33 @@ const v1 = {
       __unstableMultilineWrapperTags: ['ul'],
       default: '',
       __experimentalRole: 'content'
-    },
-    supports: {
-      __unstablePasteTextInline: true,
-      __experimentalSelector: 'ul',
-      __experimentalSlashInserter: true
     }
   },
-  save({
-    attributes
-  }) {
+  supports: {
+    className: false,
+    __unstablePasteTextInline: true,
+    __experimentalSelector: 'ul',
+    __experimentalSlashInserter: true
+  },
+  // save( { attributes } ) {
+  save(props) {
     const {
-      className,
-      values,
-      state,
-      marginLeft,
-      marginRight,
-      marginBefore,
-      marginAfter,
-      display,
-      textAlign
-    } = attributes;
-    console.log('hello from deprecation');
+      attributes: {
+        className,
+        values,
+        state,
+        marginLeft,
+        marginRight,
+        marginBefore,
+        marginAfter,
+        display,
+        textAlign
+      }
+    } = props;
 
-    // const content = values;
-    // console.log( 'deprecated attr content: ' + content )
+    // console.log( 'hello from deprecation' );
+
+    // console.log( 'values: ' + values )
 
     // required content object
     // [
@@ -2035,7 +1996,7 @@ const v1 = {
 
     // const newContent = [ 'Lorem', 'Ipsum' ];
 
-    const checklistClassNames = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_4__.addClassNames)({
+    const checklistClassNames = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_3__.addClassNames)({
       marginLeft,
       marginRight,
       marginBefore,
@@ -2052,12 +2013,6 @@ const v1 = {
                     />
     */
 
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, content && !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.isEmpty(content) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
-      tagName: "ul",
-      value: content,
-      className: checklistClassNames
-    }));
-
     // const TagName = 'ul';
 
     //    const test = (
@@ -2072,6 +2027,45 @@ const v1 = {
     // 		<InnerBlocks.Content />
     // 	</TagName>
     // );
+
+    //    const test_1 = (
+    //        <>
+    //            {
+    //                ( content && ! RichText.isEmpty( content ) ) && (
+    //                    <RichText.Content 
+    //                        tagName="ul" 
+    //                        value={ content } 
+    //                        className={ checklistClassNames }
+    //                    />
+    //                )
+    //            }
+    //        </>
+    // );
+    // console.log( 'test_1: \n' + JSON.stringify( test_1, null, 2 ) );
+
+    // // create element without type
+    // const Element = props.element;
+    // const test_2 = (
+    // 	<>
+    // 		<Element { ...useBlockProps.save( { tagName: 'ul', value: content, className: checklistClassNames } ) }/>
+    // 	</>
+    // );
+    // // const test_2 = (
+    // // 	<>
+    // // 		<Element tagName="ul" value={ content } className={ checklistClassNames }/>
+    // // 	</>
+    // // );
+
+    // console.log( 'test_2: \n' + JSON.stringify( test_2, null, 2 ) );
+
+    // return test_1;
+
+    // RichText value now accepting HTML content
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, content && !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.isEmpty(content) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+      tagName: "ul",
+      value: values,
+      className: checklistClassNames
+    }));
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([v1]);

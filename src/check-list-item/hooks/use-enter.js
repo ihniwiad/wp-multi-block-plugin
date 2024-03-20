@@ -61,7 +61,7 @@ export default function useEnter( props ) {
 					blockIndex
 				),
 			} );
-			const middle = createBlock( 'create-block/check-list-item' );
+			const middle = createBlock( getDefaultBlockName() );
 			// Last list item might contain a `list` block innerBlock
 			// In that case append remaining innerBlocks blocks.
 			const after = [
