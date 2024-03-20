@@ -238,13 +238,14 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		// 	<ul allowedBlocks={ metadata.allowedBlocks } { ...innerBlocksProps } />
 		// 	{ controls }
 		// </>
+
+        // <InnerBlocks allowedBlocks={ metadata.allowedBlocks } />
   //   );
 
 
     return (
         <>
             <ul { ...innerBlocksProps }>
-                <InnerBlocks allowedBlocks={ metadata.allowedBlocks } />
             </ul>
             { controls }
         </>

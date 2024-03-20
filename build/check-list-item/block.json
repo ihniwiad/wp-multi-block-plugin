@@ -22,7 +22,7 @@
   },
   "supports": {
     "anchor": false,
-    "className": true,
+    "className": false,
     "__experimentalSelector": "li",
     "__unstablePasteTextInline": true,
     "interactivity": {

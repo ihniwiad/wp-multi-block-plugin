@@ -1017,15 +1017,33 @@ function convertToChecklistItems(blocks) {
     console.log('convertToChecklistItems(), iterate blocks, block: ' + JSON.stringify(block, null, 2));
     if (typeof block !== 'undefined' && typeof block.name !== 'undefined') {
       if (block.name === 'create-block/check-list-item') {
+        console.log("block.name === 'create-block/check-list-item'");
         listItems.push(block);
       } else if (block.name === 'create-block/check-list') {
+        console.log(block.name === 'create-block/check-list');
         listItems.push(...block.innerBlocks);
+      } else if (block.name === 'core/paragraph') {
+        console.log("block.name === 'core/paragraph'");
+        // make each line a single check list item
+        const lines = block.attributes.content.split('<br>');
+        for (let line of lines) {
+          console.log('-- add: ' + line);
+          const item = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)('create-block/check-list-item', {
+            content: line
+          });
+          console.log('-- item: ' + JSON.stringify(item, null, 2));
+          listItems.push(item);
+          console.log('-- listItems: ' + JSON.stringify(listItems, null, 2));
+        }
       } else if (block = convertBlockToChecklist(block)) {
+        console.log('block = convertBlockToChecklist( block )');
         for (const {
           innerBlocks
         } of block) {
           listItems.push(...innerBlocks);
         }
+      } else {
+        console.log('else');
       }
     } else {
       // skip, do nothing
@@ -1146,7 +1164,7 @@ module.exports = window["wp"]["keycodes"];
   \****************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/check-list-item","version":"0.1.0","title":"CB Check List Item","category":"text","parent":["create-block/check-list"],"allowedBlocks":[],"description":"Create a check list item.","example":{},"textdomain":"multiple-blocks-plugin-textdomain","attributes":{"content":{"type":"string","source":"html","selector":"li","__experimentalRole":"content"}},"supports":{"anchor":false,"className":true,"__experimentalSelector":"li","__unstablePasteTextInline":true,"interactivity":{"clientNavigation":true}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/check-list-item","version":"0.1.0","title":"CB Check List Item","category":"text","parent":["create-block/check-list"],"allowedBlocks":[],"description":"Create a check list item.","example":{},"textdomain":"multiple-blocks-plugin-textdomain","attributes":{"content":{"type":"string","source":"html","selector":"li","__experimentalRole":"content"}},"supports":{"anchor":false,"className":false,"__experimentalSelector":"li","__unstablePasteTextInline":true,"interactivity":{"clientNavigation":true}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ })
 

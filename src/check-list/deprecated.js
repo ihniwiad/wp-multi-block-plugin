@@ -1,8 +1,52 @@
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks, RichText } from '@wordpress/block-editor';
 
-// import { rawHandler } from '@wordpress/blocks';
+import { rawHandler, switchToBlockType, createBlock } from '@wordpress/blocks';
+
+import { migrateToListV2 } from './utils';
 
 import { addClassNames } from './../_functions/add-class-names.js';
+
+
+// v1 functions
+
+
+/**
+ * At the moment, deprecations don't handle create blocks from attributes
+ * (like when using CPT templates). For this reason, this hook is necessary
+ * to avoid breaking templates using the old list block format.
+ *
+ * @param {Object} attributes Block attributes.
+ * @param {string} clientId   Block client ID.
+ */
+function useMigrateOnLoad( attributes, clientId ) {
+
+	// console.log( 'useMigrateOnLoad()' )
+
+	const registry = useRegistry();
+	const { updateBlockAttributes, replaceInnerBlocks } =
+		useDispatch( blockEditorStore );
+
+	useEffect( () => {
+		// As soon as the block is loaded, migrate it to the new version.
+
+		if ( ! attributes.values ) {
+			return;
+		}
+
+		const [ newAttributes, newInnerBlocks ] = migrateToListV2( attributes );
+
+		// deprecated( 'Content attribute on the BSX Check List block', {
+		// 	since: '6.0',
+		// 	version: '6.5',
+		// 	alternative: 'inner blocks',
+		// } );
+
+		registry.batch( () => {
+			updateBlockAttributes( clientId, newAttributes );
+			replaceInnerBlocks( clientId, newInnerBlocks );
+		} );
+	}, [ attributes.values ] );
+}
 
 const v1 = {
 
@@ -43,6 +87,11 @@ const v1 = {
 	        textAlign,
 		} = attributes;
 
+
+		console.log( 'hello from deprecation' );
+
+
+		// const content = values;
 		// console.log( 'deprecated attr content: ' + content )
 
 
@@ -113,31 +162,36 @@ const v1 = {
 
 
 
-		// const list = document.createElement( 'ul' );
-		// list.innerHTML = content;
+		const list = document.createElement( 'ul' );
+		list.innerHTML = values;
 
-		// const [ listBlock ] = rawHandler( { HTML: list.outerHTML } );
+		const [ listBlock ] = rawHandler( { HTML: list.outerHTML } );
 
 		// console.log( 'listBlock: \n' + JSON.stringify( listBlock, null, 2 ) );
 
 
-		// const innerBlocks = Array.from( listBlock.innerBlocks ).map(
-		// 	( listItem ) => {
-		// 		console.log( '---- listItem: \n' + JSON.stringify( listItem, null, 2 ) );
-		// 		if ( typeof listItem.attributes !== 'undefined' && typeof listItem.attributes.content !== 'undefined' ) {
-		// 			return {
-		// 				"type": "li",
-		// 				"props": {
-		// 					"children": [
-		// 						listItem.attributes.content
-		// 					]
-		// 				}
-		// 			};
-		// 		}
-		// 	}
-		// );
+		// rebuild old content attribute from inner blocks data
+		const content = Array.from( listBlock.innerBlocks ).map(
+			( listItem ) => {
+				// console.log( '---- listItem: \n' + JSON.stringify( listItem, null, 2 ) );
+				if ( typeof listItem.attributes !== 'undefined' && typeof listItem.attributes.content !== 'undefined' ) {
+					return {
+						"type": "li",
+						"props": {
+							"children": [
+								listItem.attributes.content
+							]
+						}
+					};
+				}
+			}
+		);
 
 		// console.log( 'innerBlocks: \n' + JSON.stringify( innerBlocks, null, 2 ) );
+
+
+
+
 
 
 
@@ -162,27 +216,34 @@ const v1 = {
 	                    />
 	    */
 
-	    // return (
-	    //     <>
-	    //         {
-	    //             ( content && ! RichText.isEmpty( content ) ) && (
-	    //                 <RichText.Content 
-	    //                     tagName="ul" 
-	    //                     value={ innerBlocks } 
-	    //                     className={ checklistClassNames }
-	    //                 />
-	    //             )
-	    //         }
-	    //     </>
-	    // );
+	    return (
+	        <>
+	            {
+	                ( content && ! RichText.isEmpty( content ) ) && (
+	                    <RichText.Content 
+	                        tagName="ul" 
+	                        value={ content } 
+	                        className={ checklistClassNames }
+	                    />
+	                )
+	            }
+	        </>
+	    );
 
-	    const TagName = 'ul';
+	    // const TagName = 'ul';
 
-		return (
-			<TagName { ...useBlockProps.save() }>
-				<RichText.Content value={ values } multiline="li" />
-			</TagName>
-		);
+	 //    const test = (
+		// 	<TagName { ...useBlockProps.save( { className: checklistClassNames } ) }>
+		// 		<RichText.Content value={ values } multiline="li" />
+		// 	</TagName>
+		// );
+		// console.log( 'test: \n' + JSON.stringify( test, null, 2 ) );
+
+		// return (
+		// 	<TagName { ...useBlockProps.save( { className: checklistClassNames } ) }>
+		// 		<InnerBlocks.Content />
+		// 	</TagName>
+		// );
 	}
 }
 

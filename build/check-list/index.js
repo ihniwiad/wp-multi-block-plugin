@@ -1866,13 +1866,54 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils */ "./src/check-list/utils.js");
+/* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
 
 
 
-// import { rawHandler } from '@wordpress/blocks';
 
 
+
+// v1 functions
+
+/**
+ * At the moment, deprecations don't handle create blocks from attributes
+ * (like when using CPT templates). For this reason, this hook is necessary
+ * to avoid breaking templates using the old list block format.
+ *
+ * @param {Object} attributes Block attributes.
+ * @param {string} clientId   Block client ID.
+ */
+function useMigrateOnLoad(attributes, clientId) {
+  // console.log( 'useMigrateOnLoad()' )
+
+  const registry = useRegistry();
+  const {
+    updateBlockAttributes,
+    replaceInnerBlocks
+  } = useDispatch(blockEditorStore);
+  useEffect(() => {
+    // As soon as the block is loaded, migrate it to the new version.
+
+    if (!attributes.values) {
+      return;
+    }
+    const [newAttributes, newInnerBlocks] = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.migrateToListV2)(attributes);
+
+    // deprecated( 'Content attribute on the BSX Check List block', {
+    // 	since: '6.0',
+    // 	version: '6.5',
+    // 	alternative: 'inner blocks',
+    // } );
+
+    registry.batch(() => {
+      updateBlockAttributes(clientId, newAttributes);
+      replaceInnerBlocks(clientId, newInnerBlocks);
+    });
+  }, [attributes.values]);
+}
 const v1 = {
   // get old attr
   attributes: {
@@ -1910,7 +1951,9 @@ const v1 = {
       display,
       textAlign
     } = attributes;
+    console.log('hello from deprecation');
 
+    // const content = values;
     // console.log( 'deprecated attr content: ' + content )
 
     // required content object
@@ -1967,34 +2010,32 @@ const v1 = {
     // 	}
     // );
 
-    // const list = document.createElement( 'ul' );
-    // list.innerHTML = content;
-
-    // const [ listBlock ] = rawHandler( { HTML: list.outerHTML } );
+    const list = document.createElement('ul');
+    list.innerHTML = values;
+    const [listBlock] = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__.rawHandler)({
+      HTML: list.outerHTML
+    });
 
     // console.log( 'listBlock: \n' + JSON.stringify( listBlock, null, 2 ) );
 
-    // const innerBlocks = Array.from( listBlock.innerBlocks ).map(
-    // 	( listItem ) => {
-    // 		console.log( '---- listItem: \n' + JSON.stringify( listItem, null, 2 ) );
-    // 		if ( typeof listItem.attributes !== 'undefined' && typeof listItem.attributes.content !== 'undefined' ) {
-    // 			return {
-    // 				"type": "li",
-    // 				"props": {
-    // 					"children": [
-    // 						listItem.attributes.content
-    // 					]
-    // 				}
-    // 			};
-    // 		}
-    // 	}
-    // );
+    // rebuild old content attribute from inner blocks data
+    const content = Array.from(listBlock.innerBlocks).map(listItem => {
+      // console.log( '---- listItem: \n' + JSON.stringify( listItem, null, 2 ) );
+      if (typeof listItem.attributes !== 'undefined' && typeof listItem.attributes.content !== 'undefined') {
+        return {
+          "type": "li",
+          "props": {
+            "children": [listItem.attributes.content]
+          }
+        };
+      }
+    });
 
     // console.log( 'innerBlocks: \n' + JSON.stringify( innerBlocks, null, 2 ) );
 
     // const newContent = [ 'Lorem', 'Ipsum' ];
 
-    const checklistClassNames = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_2__.addClassNames)({
+    const checklistClassNames = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_4__.addClassNames)({
       marginLeft,
       marginRight,
       marginBefore,
@@ -2011,27 +2052,26 @@ const v1 = {
                     />
     */
 
-    // return (
-    //     <>
-    //         {
-    //             ( content && ! RichText.isEmpty( content ) ) && (
-    //                 <RichText.Content 
-    //                     tagName="ul" 
-    //                     value={ innerBlocks } 
-    //                     className={ checklistClassNames }
-    //                 />
-    //             )
-    //         }
-    //     </>
-    // );
-
-    const TagName = 'ul';
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(TagName, {
-      ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
-      value: values,
-      multiline: "li"
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, content && !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.isEmpty(content) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+      tagName: "ul",
+      value: content,
+      className: checklistClassNames
     }));
+
+    // const TagName = 'ul';
+
+    //    const test = (
+    // 	<TagName { ...useBlockProps.save( { className: checklistClassNames } ) }>
+    // 		<RichText.Content value={ values } multiline="li" />
+    // 	</TagName>
+    // );
+    // console.log( 'test: \n' + JSON.stringify( test, null, 2 ) );
+
+    // return (
+    // 	<TagName { ...useBlockProps.save( { className: checklistClassNames } ) }>
+    // 		<InnerBlocks.Content />
+    // 	</TagName>
+    // );
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([v1]);
@@ -2263,13 +2303,13 @@ function Edit({
   // 	<ul allowedBlocks={ metadata.allowedBlocks } { ...innerBlocksProps } />
   // 	{ controls }
   // </>
+
+  // <InnerBlocks allowedBlocks={ metadata.allowedBlocks } />
   //   );
 
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
     ...innerBlocksProps
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks, {
-    allowedBlocks: _block_json__WEBPACK_IMPORTED_MODULE_6__.allowedBlocks
-  })), controls);
+  }), controls);
 }
 
 /***/ }),
