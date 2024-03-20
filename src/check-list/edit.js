@@ -200,7 +200,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
 	const controls = (
 		<>
-            <BlockControls>
+            <BlockControls group="block">
                 {
                     textAlignToolbar( textAlign, onChangeTextAlign )
                 }
@@ -245,8 +245,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
     return (
         <>
-            <ul { ...innerBlocksProps }>
-            </ul>
+            <ul { ...innerBlocksProps }/>
             { controls }
         </>
     );

@@ -41,12 +41,6 @@ registerBlockType( metadata.name, {
 			content: attributes.content + attributesToMerge.content,
 		};
 	},
-	/**
-	 * @see ./edit.js
-	 */
 	edit: Edit,
-	/**
-	 * @see ./save.js
-	 */
 	save,
 } );

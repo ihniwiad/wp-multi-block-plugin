@@ -407,10 +407,41 @@ function Edit({
   // it seems to require a parent element for the rich text editor to 
   // work properly in the backend (be able to select parent list element
   // or select a new block via JavaScript)
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+
+  // return (
+  //     <>
+  //         <RichText
+  //             ref={ useMergeRefs( [ useEnterRef ] ) }
+  //             identifier="content"
+  //             tagName="li"
+  //             onChange={ ( nextContent ) =>
+  //                 setAttributes( { content: nextContent } )
+  //             }
+  //             value={ content }
+  //             aria-label={ __( 'List text' ) }
+  //             placeholder={ __( 'List' ) }
+  //             onSplit={ onSplit }
+  //             onMerge={ onMerge }
+  //             onReplace={
+  //                 onReplace
+  //                     ? ( blocks, ...args ) => {
+  //                             onReplace(
+  //                                 convertToChecklistItems( blocks ),
+  //                                 ...args
+  //                             );
+  //                       }
+  //                     : undefined
+  //             }
+  //         />
+  //     </>
+  // );
+
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+    ...innerBlocksProps
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
     ref: (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useMergeRefs)([useEnterRef]),
     identifier: "content",
-    tagName: "li",
+    tagName: "span",
     onChange: nextContent => setAttributes({
       content: nextContent
     }),
@@ -422,50 +453,7 @@ function Edit({
     onReplace: onReplace ? (blocks, ...args) => {
       onReplace((0,_utils__WEBPACK_IMPORTED_MODULE_9__.convertToChecklistItems)(blocks), ...args);
     } : undefined
-    // onReplace={ onReplace }
-    // onRemove={  }
-  }));
-
-  /*
-           onSplit={ ( value, isOriginal ) => {
-              console.log( '(attr) onSplit()' )
-              let newAttributes;
-               if ( isOriginal || value ) {
-                  newAttributes = {
-                      ...attributes,
-                      content: value,
-                  };
-              }
-               const block = createBlock( name, newAttributes );
-               if ( isOriginal ) {
-                  block.clientId = clientId;
-              }
-               return block;
-          } }
-           onSplit={ 
-              ( value, isAfterOriginal ) => {
-                  console.log( 'onSplit' )
-                  createBlock( 'create-block/check-list-item', { ...attributes, text: value } );
-              } 
-          }
-           ref={ useOnEnter( { clientId, content } ) }
-           ref={ useMergeRefs( [ useEnterRef ] ) }
-   */
-
-  // return (
-  //        <RichText
-  //            ref={ useOnEnter( { clientId, content } ) }
-  //            identifier="content"
-  //            tagName="li"
-  //            onChange={ ( nextContent ) =>
-  //                setAttributes( { content: nextContent } )
-  //            }
-  //            value={ content }
-  //            aria-label={ __( 'List text' ) }
-  //            placeholder={ __( 'List' ) }
-
-  //        />
-  //    );
+  }), innerBlocksProps.children);
 }
 
 /***/ }),
@@ -487,7 +475,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _use_merge__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./use-merge */ "./src/check-list-item/hooks/use-merge.js");
 
 
-// export { default as useSpace } from './use-space';
 
 
 /***/ }),
@@ -863,13 +850,7 @@ const icon = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
       content: attributes.content + attributesToMerge.content
     };
   },
-  /**
-   * @see ./edit.js
-   */
   edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"],
-  /**
-   * @see ./save.js
-   */
   save: _save__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 

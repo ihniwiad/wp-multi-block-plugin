@@ -117,12 +117,43 @@ export default function Edit( {
     // it seems to require a parent element for the rich text editor to 
     // work properly in the backend (be able to select parent list element
     // or select a new block via JavaScript)
+
+
+    // return (
+    //     <>
+    //         <RichText
+    //             ref={ useMergeRefs( [ useEnterRef ] ) }
+    //             identifier="content"
+    //             tagName="li"
+    //             onChange={ ( nextContent ) =>
+    //                 setAttributes( { content: nextContent } )
+    //             }
+    //             value={ content }
+    //             aria-label={ __( 'List text' ) }
+    //             placeholder={ __( 'List' ) }
+    //             onSplit={ onSplit }
+    //             onMerge={ onMerge }
+    //             onReplace={
+    //                 onReplace
+    //                     ? ( blocks, ...args ) => {
+    //                             onReplace(
+    //                                 convertToChecklistItems( blocks ),
+    //                                 ...args
+    //                             );
+    //                       }
+    //                     : undefined
+    //             }
+    //         />
+    //     </>
+    // );
+
+
     return (
-        <>
+        <li { ...innerBlocksProps }>
             <RichText
                 ref={ useMergeRefs( [ useEnterRef ] ) }
                 identifier="content"
-                tagName="li"
+                tagName="span"
                 onChange={ ( nextContent ) =>
                     setAttributes( { content: nextContent } )
                 }
@@ -141,60 +172,9 @@ export default function Edit( {
                           }
                         : undefined
                 }
-                // onReplace={ onReplace }
-                // onRemove={  }
             />
-        </>
+            { innerBlocksProps.children }
+        </li>
     );
 
-    /*
-
-            onSplit={ ( value, isOriginal ) => {
-                console.log( '(attr) onSplit()' )
-                let newAttributes;
-
-                if ( isOriginal || value ) {
-                    newAttributes = {
-                        ...attributes,
-                        content: value,
-                    };
-                }
-
-                const block = createBlock( name, newAttributes );
-
-                if ( isOriginal ) {
-                    block.clientId = clientId;
-                }
-
-                return block;
-            } }
-
-            onSplit={ 
-                ( value, isAfterOriginal ) => {
-                    console.log( 'onSplit' )
-                    createBlock( 'create-block/check-list-item', { ...attributes, text: value } );
-                } 
-            }
-
-            ref={ useOnEnter( { clientId, content } ) }
-
-            ref={ useMergeRefs( [ useEnterRef ] ) }
-
-    */
-
-	// return (
- //        <RichText
- //            ref={ useOnEnter( { clientId, content } ) }
- //            identifier="content"
- //            tagName="li"
- //            onChange={ ( nextContent ) =>
- //                setAttributes( { content: nextContent } )
- //            }
- //            value={ content }
- //            aria-label={ __( 'List text' ) }
- //            placeholder={ __( 'List' ) }
-
-
- //        />
- //    );
 }

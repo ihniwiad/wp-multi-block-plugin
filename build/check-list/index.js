@@ -2286,7 +2286,9 @@ function Edit({
     display,
     textAlign
   }, !!className ? 'checklist ' + className : 'checklist');
-  const controls = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, null, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.textAlignToolbar)(textAlign, onChangeTextAlign)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  const controls = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, {
+    group: "block"
+  }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.textAlignToolbar)(textAlign, onChangeTextAlign)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Appearance', 'bsx-blocks')
   }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.stateSelect)(state, onChangeState), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.displaySelect)(display, onChangeDisplay)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Margin', 'bsx-blocks')
@@ -2366,14 +2368,8 @@ const icon = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_5__.name, {
-  icon: icon,
-  /**
-   * @see ./edit.js
-   */
+  icon,
   edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"],
-  /**
-   * @see ./save.js
-   */
   save: _save__WEBPACK_IMPORTED_MODULE_4__["default"],
   deprecated: _deprecated__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
@@ -2599,7 +2595,7 @@ module.exports = window["wp"]["i18n"];
   \***********************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/check-list","version":"0.1.0","title":"CB Check List","category":"text","allowedBlocks":["create-block/check-list-item"],"description":"Create a check list.","example":{},"supports":{"__unstablePasteTextInline":true,"__experimentalSelector":"ul","__experimentalSlashInserter":true,"__experimentalOnEnter":true},"textdomain":"multiple-blocks-plugin-textdomain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"values":{"type":"string","source":"html","selector":"ul","multiline":"li","__unstableMultilineWrapperTags":["ul"],"default":"","__experimentalRole":"content"},"state":{"type":"string","default":"primary"},"marginLeft":{"type":"string"},"marginRight":{"type":"string"},"marginBefore":{"type":"string"},"marginAfter":{"type":"string"},"display":{"type":"string"},"textAlign":{"type":"string","default":""}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/check-list","version":"0.1.0","title":"CB Check List","category":"text","allowedBlocks":["create-block/check-list-item"],"description":"Create a check list.","example":{},"attributes":{"values":{"type":"string","source":"html","selector":"ul","multiline":"li","__unstableMultilineWrapperTags":["ul"],"default":"","__experimentalRole":"content"},"state":{"type":"string","default":"primary"},"marginLeft":{"type":"string"},"marginRight":{"type":"string"},"marginBefore":{"type":"string"},"marginAfter":{"type":"string"},"display":{"type":"string"},"textAlign":{"type":"string","default":""}},"supports":{"className":false,"__unstablePasteTextInline":true,"__experimentalSelector":"ul","__experimentalSlashInserter":true,"__experimentalOnEnter":true},"textdomain":"multiple-blocks-plugin-textdomain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ })
 

@@ -39,15 +39,8 @@ const icon = (
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType( metadata.name, {
-	icon: icon,
-	/**
-	 * @see ./edit.js
-	 */
+	icon,
 	edit: Edit,
-
-	/**
-	 * @see ./save.js
-	 */
 	save,
 	deprecated,
 } );
