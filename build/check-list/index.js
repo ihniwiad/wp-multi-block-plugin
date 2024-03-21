@@ -1866,11 +1866,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
 
 
-
-// import { rawHandler } from '@wordpress/blocks';
 
 
 const v1 = {
@@ -1889,29 +1889,33 @@ const v1 = {
       __unstableMultilineWrapperTags: ['ul'],
       default: '',
       __experimentalRole: 'content'
-    },
-    supports: {
-      __unstablePasteTextInline: true,
-      __experimentalSelector: 'ul',
-      __experimentalSlashInserter: true
     }
   },
-  save({
-    attributes
-  }) {
+  supports: {
+    className: false,
+    __unstablePasteTextInline: true,
+    __experimentalSelector: 'ul',
+    __experimentalSlashInserter: true
+  },
+  // save( { attributes } ) {
+  save(props) {
     const {
-      className,
-      values,
-      state,
-      marginLeft,
-      marginRight,
-      marginBefore,
-      marginAfter,
-      display,
-      textAlign
-    } = attributes;
+      attributes: {
+        className,
+        values,
+        state,
+        marginLeft,
+        marginRight,
+        marginBefore,
+        marginAfter,
+        display,
+        textAlign
+      }
+    } = props;
 
-    // console.log( 'deprecated attr content: ' + content )
+    // console.log( 'hello from deprecation' );
+
+    // console.log( 'values: ' + values )
 
     // required content object
     // [
@@ -1967,34 +1971,32 @@ const v1 = {
     // 	}
     // );
 
-    // const list = document.createElement( 'ul' );
-    // list.innerHTML = content;
-
-    // const [ listBlock ] = rawHandler( { HTML: list.outerHTML } );
+    const list = document.createElement('ul');
+    list.innerHTML = values;
+    const [listBlock] = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__.rawHandler)({
+      HTML: list.outerHTML
+    });
 
     // console.log( 'listBlock: \n' + JSON.stringify( listBlock, null, 2 ) );
 
-    // const innerBlocks = Array.from( listBlock.innerBlocks ).map(
-    // 	( listItem ) => {
-    // 		console.log( '---- listItem: \n' + JSON.stringify( listItem, null, 2 ) );
-    // 		if ( typeof listItem.attributes !== 'undefined' && typeof listItem.attributes.content !== 'undefined' ) {
-    // 			return {
-    // 				"type": "li",
-    // 				"props": {
-    // 					"children": [
-    // 						listItem.attributes.content
-    // 					]
-    // 				}
-    // 			};
-    // 		}
-    // 	}
-    // );
+    // rebuild old content attribute from inner blocks data
+    const content = Array.from(listBlock.innerBlocks).map(listItem => {
+      // console.log( '---- listItem: \n' + JSON.stringify( listItem, null, 2 ) );
+      if (typeof listItem.attributes !== 'undefined' && typeof listItem.attributes.content !== 'undefined') {
+        return {
+          "type": "li",
+          "props": {
+            "children": [listItem.attributes.content]
+          }
+        };
+      }
+    });
 
     // console.log( 'innerBlocks: \n' + JSON.stringify( innerBlocks, null, 2 ) );
 
     // const newContent = [ 'Lorem', 'Ipsum' ];
 
-    const checklistClassNames = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_2__.addClassNames)({
+    const checklistClassNames = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_3__.addClassNames)({
       marginLeft,
       marginRight,
       marginBefore,
@@ -2011,26 +2013,58 @@ const v1 = {
                     />
     */
 
+    // const TagName = 'ul';
+
+    //    const test = (
+    // 	<TagName { ...useBlockProps.save( { className: checklistClassNames } ) }>
+    // 		<RichText.Content value={ values } multiline="li" />
+    // 	</TagName>
+    // );
+    // console.log( 'test: \n' + JSON.stringify( test, null, 2 ) );
+
     // return (
-    //     <>
-    //         {
-    //             ( content && ! RichText.isEmpty( content ) ) && (
-    //                 <RichText.Content 
-    //                     tagName="ul" 
-    //                     value={ innerBlocks } 
-    //                     className={ checklistClassNames }
-    //                 />
-    //             )
-    //         }
-    //     </>
+    // 	<TagName { ...useBlockProps.save( { className: checklistClassNames } ) }>
+    // 		<InnerBlocks.Content />
+    // 	</TagName>
     // );
 
-    const TagName = 'ul';
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(TagName, {
-      ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+    //    const test_1 = (
+    //        <>
+    //            {
+    //                ( content && ! RichText.isEmpty( content ) ) && (
+    //                    <RichText.Content 
+    //                        tagName="ul" 
+    //                        value={ content } 
+    //                        className={ checklistClassNames }
+    //                    />
+    //                )
+    //            }
+    //        </>
+    // );
+    // console.log( 'test_1: \n' + JSON.stringify( test_1, null, 2 ) );
+
+    // // create element without type
+    // const Element = props.element;
+    // const test_2 = (
+    // 	<>
+    // 		<Element { ...useBlockProps.save( { tagName: 'ul', value: content, className: checklistClassNames } ) }/>
+    // 	</>
+    // );
+    // // const test_2 = (
+    // // 	<>
+    // // 		<Element tagName="ul" value={ content } className={ checklistClassNames }/>
+    // // 	</>
+    // // );
+
+    // console.log( 'test_2: \n' + JSON.stringify( test_2, null, 2 ) );
+
+    // return test_1;
+
+    // RichText value now accepting HTML content
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, content && !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.isEmpty(content) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+      tagName: "ul",
       value: values,
-      multiline: "li"
+      className: checklistClassNames
     }));
   }
 };
@@ -2252,7 +2286,9 @@ function Edit({
     display,
     textAlign
   }, !!className ? 'checklist ' + className : 'checklist');
-  const controls = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, null, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.textAlignToolbar)(textAlign, onChangeTextAlign)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  const controls = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, {
+    group: "block"
+  }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.textAlignToolbar)(textAlign, onChangeTextAlign)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Appearance', 'bsx-blocks')
   }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.stateSelect)(state, onChangeState), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.displaySelect)(display, onChangeDisplay)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Margin', 'bsx-blocks')
@@ -2263,13 +2299,13 @@ function Edit({
   // 	<ul allowedBlocks={ metadata.allowedBlocks } { ...innerBlocksProps } />
   // 	{ controls }
   // </>
+
+  // <InnerBlocks allowedBlocks={ metadata.allowedBlocks } />
   //   );
 
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
     ...innerBlocksProps
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks, {
-    allowedBlocks: _block_json__WEBPACK_IMPORTED_MODULE_6__.allowedBlocks
-  })), controls);
+  }), controls);
 }
 
 /***/ }),
@@ -2332,14 +2368,8 @@ const icon = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_5__.name, {
-  icon: icon,
-  /**
-   * @see ./edit.js
-   */
+  icon,
   edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"],
-  /**
-   * @see ./save.js
-   */
   save: _save__WEBPACK_IMPORTED_MODULE_4__["default"],
   deprecated: _deprecated__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
@@ -2565,7 +2595,7 @@ module.exports = window["wp"]["i18n"];
   \***********************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/check-list","version":"0.1.0","title":"CB Check List","category":"text","allowedBlocks":["create-block/check-list-item"],"description":"Create a check list.","example":{},"supports":{"__unstablePasteTextInline":true,"__experimentalSelector":"ul","__experimentalSlashInserter":true,"__experimentalOnEnter":true},"textdomain":"multiple-blocks-plugin-textdomain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"values":{"type":"string","source":"html","selector":"ul","multiline":"li","__unstableMultilineWrapperTags":["ul"],"default":"","__experimentalRole":"content"},"state":{"type":"string","default":"primary"},"marginLeft":{"type":"string"},"marginRight":{"type":"string"},"marginBefore":{"type":"string"},"marginAfter":{"type":"string"},"display":{"type":"string"},"textAlign":{"type":"string","default":""}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/check-list","version":"0.1.0","title":"CB Check List","category":"text","allowedBlocks":["create-block/check-list-item"],"description":"Create a check list.","example":{},"attributes":{"values":{"type":"string","source":"html","selector":"ul","multiline":"li","__unstableMultilineWrapperTags":["ul"],"default":"","__experimentalRole":"content"},"state":{"type":"string","default":"primary"},"marginLeft":{"type":"string"},"marginRight":{"type":"string"},"marginBefore":{"type":"string"},"marginAfter":{"type":"string"},"display":{"type":"string"},"textAlign":{"type":"string","default":""}},"supports":{"className":false,"__unstablePasteTextInline":true,"__experimentalSelector":"ul","__experimentalSlashInserter":true,"__experimentalOnEnter":true},"textdomain":"multiple-blocks-plugin-textdomain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ })
 

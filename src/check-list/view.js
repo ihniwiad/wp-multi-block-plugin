@@ -21,5 +21,5 @@
  */
 
 /* eslint-disable no-console */
-// console.log( 'Hello World! (from create-block-multiple-blocks-plugin block)' );
+
 /* eslint-enable no-console */

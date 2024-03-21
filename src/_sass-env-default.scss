@@ -1,0 +1,9 @@
+// this file will be processed by gulpfile using `.env` variables
+// the result will be saved as `_sass-env.scss` and included in `src/_global-editor-style.scss`
+
+
+@import "###THEME_PACKAGE_PATH######VARIABLES_PATH_AND_FILE###";
+
+@import "###THEME_PACKAGE_PATH###node_modules/bootstrap/scss/mixins/breakpoints";
+@import "###THEME_PACKAGE_PATH###node_modules/bootstrap/scss/mixins/grid-framework";
+@import "###THEME_PACKAGE_PATH###node_modules/bootstrap/scss/mixins/grid";

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/editor-style",
+  "version": "0.1.0",
+  "title": "Editor Style",
+  "category": "hidden",
+  "icon": "smiley",
+  "description": "Just some style for the Block Editor backend. This Block is not registered to the Block Editor, but it’s style is included into the Block Editor.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "textdomain": "multiple-blocks-plugin-textdomain",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

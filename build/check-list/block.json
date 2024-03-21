@@ -10,17 +10,6 @@
   ],
   "description": "Create a check list.",
   "example": {},
-  "supports": {
-    "__unstablePasteTextInline": true,
-    "__experimentalSelector": "ul",
-    "__experimentalSlashInserter": true,
-    "__experimentalOnEnter": true
-  },
-  "textdomain": "multiple-blocks-plugin-textdomain",
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
-  "viewScript": "file:./view.js",
   "attributes": {
     "values": {
       "type": "string",
@@ -56,5 +45,17 @@
       "type": "string",
       "default": ""
     }
-  }
+  },
+  "supports": {
+    "className": false,
+    "__unstablePasteTextInline": true,
+    "__experimentalSelector": "ul",
+    "__experimentalSlashInserter": true,
+    "__experimentalOnEnter": true
+  },
+  "textdomain": "multiple-blocks-plugin-textdomain",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
 }

@@ -200,7 +200,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
 	const controls = (
 		<>
-            <BlockControls>
+            <BlockControls group="block">
                 {
                     textAlignToolbar( textAlign, onChangeTextAlign )
                 }
@@ -238,14 +238,14 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		// 	<ul allowedBlocks={ metadata.allowedBlocks } { ...innerBlocksProps } />
 		// 	{ controls }
 		// </>
+
+        // <InnerBlocks allowedBlocks={ metadata.allowedBlocks } />
   //   );
 
 
     return (
         <>
-            <ul { ...innerBlocksProps }>
-                <InnerBlocks allowedBlocks={ metadata.allowedBlocks } />
-            </ul>
+            <ul { ...innerBlocksProps }/>
             { controls }
         </>
     );

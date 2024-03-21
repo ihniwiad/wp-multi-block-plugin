@@ -26,7 +26,7 @@ export default function useEnter( props ) {
 	propsRef.current = props;
 	// const outdentListItem = useOutdentListItem();
 	return useRefEffect( ( element ) => {
-				console.log( '—— useEnter() return' )
+				// console.log( '—— useEnter() return' )
 		function onKeyDown( event ) {
 			if ( event.defaultPrevented || event.keyCode !== ENTER ) {
 				return;
@@ -61,7 +61,7 @@ export default function useEnter( props ) {
 					blockIndex
 				),
 			} );
-			const middle = createBlock( 'create-block/check-list-item' );
+			const middle = createBlock( getDefaultBlockName() );
 			// Last list item might contain a `list` block innerBlock
 			// In that case append remaining innerBlocks blocks.
 			const after = [
