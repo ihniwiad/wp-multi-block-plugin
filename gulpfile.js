@@ -13,12 +13,12 @@ const fs            = require( 'fs' );
 const paths = {
     themePathReplace: {
         src: 'src/',
-        dest: 'build/',
+        dest: 'src/',
         fileName: '_sass-env-default.scss',
         renamedFileName: '_sass-env.scss'
     },
     publish: {
-        watchSrc: [ 'build/*.js', 'plugin.php', 'src/**/*.php' ],
+        watchSrc: [ 'build/**/*.js', 'build/', 'plugin.php', 'src/**/*.php' ],
     },
 };
 
@@ -107,20 +107,20 @@ const publish = series(
     publishFolderCreate,
 );
 
-// exports.publish = publish;
+exports.publish = publish;
 
 
-// exports.build = series(
-//     themePackagePathReplace,
-//     publish,
-// );
+exports.build = series(
+    themePackagePathReplace,
+    publish,
+);
 
 
 function allWatch() {
     gulp.watch( paths.publish.watchSrc, publish );
 }
 
-// exports.watch = allWatch;
+exports.watch = allWatch;
 
 
 const justTest = ( cb ) => {

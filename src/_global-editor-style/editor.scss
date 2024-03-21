@@ -4,9 +4,13 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-
+// import Theme variables & Bootstrap grid for Block Editor
 @import "../sass-env";
 
+
+
+// Editor styles
+
 .editor-styles-wrapper {
-	background-color: $primary !important;
+	background-color: $secondary !important;
 }

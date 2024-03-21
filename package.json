@@ -12,7 +12,10 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start --webpack-src-dir=src"
+		"start": "wp-scripts start --webpack-src-dir=src",
+		"build": "npm run wp-build-all && gulp build",
+		"publish": "gulp publish",
+		"watch": "gulp watch"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^27.2.0",
