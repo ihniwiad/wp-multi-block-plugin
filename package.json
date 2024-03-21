@@ -15,6 +15,12 @@
 		"start": "wp-scripts start --webpack-src-dir=src"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^27.2.0"
+		"@wordpress/scripts": "^27.2.0",
+		"dotenv": "^8.2.0",
+		"gulp": "^4.0.2",
+		"gulp-clean": "^0.4.0",
+		"gulp-rename": "^1.4.0",
+		"gulp-string-replace": "^1.1.2",
+		"gulp-watch": "^4.3.11"
 	}
 }
