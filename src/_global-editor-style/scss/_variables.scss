@@ -1,0 +1,81 @@
+// editor style vars
+
+
+// wp
+
+$bsxui-list-appender-selector:          '.block-list-appender' !default;
+$bsxui-list-appender-button-selector:   '.block-list-appender__toggle' !default;
+
+
+// basic
+
+$bsxui-interact-color: 				var(--wp-admin-theme-color) !default; // @wordpress
+
+$bsxui-light-border-color:			#dee2e6 !default;
+$bsxui-interact-border-color:		$bsxui-interact-color !default;
+$bsxui-default-border-style:		solid !default;
+$bsxui-special-border-style:		dashed !default;
+$bsxui-area-button-bg-color:		rgba(237, 239, 240, .8) !default; // @wordpress
+$bsxui-placeholder-bg-color:		rgba(#eeeeee, .5) !default;
+
+
+// active
+$bsxui-hover-active-color: 			var(--wp-admin-theme-color) !default; // @wordpress
+
+// danger
+$bsxui-danger-color: 				#ca4a1f !default; // @wordpress
+
+
+// basic composites
+
+$bsxui-light-border:				1px $bsxui-default-border-style $bsxui-light-border-color !default;
+$bsxui-interact-border:				1px $bsxui-special-border-style $bsxui-interact-border-color !default;
+
+
+// initial inline control panel
+
+$bsxui-initial-inline-control-heading-padding: 		16px !default; // @wordpress
+$bsxui-initial-inline-control-heading-text-align: 	left !default;
+
+
+// config panel
+
+$bsxui-margin-bottom:				24px !default; // @wordpress
+$bsxui-small-margin-bottom:			calc($bsxui-margin-bottom / 2) !default;
+$bsxui-config-panel-font-size:		13px !default; // @wordpress
+
+
+// icon text button list
+
+$bsxui-icon-text-button-list-justify-content:		flex-start !default;
+$bsxui-icon-text-button-list-item-width: 			50% !default;
+$bsxui-icon-text-button-list-item-inline-width: 	7.5rem !default;
+
+
+// alert
+
+$bsxui-alert-background-color: 		#fef8ee !default; // @wordpress
+$bsxui-alert-color: 				inherit !default; // @wordpress
+$bsxui-alert-border-color: 			darken($bsxui-alert-background-color, 15%) !default; // @wordpress
+$bsxui-alert-border-radius: 		.25rem !default; 
+$bsxui-alert-padding: 				.125rem .25rem !default; 
+
+
+// placeholder limitation
+$bsxui-in-col-placeholder-max-width:		150px !default;
+
+
+
+// isselected config panel (deprecated! – do not delete before replacing varibles beeing used afterwards)
+
+$bsxui-isselected-panel-bg-color: 	#ffffff !default; 
+$bsxui-isselected-panel-border: 	$bsxui-light-border !default;
+
+$bsxui-isselected-panel-mt: 		.5rem !default; 
+$bsxui-isselected-panel-px: 		.25rem !default; 
+
+
+// in widget overlay panel
+$bsxui-in-widget-overlay-panel-padding:	$bsxui-isselected-panel-mt $bsxui-isselected-panel-px !default;
+
+

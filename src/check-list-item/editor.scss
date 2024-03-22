@@ -3,3 +3,25 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+
+
+// imports
+
+@import "../_global-editor-style/scss/variables";
+@import "../_global-editor-style/scss/mixins";
+
+
+// style
+/*
+// has conflict since attr(data-title) not existing
+[data-type][data-type="create-block/check-list-item"]:hover {
+	position: relative;
+
+	& > span {
+		@include bsx-make-hover-block-identifier()
+	}
+}
+*/
+
+
+

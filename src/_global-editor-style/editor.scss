@@ -1,16 +1,15 @@
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
 
-// import Theme variables & Bootstrap grid for Block Editor
+// external dependency from .env dependant generated file: Theme variables & Bootstrap grid for Block Editor
+
 @import "../sass-env";
 
 
+// internal dependencies
 
-// Editor styles
+@import "scss/variables";
+@import "scss/mixins";
+@import "scss/editor-style-basics";
+@import "scss/editor-style";
 
-.editor-styles-wrapper {
-	background-color: $secondary !important;
-}
+
+

@@ -1,0 +1,109 @@
+// editor style basics
+
+
+// display
+
+.bsxui-d-flex {
+	display: flex;
+}
+
+
+// margin
+
+.bsxui-mt-3 {
+	margin-top: $bsxui-small-margin-bottom !important;
+}
+.bsxui-mt-4 {
+	margin-top: $bsxui-margin-bottom !important;
+}
+
+.bsxui-mb-3 {
+	margin-bottom: $bsxui-small-margin-bottom !important;
+}
+.bsxui-mb-4 {
+	margin-bottom: $bsxui-margin-bottom !important;
+}
+
+.bsxui-ml-auto {
+	margin-left: auto !important;
+}
+
+
+// padding
+
+.bsxui-px-0 {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+.bsxui-p-0 {
+	padding: 0 !important;
+}
+.bsxui-pt-0 {
+	padding-top: 0 !important;
+}
+.bsxui-pb-0 {
+	padding-bottom: 0 !important;
+}
+
+
+// border
+
+.bsxui-bt-0 {
+	border-top: 0 !important;
+}
+.bsxui-bb-0 {
+	border-bottom: 0 !important;
+}
+
+
+// width
+
+.bsxui-w-100 {
+	width: 100% !important;
+}
+.bsxui-w-50 {
+	width: 50% !important;
+}
+
+
+// height
+
+.bsxui-h-auto {
+	height: auto !important;
+}
+
+
+// vertical align
+
+.bsxui-va-middle {
+	vertical-align: middle !important;
+}
+
+
+// color (state danger)
+
+.bsxui-text-danger {
+	color: $bsxui-danger-color !important;
+}
+.bsxui-border-danger {
+	border-color: $bsxui-danger-color !important;
+}
+.bsxui-bg-danger {
+	background-color: $bsxui-danger-color !important;
+}
+
+
+// ui
+
+.bsxui-disabled {
+	pointer-events: none !important;
+}
+
+.bsxui-alert {
+	color: $bsxui-alert-color;
+	background: $bsxui-alert-background-color;
+	border: 1px solid $bsxui-alert-border-color;
+	border-radius: $bsxui-alert-border-radius;
+	font-size: $bsxui-config-panel-font-size;
+	padding: $bsxui-alert-padding;
+}

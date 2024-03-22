@@ -1,0 +1,275 @@
+// editor style
+
+
+// editor background
+
+.editor-styles-wrapper {
+	background-color: $body-bg;
+	color: $body-color;
+}
+
+
+// make editor wider
+
+.wp-block {
+    max-width: unset !important;
+}
+
+
+// hover border for all bsx blocks
+// TODO: test & make variables
+
+// [data-type^="bsx-blocks/"]
+// :not([data-type="create-block/check-list-item"])
+[data-type]:hover {
+
+	@include bsx-make-hover-block-identifier()
+/*
+	// border
+	&:before {
+		content: "";
+		z-index: 100;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		display: block;
+		color: unset;
+		background-color: unset;
+		// box-shadow: 0 0 0 1px inset $bsxui-hover-active-color;
+		font-size: unset;
+		border: 1px dashed $bsxui-hover-active-color;
+		padding: unset;
+		pointer-events: none;
+	}
+
+	// flag
+	&:after {
+		content: attr(data-title);
+		z-index: unset;
+		position: absolute;
+		top: unset;
+		bottom: 100%;
+		left: 0;
+		right: unset;
+		display: block;
+		color: #ffffff;
+		background-color: $bsxui-hover-active-color;
+		font-size: 9px;
+		padding: 1px 4px;
+		pointer-events: none;
+	}
+	*/
+}
+
+
+// columns (make core style ready for bootstrap style)
+
+// NOTE: please check this style for conflicts or better do not use WP Core Columns, use BSX Columns instead
+//.block-editor-inner-blocks {
+//    width: 100%;
+//}
+
+
+// link
+a.bsxui-link {
+	color: $bsxui-interact-color;
+
+	&:hover,
+	&:focus {
+		color: $bsxui-interact-color;
+		text-decoration: underline;
+	}
+}
+
+
+// is selected config panel (deprecated)
+
+.bsxui-isselected-config-panel {
+	background: $bsxui-isselected-panel-bg-color; 
+	border: $bsxui-isselected-panel-border;
+	margin-top: $bsxui-isselected-panel-mt; 
+	padding-left: $bsxui-isselected-panel-px;
+	padding-right: $bsxui-isselected-panel-px;
+}
+
+
+// image upload
+
+.bsxui-img-upload-placeholder {
+	background: $bsxui-placeholder-bg-color;
+	padding: 0.5rem;
+}
+.bsxui-upload-btn-wrapper {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+.upload-img {
+	max-width: 100%;
+	height: auto;
+}
+
+
+// wp-looking button (currently not in use)
+
+//.bsxui-btn {
+//	background: $bsxui-area-button-bg-color;
+//	border: $bsxui-interact-border;
+//}
+
+
+// banner button
+
+.bsxui-banner-button {
+    height: auto;
+    padding: 0 !important;
+    border: 0;
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+
+
+// icon button
+
+.bsxui-icon-button {
+	display: flex !important;
+	align-items: center;
+}
+
+
+// config panel
+
+.bsxui-config-panel-row {
+	margin-bottom: $bsxui-margin-bottom;
+}
+
+.bsxui-config-panel-img {
+	max-width: 100%;
+	height: auto;
+}
+
+.bsxui-config-panel-text {
+	font-size: $bsxui-config-panel-font-size;
+}
+
+// clickable img (should not look like a button) 
+.bsxui-config-panel-img-button {
+    display: block;
+    height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    color: #dddddd !important; // keep on hover, focus
+
+    background-image: 
+    	repeating-linear-gradient(-45deg, currentColor 25%, transparent 25%, transparent 75%, currentColor 75%, currentColor), repeating-linear-gradient(-45deg, currentColor 25%, transparent 25%, transparent 75%, currentColor 75%, currentColor);
+	background-position: 0 0, 10px 10px;
+	background-size: calc(2 * 10px) calc(2 * 10px);
+
+    &.has-margin-bottom {
+    	margin-bottom: $bsxui-small-margin-bottom;
+    }
+}
+
+
+// in widget overlay panel
+
+.bsxui-in-widget-overlay-panel {
+	position: absolute;
+	width: 100%;
+	padding: $bsxui-in-widget-overlay-panel-padding;
+	text-align: center;
+
+	&.bsxui-top {
+		top: 0;
+	}
+
+	&.bsxui-bottom {
+		bottom: 0;
+	}
+}
+
+
+// initial inline control panel
+
+.bsxui-initial-inline-control {
+	background-color: $bsxui-placeholder-bg-color;
+	width: 100%;
+}
+.bsxui-initial-inline-control-heading {
+	text-align: $bsxui-initial-inline-control-heading-text-align;
+	padding: $bsxui-initial-inline-control-heading-padding;
+}
+
+// permanent inline control
+
+.bsxui-inline-control {
+	background-color: $bsxui-placeholder-bg-color;
+	width: 100%;
+	border: 1px dashed $bsxui-hover-active-color;
+	padding: .25rem;
+	text-align: left;
+
+	*:not[class^="bsxui-"] {
+		margin-bottom: 0;
+	}
+}
+
+// icon text button list
+
+.bsxui-icon-text-button-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: $bsxui-icon-text-button-list-justify-content;
+	margin-bottom: $bsxui-margin-bottom;
+
+	.bsxui-icon-text-button-list-item {
+		display: flex;
+		flex-direction: column;
+		width: $bsxui-icon-text-button-list-item-width;
+		height: auto;
+		cursor: pointer;
+
+		&.active {
+			color: $bsxui-hover-active-color;
+		}
+
+		.bsxui-icon-text-button-list-item-icon {
+
+		}
+
+		.bsxui-icon-text-button-list-item-label {
+		
+		}
+	}
+}
+
+.bsxui-initial-inline-control {
+	.bsxui-icon-text-button-list {
+		.bsxui-icon-text-button-list-item {
+			width: $bsxui-icon-text-button-list-item-inline-width;
+		}
+	}
+}
+
+
+// force RichText inline & auto width
+
+.bsxui-inline-editor {
+	display: inline-block;
+	width: auto;
+}
+
+
+// display
+
+.wp-block[data-display="inline-block"] {
+  display: inline-block;
+}
+
+
+// vertical-align
+
+.wp-block[data-vertical-align="middle"] {
+  vertical-align: middle;
+}

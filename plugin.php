@@ -24,13 +24,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function multiple_blocks_plugin_multiple_blocks_plugin_block_init() {
+function multiple_blocks_plugin_blocks_init() {
 	// register_block_type( __DIR__ . '/build/block-1' );
 	// register_block_type( __DIR__ . '/build/block-2' );
 	register_block_type( __DIR__ . '/build/check-list' );
 	register_block_type( __DIR__ . '/build/check-list-item' );
 }
-add_action( 'init', 'multiple_blocks_plugin_multiple_blocks_plugin_block_init' );
+add_action( 'init', 'multiple_blocks_plugin_blocks_init' );
 
 
 // additional scripts / styles

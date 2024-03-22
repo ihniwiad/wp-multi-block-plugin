@@ -1,0 +1,47 @@
+// mixins
+
+// imports
+
+//@import "variables";
+
+
+// mixins
+ 
+@mixin bsx-make-hover-block-identifier() {
+
+	// border
+	&:before {
+		content: "";
+		z-index: 100;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		display: block;
+		color: unset;
+		background-color: unset;
+		// box-shadow: 0 0 0 1px inset $bsxui-hover-active-color;
+		font-size: unset;
+		border: 1px dashed $bsxui-hover-active-color;
+		padding: unset;
+		pointer-events: none;
+	}
+
+	// flag
+	&:after {
+		content: attr(data-title);
+		z-index: unset;
+		position: absolute;
+		top: unset;
+		bottom: 100%;
+		left: 0;
+		right: unset;
+		display: block;
+		color: #ffffff;
+		background-color: $bsxui-hover-active-color;
+		font-size: 9px;
+		padding: 1px 4px;
+		pointer-events: none;
+	}
+}
