@@ -1,1 +1,0 @@
-{"version":3,"file":"_global-class-names/index.js","mappings":";;;;;AAAAA,OAAO,CAACC,GAAG,CAAE,kCAAmC,CAAC,C","sources":["webpack://multiple-blocks-plugin/./src/_global-class-names/index.js"],"sourcesContent":["console.log( 'Hello from “global class names”!' )"],"names":["console","log"],"sourceRoot":""}

@@ -1,1 +1,0 @@
-{"version":3,"file":"_global-block-settings/index.js","mappings":";;;;;AAAAA,OAAO,CAACC,GAAG,CAAE,qCAAsC,CAAC,C","sources":["webpack://multiple-blocks-plugin/./src/_global-block-settings/index.js"],"sourcesContent":["console.log( 'Hello from “global block settings”!' )"],"names":["console","log"],"sourceRoot":""}
