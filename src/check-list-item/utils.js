@@ -4,7 +4,7 @@
 import { switchToBlockType, createBlock } from '@wordpress/blocks';
 
 function convertBlockToChecklist( block ) {
-	const list = switchToBlockType( block, 'create-block/check-list' );
+	const list = switchToBlockType( block, 'bsx-blocks/check-list' );
 	if ( list ) {
 		return list;
 	}
@@ -12,7 +12,7 @@ function convertBlockToChecklist( block ) {
 	if ( ! paragraph ) {
 		return null;
 	}
-	return switchToBlockType( paragraph, 'create-block/check-list' );
+	return switchToBlockType( paragraph, 'bsx-blocks/check-list' );
 }
 
 export function convertToChecklistItems( blocks ) {
@@ -21,12 +21,12 @@ export function convertToChecklistItems( blocks ) {
 	for ( let block of blocks ) {
 				console.log( 'convertToChecklistItems(), iterate blocks, block: ' + JSON.stringify( block, null, 2 ) );
 		if ( typeof block !== 'undefined' && typeof block.name !== 'undefined' ) {
-			if ( block.name === 'create-block/check-list-item' ) {
-				console.log( "block.name === 'create-block/check-list-item'" );
+			if ( block.name === 'bsx-blocks/check-list-item' ) {
+				console.log( "block.name === 'bsx-blocks/check-list-item'" );
 				listItems.push( block );
 			} 
-			else if ( block.name === 'create-block/check-list' ) {
-				console.log( block.name === 'create-block/check-list' );
+			else if ( block.name === 'bsx-blocks/check-list' ) {
+				console.log( block.name === 'bsx-blocks/check-list' );
 				listItems.push( ...block.innerBlocks );
 			}
 			else if ( block.name === 'core/paragraph' ) {
@@ -36,7 +36,7 @@ export function convertToChecklistItems( blocks ) {
 				for ( let line of lines ) {
 					console.log( '-- add: ' + line );
 
-					const item = createBlock( 'create-block/check-list-item', {
+					const item = createBlock( 'bsx-blocks/check-list-item', {
 						content: line,
 					} );
 					console.log( '-- item: ' + JSON.stringify( item, null, 2 ) );

@@ -58,9 +58,9 @@ import {
 import { migrateToListV2 } from './utils';
 
 const DEFAULT_BLOCK = {
-    name: 'create-block/check-list-item',
+    name: 'bsx-blocks/check-list-item',
 };
-const TEMPLATE = [ [ 'create-block/check-list-item' ] ];
+const TEMPLATE = [ [ 'bsx-blocks/check-list-item' ] ];
 
 /**
  * At the moment, deprecations don't handle create blocks from attributes

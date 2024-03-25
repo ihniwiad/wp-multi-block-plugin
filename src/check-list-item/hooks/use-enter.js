@@ -44,7 +44,7 @@ export default function useEnter( props ) {
 			// 		getBlockRootClientId(
 			// 			getBlockRootClientId( propsRef.current.clientId )
 			// 		)
-			// 	) === 'create-block/check-list-item';
+			// 	) === 'bsx-blocks/check-list-item';
 			// if ( canOutdent ) {
 			// 	// outdentListItem();
 			// 	return;

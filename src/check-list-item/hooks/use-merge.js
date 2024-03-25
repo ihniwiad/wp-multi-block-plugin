@@ -38,7 +38,7 @@ export default function useMerge( clientId, onMerge ) {
 		const listId = getBlockRootClientId( id );
 		const parentListItemId = getBlockRootClientId( listId );
 		if ( ! parentListItemId ) return;
-		if ( getBlockName( parentListItemId ) !== 'create-block/check-list-item' ) return;
+		if ( getBlockName( parentListItemId ) !== 'bsx-blocks/check-list-item' ) return;
 		return parentListItemId;
 	}
 

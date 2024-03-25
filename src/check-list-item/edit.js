@@ -19,10 +19,10 @@ import {
 
 import { useMergeRefs } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
-
-import { addClassNames } from './../_functions/add-class-names.js';
 import { createBlock, rawHandler } from '@wordpress/blocks';
 import { useRef } from '@wordpress/element';
+
+import { addClassNames } from './../_functions/add-class-names.js';
 
 /**
  * Internal dependencies
@@ -44,7 +44,7 @@ import { convertToChecklistItems } from './utils';
  */
 import './editor.scss';
 
-const name = 'create-block/check-list-item';
+const name = 'bsx-blocks/check-list-item';
 
 /**
  * The edit function describes the structure of your block in the context of the

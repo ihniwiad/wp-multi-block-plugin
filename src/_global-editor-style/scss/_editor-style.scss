@@ -20,10 +20,10 @@
 // TODO: test & make variables
 
 // [data-type^="bsx-blocks/"]
-// :not([data-type="create-block/check-list-item"])
+// :not([data-type="bsx-blocks/check-list-item"])
 [data-type]:hover {
 
-	@include bsx-make-hover-block-identifier()
+	//@include bsx-make-hover-block-identifier()
 /*
 	// border
 	&:before {
@@ -60,7 +60,7 @@
 		padding: 1px 4px;
 		pointer-events: none;
 	}
-	*/
+*/
 }
 
 

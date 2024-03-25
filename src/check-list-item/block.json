@@ -1,15 +1,15 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "create-block/check-list-item",
+	"name": "bsx-blocks/check-list-item",
 	"version": "0.1.0",
-	"title": "CB Check List Item",
+	"title": "BSX Check List Item",
 	"category": "text",
-	"parent": [ "create-block/check-list" ],
+	"parent": [ "bsx-blocks/check-list" ],
 	"allowedBlocks": [],
 	"description": "Create a check list item.",
 	"example": {},
-	"textdomain": "multiple-blocks-plugin-textdomain",
+	"textdomain": "bsx-blocks",
     "attributes": {
 		"content": {
 			"type": "string",
