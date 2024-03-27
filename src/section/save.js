@@ -34,7 +34,7 @@ export default function save( { attributes } ) {
         isGalleryParent,
     } = attributes;
 
-    const containerClassName = addClassNames( { 
+    const sectionClassName = addClassNames( { 
         belowNavbar, 
         touchFooter,
         marginBefore, 
@@ -50,14 +50,8 @@ export default function save( { attributes } ) {
     } );
 
     return (
-        <section { ...useBlockProps.save( { className: containerClassName, ...saveAttributes } ) }>
+        <section { ...useBlockProps.save( { className: sectionClassName, ...saveAttributes } ) }>
             <InnerBlocks.Content />
         </section>
     );
-
-	// return (
-	// 	<p { ...useBlockProps.save() }>
-	// 		{ 'Multiple Blocks Plugin – hello from the saved content!' }
-	// 	</p>
-	// );
 }

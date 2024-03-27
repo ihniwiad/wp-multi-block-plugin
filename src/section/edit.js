@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
     InnerBlocks,
-    useInnerBlocksProps,
     InspectorControls,
     InspectorAdvancedControls,
 } from '@wordpress/block-editor';
@@ -16,9 +15,6 @@ import {
     SVG, 
     Path,
 } from '@wordpress/components';
-// import { 
-//     withSelect, 
-// } from '@wordpress/data';
 import { useSelect } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 
@@ -57,258 +53,194 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-// { attributes, setAttributes, clientId }
-export default function Edit( props ) {
+export default function Edit( { attributes, setAttributes, clientId } ) {
 
-// withSelect( ( select, { clientId } ) => {
-//         const { 
-//             getBlocksByClientId,
-//         } = select( 'core/block-editor' );
+	const { getBlock } = useSelect( blockEditorStore );
 
-//         const children = getBlocksByClientId( clientId )[ 0 ]
-//             ? getBlocksByClientId( clientId )[ 0 ].innerBlocks
-//             : [];
+    const {
+        templateName,
+        belowNavbar,
+        touchFooter,
+        id,
+        marginBefore,
+        marginAfter,
+        bgColor,
+        paddingBefore,
+        paddingAfter,
+        isGalleryParent,
+    } = attributes;
 
-//         return {
-//             children,
-//         };
-//     } )( ( props ) => {
+    const hasInnerBlocks = () => {
+    	const block = getBlock( clientId );
+		if ( typeof block.innerBlocks === 'undefined' ) return false;
+        return block.innerBlocks.length > 0;
+    }
 
+    let template = getTemplate( templates, templateName ).template;
 
-		// console.log( 'props: ' + JSON.stringify( props, null, 2 ) );
+	const blockProps = useBlockProps();
+	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
-
-		const { getBlock } = useSelect( blockEditorStore );
-
-        const {
-            className,
-            attributes: {
-                templateName,
-	            belowNavbar,
-                touchFooter,
-	            id,
-	            marginBefore,
-	            marginAfter,
-                bgColor,
-                paddingBefore,
-                paddingAfter,
-                isGalleryParent,
-            },
-            setAttributes,
-            // children,
-            clientId,
-        } = props;
-
-
-
-
-        // const hasInnerBlocks = ( children ) => {
-        //     return children.length > 0;
-        // }
-        const hasInnerBlocks = () => {
-        	const block = getBlock( clientId );
-			// console.log( '-- block: ' + JSON.stringify( block, null, 2 ) );
-			if ( typeof block.innerBlocks === 'undefined' ) return false;
-            return block.innerBlocks.length > 0;
+    const onChangeTemplate = ( value ) => {
+        const currentTemplateMap = getTemplate( templates, value );
+        if ( currentTemplateMap.template != undefined && currentTemplateMap.attributes != undefined ) {
+            template = currentTemplateMap.template;
+            setAttributes( { 
+                templateName: value,
+                ...currentTemplateMap.attributes,
+            } );
         }
+        else {
+            console.log( 'Error: Template change failed.' );
+        }
+    };
 
-        // const hasBlocks = hasInnerBlocks();
+    const onChangeBelowNavbar = ( value ) => {
+        setAttributes( { belowNavbar: value } );
+    };
+    const onChangeTouchFooter = ( value ) => {
+        setAttributes( { touchFooter: value } );
+    };
 
-        let template = getTemplate( templates, templateName ).template;
+    const onChangeId = ( value ) => {
+        setAttributes( { id: value } );
+    };
 
-		const blockProps = useBlockProps();
-		// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
+    const onChangeMarginBefore = ( value ) => {
+        setAttributes( { marginBefore: value } );
+    };
+    const onChangeMarginAfter = ( value ) => {
+        setAttributes( { marginAfter: value } );
+    };
 
-		// let innerBlocksProps = useInnerBlocksProps( blockProps );
-		// console.log( 'innerBlocksProps: ' + JSON.stringify( innerBlocksProps, null, 2 ) );
+    const onChangeBgColor = ( value ) => {
+        setAttributes( { bgColor: value } );
+    };
 
-        const onChangeTemplate = ( value ) => {
-        	// console.log( 'onChangeTemplate: ' + value )
-            const currentTemplateMap = getTemplate( templates, value );
-			// console.log( '-- currentTemplateMap: ' + JSON.stringify( currentTemplateMap, null, 2 ) );
-            if ( currentTemplateMap.template != undefined && currentTemplateMap.attributes != undefined ) {
-                template = currentTemplateMap.template;
-				// console.log( '---- template: ' + JSON.stringify( template, null, 2 ) );
-                setAttributes( { 
-                    templateName: value,
-                    ...currentTemplateMap.attributes,
-                } );
-                // console.log( '------ setAttributes done' )
-				// innerBlocksProps = useInnerBlocksProps( blockProps, {
-			 //        directInsert: true,
-				// 	template: template,
-				// 	templateLock: false,
-				// 	templateInsertUpdatesSelection: true,
-				// } );
-				// console.log( 'innerBlocksProps: ' + JSON.stringify( innerBlocksProps, null, 2 ) );
-            }
-            else {
-                console.log( 'Error: Template change failed.' );
-            }
+    const onChangePaddingBefore = ( value ) => {
+        setAttributes( { paddingBefore: value } );
+    };
+    const onChangePaddingAfter = ( value ) => {
+        setAttributes( { paddingAfter: value } );
+    };
 
-            // console.log( 'changed templateName: ' + value );
-            // console.log( 'changed template: ' + template );
-        };
+    const onChangeIsGalleryParent = ( value ) => {
+        setAttributes( { isGalleryParent: value } );
+    };
 
-        const onChangeBelowNavbar = ( value ) => {
-            setAttributes( { belowNavbar: value } );
-        };
-        const onChangeTouchFooter = ( value ) => {
-            setAttributes( { touchFooter: value } );
-        };
+    // class name
+    const sectionClassName = addClassNames( { 
+        belowNavbar, 
+        touchFooter,
+        marginBefore, 
+        marginAfter, 
+        bgColor,
+        paddingBefore,
+        paddingAfter,
+    } );
 
-        const onChangeId = ( value ) => {
-            setAttributes( { id: value } );
-        };
+    return [
+        <>
+            <InspectorControls>
+                <PanelBody title={ __( 'Section Settings', 'bsx-blocks' ) }>
+                    <div className="bsxui-icon-text-button-list">
+                        { templates.map( ( template, index ) => (
+                            <Button
+                                label={ template.title }
+                                onClick={ () => {
+                                    onChangeTemplate( template.name );
+                                } }
+                                className={ 'bsxui-icon-text-button-list-item ' + ( templateName === template.name ? 'active' : '' ) }
+                            >
+                                <div class="bsxui-icon-text-button-list-item-icon">
+                                    { template.icon }
+                                </div>
+                                <div class="bsxui-icon-text-button-list-item-label">
+                                    { template.title }
+                                </div>
+                            </Button>
+                        ) ) }
+                    </div>
+                    <TextControl 
+                        label={ __( 'ID', 'bsx-blocks' ) }
+                        value={ id } 
+                        onChange={ onChangeId }
+                    />
+                </PanelBody>
 
-        const onChangeMarginBefore = ( value ) => {
-            setAttributes( { marginBefore: value } );
-        };
-        const onChangeMarginAfter = ( value ) => {
-            setAttributes( { marginAfter: value } );
-        };
-
-        const onChangeBgColor = ( value ) => {
-            setAttributes( { bgColor: value } );
-        };
-
-        const onChangePaddingBefore = ( value ) => {
-            setAttributes( { paddingBefore: value } );
-        };
-        const onChangePaddingAfter = ( value ) => {
-            setAttributes( { paddingAfter: value } );
-        };
-
-        const onChangeIsGalleryParent = ( value ) => {
-            setAttributes( { isGalleryParent: value } );
-        };
-
-        // class name
-
-        const containerClassName = addClassNames( { 
-            belowNavbar, 
-            touchFooter,
-            marginBefore, 
-            marginAfter, 
-            bgColor,
-            paddingBefore,
-            paddingAfter,
-        } );
-
-        return [
+                <PanelBody title={ __( 'Margin', 'bsx-blocks' ) }>
+                    {
+                        marginBeforeSelect( marginBefore, onChangeMarginBefore )
+                    }
+                    {
+                        marginAfterSelect( marginAfter, onChangeMarginAfter )
+                    }
+                </PanelBody>
+            </InspectorControls>
+            <InspectorAdvancedControls>
+                {
+                    belowNavbarToggle( belowNavbar, onChangeBelowNavbar )
+                }
+                {
+                    touchFooterToggle( touchFooter, onChangeTouchFooter )
+                }
+                {
+                    bgColorSelect( bgColor, onChangeBgColor )
+                }
+                {
+                    paddingBeforeSelect( paddingBefore, onChangePaddingBefore )
+                }
+                {
+                    paddingAfterSelect( paddingAfter, onChangePaddingAfter )
+                }
+                {
+                    isGalleryParentToggle( isGalleryParent, onChangeIsGalleryParent )
+                }
+            </InspectorAdvancedControls>
+        </>,
+        (
             <>
-                <InspectorControls>
-                    <PanelBody title={ __( 'Section Settings', 'bsx-blocks' ) }>
-                        <div className="bsxui-icon-text-button-list">
-                            { templates.map( ( template, index ) => (
-                                <Button
-                                    label={ template.title }
-                                    onClick={ () => {
-                                        onChangeTemplate( template.name );
-                                    } }
-                                    className={ 'bsxui-icon-text-button-list-item ' + ( templateName === template.name ? 'active' : '' ) }
-                                >
-                                    <div class="bsxui-icon-text-button-list-item-icon">
-                                        { template.icon }
-                                    </div>
-                                    <div class="bsxui-icon-text-button-list-item-label">
-                                        { template.title }
-                                    </div>
-                                </Button>
-                            ) ) }
-                        </div>
-                        <TextControl 
-                            label={ __( 'ID', 'bsx-blocks' ) }
-                            value={ id } 
-                            onChange={ onChangeId }
-                        />
-                    </PanelBody>
-
-                    <PanelBody title={ __( 'Margin', 'bsx-blocks' ) }>
-                        {
-                            marginBeforeSelect( marginBefore, onChangeMarginBefore )
-                        }
-                        {
-                            marginAfterSelect( marginAfter, onChangeMarginAfter )
-                        }
-                    </PanelBody>
-                </InspectorControls>
-                <InspectorAdvancedControls>
-                    {
-                        belowNavbarToggle( belowNavbar, onChangeBelowNavbar )
-                    }
-                    {
-                        touchFooterToggle( touchFooter, onChangeTouchFooter )
-                    }
-                    {
-                        bgColorSelect( bgColor, onChangeBgColor )
-                    }
-                    {
-                        paddingBeforeSelect( paddingBefore, onChangePaddingBefore )
-                    }
-                    {
-                        paddingAfterSelect( paddingAfter, onChangePaddingAfter )
-                    }
-                    {
-                        isGalleryParentToggle( isGalleryParent, onChangeIsGalleryParent )
-                    }
-                </InspectorAdvancedControls>
-            </>,
-            (
-                <>
-                    {
-                        ! templateName ? (
-                            <div class="bsxui-initial-inline-control">
-                                <div class="bsxui-initial-inline-control-heading">
-                                    { __( 'Please select template', 'bsx-blocks' ) }
-                                </div>
-                                <div className="bsxui-icon-text-button-list">
-                                    { templates.map( ( template, index ) => (
-                                        <Button
-                                            label={ template.title }
-                                            onClick={ () => {
-                                                onChangeTemplate( template.name );
-                                            } }
-                                            className={ 'bsxui-icon-text-button-list-item ' + ( templateName === template.name ? 'active' : '' ) }
-                                        >
-                                            <div class="bsxui-icon-text-button-list-item-icon">
-                                                { template.icon }
-                                            </div>
-                                            <div class="bsxui-icon-text-button-list-item-label">
-                                                { template.title }
-                                            </div>
-                                        </Button>
-                                    ) ) }
-                                </div>
+                {
+                    ! templateName ? (
+                        <div class="bsxui-initial-inline-control">
+                            <div class="bsxui-initial-inline-control-heading">
+                                { __( 'Please select template', 'bsx-blocks' ) }
                             </div>
-                        )
-                        : 
-                        (
-                            <section className={ containerClassName } id={ id } { ...blockProps }>
-                            	<InnerBlocks
-					                template={ template }
-                                    renderAppender={
-                                        hasInnerBlocks
-                                        ? undefined
-                                        : () => <InnerBlocks.ButtonBlockAppender />
-                                    }
-					            />
-                            </section>
-                        )
-                    }
-                </>
-            )
-        ];
-    // } )
-
-
-
-	// return (
-	// 	<p { ...useBlockProps() }>
-	// 		{ __(
-	// 			'Multiple Blocks Plugin – hello from the editor!',
-	// 			'multiple-blocks-plugin'
-	// 		) }
-	// 	</p>
-	// );
+                            <div className="bsxui-icon-text-button-list">
+                                { templates.map( ( template, index ) => (
+                                    <Button
+                                        label={ template.title }
+                                        onClick={ () => {
+                                            onChangeTemplate( template.name );
+                                        } }
+                                        className={ 'bsxui-icon-text-button-list-item ' + ( templateName === template.name ? 'active' : '' ) }
+                                    >
+                                        <div class="bsxui-icon-text-button-list-item-icon">
+                                            { template.icon }
+                                        </div>
+                                        <div class="bsxui-icon-text-button-list-item-label">
+                                            { template.title }
+                                        </div>
+                                    </Button>
+                                ) ) }
+                            </div>
+                        </div>
+                    )
+                    : 
+                    (
+                        <section className={ sectionClassName } id={ id } { ...blockProps }>
+                        	<InnerBlocks
+				                template={ template }
+                                renderAppender={
+                                    hasInnerBlocks
+                                    ? undefined
+                                    : () => <InnerBlocks.ButtonBlockAppender />
+                                }
+				            />
+                        </section>
+                    )
+                }
+            </>
+        )
+    ];
 }
