@@ -9,7 +9,6 @@
  * Plugin URI: https://github.com/ihniwiad/bsx-blocks
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       multiple-blocks-plugin
  * Text Domain:       bsx-blocks
  *
  * @package           bxs-blocks
@@ -26,18 +25,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function multiple_blocks_plugin_blocks_init() {
-	// register_block_type( __DIR__ . '/build/block-1' );
+function bsx_blocks_init() {
+	register_block_type( __DIR__ . '/build/block-1' );
 	// register_block_type( __DIR__ . '/build/block-2' );
 	register_block_type( __DIR__ . '/build/check-list' );
 	register_block_type( __DIR__ . '/build/check-list-item' );
+    register_block_type( __DIR__ . '/build/section' );
 }
-add_action( 'init', 'multiple_blocks_plugin_blocks_init' );
+add_action( 'init', 'bsx_blocks_init' );
 
 
 // additional scripts / styles
 
-function multiple_blocks_plugin_enqueue_editor_assets() {
+function bsx_blocks_enqueue_block_editor_assets() {
 
 	// scripts
     wp_enqueue_script( 'global-block-settings', plugin_dir_url( __FILE__ ) . 'build/_global-block-settings/index.js' );
@@ -65,7 +65,7 @@ function multiple_blocks_plugin_enqueue_editor_assets() {
     );
     wp_enqueue_style( 'bsx-theme-style' );
 }
-add_action( 'enqueue_block_editor_assets', 'multiple_blocks_plugin_enqueue_editor_assets' );
+add_action( 'enqueue_block_editor_assets', 'bsx_blocks_enqueue_block_editor_assets' );
 
 
 

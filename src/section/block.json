@@ -1,0 +1,57 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bsx-blocks/section",
+	"version": "0.1.0",
+	"title": "BSX Section",
+	"category": "widgets",
+	"description": "Creating a section element.",
+	"example": {},
+	"attributes": {
+		"templateName": {
+			"type": "string"
+		},
+		"belowNavbar": {
+			"type": "boolean",
+			"default": false
+		},
+		"touchFooter": {
+			"type": "boolean",
+			"default": false
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		},
+		"marginBefore": {
+			"type": "string",
+			"default": ""
+		},
+		"marginAfter": {
+			"type": "string",
+			"default": ""
+		},
+		"bgColor": {
+			"type": "string"
+		},
+		"paddingBefore": {
+			"type": "string"
+		},
+		"paddingAfter": {
+			"type": "string"
+		},
+		"isGalleryParent": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false
+	},
+	"textdomain": "bsx-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}
