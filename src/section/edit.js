@@ -20,7 +20,7 @@ import { store as blockEditorStore } from '@wordpress/block-editor';
 
 
 import { addClassNames } from './../_functions/add-class-names.js';
-import { makeSaveAttributes } from './../_functions/attributes.js';
+// import { makeSaveAttributes } from './../_functions/attributes.js';
 import { getTemplate } from './../_functions/utilities.js';
 import { 
     belowNavbarToggle,
@@ -139,7 +139,9 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         paddingAfter,
     } );
 
-    return [
+
+    const controls = (
+
         <>
             <InspectorControls>
                 <PanelBody title={ __( 'Section Settings', 'bsx-blocks' ) }>
@@ -197,50 +199,52 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     isGalleryParentToggle( isGalleryParent, onChangeIsGalleryParent )
                 }
             </InspectorAdvancedControls>
-        </>,
-        (
-            <>
-                {
-                    ! templateName ? (
-                        <div class="bsxui-initial-inline-control">
-                            <div class="bsxui-initial-inline-control-heading">
-                                { __( 'Please select template', 'bsx-blocks' ) }
-                            </div>
-                            <div className="bsxui-icon-text-button-list">
-                                { templates.map( ( template, index ) => (
-                                    <Button
-                                        label={ template.title }
-                                        onClick={ () => {
-                                            onChangeTemplate( template.name );
-                                        } }
-                                        className={ 'bsxui-icon-text-button-list-item ' + ( templateName === template.name ? 'active' : '' ) }
-                                    >
-                                        <div class="bsxui-icon-text-button-list-item-icon">
-                                            { template.icon }
-                                        </div>
-                                        <div class="bsxui-icon-text-button-list-item-label">
-                                            { template.title }
-                                        </div>
-                                    </Button>
-                                ) ) }
-                            </div>
+        </>
+    );
+
+    return (
+        <>
+            {
+                ! templateName ? (
+                    <div class="bsxui-initial-inline-control">
+                        <div class="bsxui-initial-inline-control-heading">
+                            { __( 'Please select template', 'bsx-blocks' ) }
                         </div>
-                    )
-                    : 
-                    (
-                        <section className={ sectionClassName } id={ id } { ...blockProps }>
-                        	<InnerBlocks
-				                template={ template }
-                                renderAppender={
-                                    hasInnerBlocks
-                                    ? undefined
-                                    : () => <InnerBlocks.ButtonBlockAppender />
-                                }
-				            />
-                        </section>
-                    )
-                }
-            </>
-        )
-    ];
+                        <div className="bsxui-icon-text-button-list">
+                            { templates.map( ( template, index ) => (
+                                <Button
+                                    label={ template.title }
+                                    onClick={ () => {
+                                        onChangeTemplate( template.name );
+                                    } }
+                                    className={ 'bsxui-icon-text-button-list-item ' + ( templateName === template.name ? 'active' : '' ) }
+                                >
+                                    <div class="bsxui-icon-text-button-list-item-icon">
+                                        { template.icon }
+                                    </div>
+                                    <div class="bsxui-icon-text-button-list-item-label">
+                                        { template.title }
+                                    </div>
+                                </Button>
+                            ) ) }
+                        </div>
+                    </div>
+                )
+                : 
+                (
+                    <section className={ sectionClassName } id={ id } { ...blockProps }>
+                    	<InnerBlocks
+			                template={ template }
+                            renderAppender={
+                                hasInnerBlocks
+                                ? undefined
+                                : () => <InnerBlocks.ButtonBlockAppender />
+                            }
+			            />
+                    </section>
+                )
+            }
+            { controls }
+        </>
+    )
 }
