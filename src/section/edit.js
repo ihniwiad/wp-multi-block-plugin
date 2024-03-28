@@ -78,9 +78,6 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
     let template = getTemplate( templates, templateName ).template;
 
-	const blockProps = useBlockProps();
-	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
-
     const onChangeTemplate = ( value ) => {
         const currentTemplateMap = getTemplate( templates, value );
         if ( currentTemplateMap.template != undefined && currentTemplateMap.attributes != undefined ) {
@@ -202,6 +199,10 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         </>
     );
 
+    // add class names to blockProps
+    const blockProps = useBlockProps( { className: sectionClassName } );
+    // console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
+
     return (
         <>
             {
@@ -232,7 +233,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                 )
                 : 
                 (
-                    <section className={ sectionClassName } id={ id } { ...blockProps }>
+                    <section id={ id } { ...blockProps }>
                     	<InnerBlocks
 			                template={ template }
                             renderAppender={

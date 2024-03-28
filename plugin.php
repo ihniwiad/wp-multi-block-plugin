@@ -32,6 +32,7 @@ function bsx_blocks_init() {
 	register_block_type( __DIR__ . '/build/check-list-item' );
     register_block_type( __DIR__ . '/build/container' );
     register_block_type( __DIR__ . '/build/section' );
+    register_block_type( __DIR__ . '/build/wrapper' );
 }
 add_action( 'init', 'bsx_blocks_init' );
 

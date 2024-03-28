@@ -1,0 +1,189 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bsx-blocks/wrapper",
+	"version": "0.1.0",
+	"title": "BSX Wrapper",
+	"category": "layout",
+	"description": "Block to add styling (color, background, inline floating, etc.) or functionality (data attributes, gallery parent, etc.).",
+	"example": {},
+	"attributes": {
+		"nodeName": {
+			"type": "string",
+			"default": "div"
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		},
+		"dataFn": {
+			"type": "string"
+		},
+		"dataFnOptions": {
+			"type": "string"
+		},
+		"dataFnTarget": {
+			"type": "string"
+		},
+		"dataTg": {
+			"type": "string"
+		},
+		"belowNavbar": {
+			"type": "boolean"
+		},
+		"bgColor": {
+			"type": "string"
+		},
+		"textSize": {
+			"type": "string"
+		},
+		"textShadow": {
+			"type": "string"
+		},
+		"fontWeight": {
+			"type": "string"
+		},
+		"inverseTextColor": {
+			"type": "boolean"
+		},
+		"headingInheritTextColor": {
+			"type": "boolean"
+		},
+		"headingInheritFontWeight": {
+			"type": "boolean"
+		},
+		"rounded": {
+			"type": "boolean",
+			"default": false
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"textAlign": {
+			"type": "string"
+		},
+		"resTextAlignBreakpoint": {
+			"type": "string"
+		},
+		"resTextAlign": {
+			"type": "string"
+		},
+		"border": {
+			"type": "string"
+		},
+		"borderState": {
+			"type": "string"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
+		},
+		"marginBefore": {
+			"type": "string"
+		},
+		"marginAfter": {
+			"type": "string"
+		},
+		"resMargin1Breakpoint": {
+			"type": "string"
+		},
+		"resMargin1Position": {
+			"type": "string"
+		},
+		"resMargin1Size": {
+			"type": "string"
+		},
+		"resMargin2Breakpoint": {
+			"type": "string"
+		},
+		"resMargin2Position": {
+			"type": "string"
+		},
+		"resMargin2Size": {
+			"type": "string"
+		},
+		"paddingBefore": {
+			"type": "string"
+		},
+		"paddingAfter": {
+			"type": "string"
+		},
+		"marginLeft": {
+			"type": "string"
+		},
+		"paddingRight": {
+			"type": "string"
+		},
+		"paddingLeft": {
+			"type": "string"
+		},
+		"touchFooter": {
+			"type": "boolean"
+		},
+		"display": {
+			"type": "string"
+		},
+		"verticalAlign": {
+			"type": "string"
+		},
+		"speechBubble": {
+			"type": "string"
+		},
+		"isAlert": {
+			"type": "boolean"
+		},
+		"state": {
+			"type": "string"
+		},
+		"isGalleryParent": {
+			"type": "boolean"
+		},
+		"multilayer": {
+			"type": "string"
+		},
+		"zIndex": {
+			"type": "string"
+		},
+		"isBannerInner": {
+			"type": "boolean"
+		},
+		"position": {
+			"type": "string"
+		},
+		"isTop0": {
+			"type": "boolean"
+		},
+		"isBottom0": {
+			"type": "boolean"
+		},
+		"isLeft0": {
+			"type": "boolean"
+		},
+		"isRight0": {
+			"type": "boolean"
+		},
+		"role": {
+			"type": "string"
+		},
+		"tabindex": {
+			"type": "string"
+		},
+		"hidden": {
+			"type": "boolean"
+		},
+		"overflow": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false
+	},
+	"textdomain": "bsx-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

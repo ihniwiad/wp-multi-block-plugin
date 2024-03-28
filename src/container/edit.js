@@ -69,9 +69,6 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		return block.innerBlocks.length > 0;
 	}
 
-	const blockProps = useBlockProps();
-	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
-
 
     const onChangeIsFluid = ( value ) => {
     	if ( value === false ) {
@@ -129,6 +126,9 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         paddingLeft,
         paddingRight,
     }, containerClassName );
+
+	const blockProps = useBlockProps( { className: containerClassName } );
+	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
     const controls = (
     	<>
@@ -201,7 +201,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
 	return (
 		<>
-			<div className={ containerClassName } { ...blockProps }>
+			<div { ...blockProps }>
                 <InnerBlocks 
                     renderAppender={
                         hasInnerBlocks
