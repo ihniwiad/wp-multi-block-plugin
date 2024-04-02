@@ -11,16 +11,35 @@ import './style.scss';
 /**
  * Internal dependencies
  */
+import { rowWithColsCol as icon } from './../_functions/icon';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
 
 /**
- * Every block starts by registering a new block type definition.
- *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType( metadata.name, {
+	icon,
+    getEditWrapperProps( attributes ) {
+        const {
+            sizeXs,
+            sizeSm,
+            sizeMd,
+            sizeLg,
+            sizeXl,
+            display,
+        } = attributes;
+
+        return {
+            'data-size': sizeXs,
+            'data-size-sm': sizeSm,
+            'data-size-md': sizeMd,
+            'data-size-lg': sizeLg,
+            'data-size-xl': sizeXl,
+            'data-display': display,
+        };
+    },
 	edit: Edit,
 	save,
 } );

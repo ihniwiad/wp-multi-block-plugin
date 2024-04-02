@@ -11,7 +11,6 @@ import {
     default as sectionBadgeHeadingTextButtonImgColumns,
     default as sectionHeadingListColumns,
     default as sectionBgHeadingIconHeadingTextColumns,
-    default as test,
 } from './../_functions/icon';
 
 
@@ -24,29 +23,6 @@ const templates = [
             marginAfter: '5',
         },
         template: [],
-        templateLock: false,
-    },
-    {
-        name: 'heading-paragraph',
-        title: __( 'Heading & Paragraph', 'bsx-blocks' ),
-        icon: test,
-        attributes: {
-            marginAfter: '5',
-        },
-        template: [
-            [
-                'core/heading',
-                {
-                    placeholder: __( 'Add heading, configure heading level...', 'bsx-blocks' ),
-                },
-            ],
-            [
-                'core/paragraph',
-                {
-                    placeholder: __( 'Some paragraph...', 'bsx-blocks' ),
-                },
-            ],
-        ],
         templateLock: false,
     },
     {

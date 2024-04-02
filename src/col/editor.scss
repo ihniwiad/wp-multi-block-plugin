@@ -1,0 +1,14 @@
+// imports
+@import "../sass-env";
+
+
+
+// fix WordPress vs. Bootstrap conflicts (overwrite `.editor-styles-wrapper .wp-block` default styles)
+
+.editor-styles-wrapper [data-type="bsx-blocks/col"][class*="col"].wp-block {
+	margin-left: unset;
+	margin-right: unset;
+}
+
+
+

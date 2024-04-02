@@ -1,0 +1,18 @@
+// imports
+@import "../sass-env";
+
+
+
+// fix WordPress vs. Bootstrap conflicts (overwrite `.editor-styles-wrapper .wp-block` default styles)
+
+.editor-styles-wrapper [data-type="bsx-blocks/row-with-cols"].row.wp-block:not(.no-gutters) {
+	margin-left: calc($bsx-grid-gutter-width / -2);
+	margin-right: calc($bsx-grid-gutter-width / -2);
+}
+.editor-styles-wrapper [data-type="bsx-blocks/row-with-cols"].form-row.wp-block:not(.no-gutters) {
+	margin-left: calc($form-grid-gutter-width / -2);
+	margin-right: calc($form-grid-gutter-width / -2);
+}
+
+
+

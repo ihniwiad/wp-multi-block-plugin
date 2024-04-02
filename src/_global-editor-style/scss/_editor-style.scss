@@ -6,6 +6,8 @@
 .editor-styles-wrapper {
 	background-color: $body-bg;
 	color: $body-color;
+	padding-left: calc($bsx-grid-gutter-width / 2);
+	padding-right: calc($bsx-grid-gutter-width / 2);
 }
 
 

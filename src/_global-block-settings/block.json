@@ -1,6 +1,19 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"editorScript": "file:./index.js"
+	"name": "bsx-blocks/global-block-settings",
+	"version": "0.1.0",
+	"title": "Global Block Settings",
+	"category": "hidden",
+	"icon": "smiley",
+	"description": "Global settings and style for selected Core Blocks. This Block is not registered to the Block Editor, but it’s functions and it’s styles are included into the Block Editor.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "bsx-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
 }
-
