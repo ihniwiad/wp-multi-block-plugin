@@ -26,12 +26,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function bsx_blocks_init() {
+
+    // incude blocks
+
 	// register_block_type( __DIR__ . '/build/block-1' );
 	register_block_type( __DIR__ . '/build/check-list' );
 	register_block_type( __DIR__ . '/build/check-list-item' );
-    register_block_type( __DIR__ . '/build/col' );
     register_block_type( __DIR__ . '/build/container' );
-    register_block_type( __DIR__ . '/build/row' );
+    register_block_type( __DIR__ . '/build/columns-col' );
+    register_block_type( __DIR__ . '/build/columns-row' );
     register_block_type( __DIR__ . '/build/section' );
     register_block_type( __DIR__ . '/build/wrapper' );
 }
@@ -42,15 +45,21 @@ add_action( 'init', 'bsx_blocks_init' );
 
 function bsx_blocks_enqueue_block_editor_assets() {
 
-	// scripts
-    wp_enqueue_script( 'global-block-settings', plugin_dir_url( __FILE__ ) . 'build/_global-block-settings/index.js' );
-    wp_enqueue_script( 'global-class-names', plugin_dir_url( __FILE__ ) . 'build/_global-class-names/index.js' );
+    // include non blocks data
 
-    // style
-	wp_register_style( 'global-editor-style', plugin_dir_url( __FILE__ ) . 'build/_global-editor-style/index.css' );
-	wp_enqueue_style( 'global-editor-style' );
+    // global editor style
+    wp_register_style( 'global-editor-style', plugin_dir_url( __FILE__ ) . 'build/_global-editor-style/index.css' );
+    wp_enqueue_style( 'global-editor-style' );
+
+    // global block settings
+    wp_enqueue_script( 'global-block-settings', plugin_dir_url( __FILE__ ) . 'build/_global-block-settings/index.js' );
+
     wp_register_style( 'global-block-settings-style', plugin_dir_url( __FILE__ ) . 'build/_global-block-settings/index.css' );
     wp_enqueue_style( 'global-block-settings-style' );
+
+    // global class names
+    wp_enqueue_script( 'global-class-names', plugin_dir_url( __FILE__ ) . 'build/_global-class-names/index.js' );
+
 
 	// TODO: What about getting style(s) array from .env file?
 
