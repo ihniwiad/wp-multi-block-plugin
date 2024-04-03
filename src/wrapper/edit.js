@@ -80,7 +80,7 @@ import {
 /**
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+// import './editor.scss';
 
 /**
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit

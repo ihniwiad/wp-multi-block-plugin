@@ -38,7 +38,7 @@ import makeContainerClassNames from './utils';
 /**
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+// import './editor.scss';
 
 /**
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
@@ -127,9 +127,6 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         paddingRight,
     }, containerClassName );
 
-	const blockProps = useBlockProps( { className: containerClassName } );
-	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
-
     const controls = (
     	<>
 	        <InspectorControls>
@@ -198,6 +195,9 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	        </InspectorAdvancedControls>
         </>
 	);
+
+	const blockProps = useBlockProps( { className: containerClassName } );
+	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
 	return (
 		<>
