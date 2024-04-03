@@ -35,6 +35,7 @@ function bsx_blocks_init() {
     register_block_type( __DIR__ . '/build/container' );
     register_block_type( __DIR__ . '/build/columns-col' );
     register_block_type( __DIR__ . '/build/columns-row' );
+    register_block_type( __DIR__ . '/build/lazy-img' );
     register_block_type( __DIR__ . '/build/section' );
     register_block_type( __DIR__ . '/build/wrapper' );
 }
