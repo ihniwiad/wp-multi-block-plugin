@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bsx-blocks/column-row",
+	"version": "0.1.0",
+	"title": "BSX Row",
+	"category": "layout",
+	"description": "Row within Rows for vertical layouting.",
+	"example": {},
+	"attributes": {
+		"columnRowType": {
+			"type": "string",
+			"default": ""
+		},
+		"alignItems": {
+			"type": "string"
+		},
+		"display": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false
+	},
+	"textdomain": "bsx-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

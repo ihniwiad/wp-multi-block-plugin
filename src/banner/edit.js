@@ -638,9 +638,21 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     	</>
 	);
 
+
+	// console.log( 'template: ' + JSON.stringify( template, null, 2 ) );
+	// console.log( 'template[ 0 ][ 1 ].isBannerInner: ' + JSON.stringify( template[ 0 ][ 1 ].isBannerInner, null, 2 ) );
+
     // add class names to blockProps
     const blockProps = useBlockProps( { className: bannerClassName, style: bannerStyle } );
 	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
+	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+		// defaultBlock: { name: 'bsx-blocks/container' },
+		directInsert: true,
+		template: template,
+		templateLock: false,
+		templateInsertUpdatesSelection: true,
+	} );
+	// console.log( 'innerBlocksProps: ' + JSON.stringify( innerBlocksProps, null, 2 ) );
 
 	// prepare props for .banner-inner without additional 
     const bannerInnerBlockProps = { className: bannerInnerClassName };
@@ -666,43 +678,94 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                 )
                 : 
                 (
-                    <TagName { ...blockProps }>
-                        {
-                            false && ! imgId && (
-                                <div className="bsxui-in-widget-overlay-panel bsxui-top">
-                                    <MediaUpload
-                                        onSelect={ onSelectImage }
-                                        allowedTypes="image"
-                                        value={ imgId }
-                                        render={ ( { open } ) => (
-                                            <Button 
-                                                onClick={ open }
-                                                isSecondary
-                                            >
-                                                { __( 'Select / upload Image', 'bsx-blocks' ) }
-                                            </Button>
-                                        ) }
-                                    />
-                                </div>
-                            )
-                        }
-                        {
-                            noBannerInnerTemplateNames.indexOf( templateName ) == -1 ? (
-                                <div { ...bannerInnerInnerBlocksProps }/>
-                            )
-                            :
-                            (
-                                <InnerBlocks 
-                                    template={ template }
-                                    renderAppender={
-                                        hasInnerBlocks ? undefined
-                                        : () => <InnerBlocks.ButtonBlockAppender />
-                                    }
-                                />
-                            )
-                        }
-                    </TagName>
+	                <>
+	                	{
+	                		false && ! imgId ? (
+	                    		<TagName { ...blockProps }>
+	                                <div className="bsxui-in-widget-overlay-panel bsxui-top">
+	                                    <MediaUpload
+	                                        onSelect={ onSelectImage }
+	                                        allowedTypes="image"
+	                                        value={ imgId }
+	                                        render={ ( { open } ) => (
+	                                            <Button 
+	                                                onClick={ open }
+	                                                isSecondary
+	                                            >
+	                                                { __( 'Select / upload Image', 'bsx-blocks' ) }
+	                                            </Button>
+	                                        ) }
+	                                    />
+	                                </div>
+	                    		</TagName>
+	                		)
+	                		:
+	                		(
+		                		<>
+			                        {
+			                            typeof template[ 0 ] !== 'undefined' && typeof template[ 0 ][ 1 ] !== 'undefined' && typeof template[ 0 ][ 1 ].isBannerInner !== 'undefined' && template[ 0 ][ 1 ].isBannerInner ? (
+			                            	// is column row with class name .banner-inner, needs no additional inner element, inset template directly
+		                    				<TagName { ...innerBlocksProps }/>
+			                            )
+			                            :
+			                            (
+			                            	// is not column row, needs additional inner element .banner-inner to inset template
+			                                <TagName { ...blockProps }>
+			                                	<div { ...bannerInnerInnerBlocksProps }/>
+			                                </TagName>
+			                            )
+			                        }
+		                        </>
+	                		)
+	                	}
+                	</>
                 )
+
+
+                // (
+                // 	// check if image
+
+                // 	// else 
+                // 		// check if column-row -> put innerBlocksProps into root
+                // 		// else put bannerInnerInnerBlocksProps into child of root
+                //     <TagName { ...blockProps }>
+                //         {
+                //             false && ! imgId && (
+                //                 <div className="bsxui-in-widget-overlay-panel bsxui-top">
+                //                     <MediaUpload
+                //                         onSelect={ onSelectImage }
+                //                         allowedTypes="image"
+                //                         value={ imgId }
+                //                         render={ ( { open } ) => (
+                //                             <Button 
+                //                                 onClick={ open }
+                //                                 isSecondary
+                //                             >
+                //                                 { __( 'Select / upload Image', 'bsx-blocks' ) }
+                //                             </Button>
+                //                         ) }
+                //                     />
+                //                 </div>
+                //             )
+                //         }
+                //         {
+                //             noBannerInnerTemplateNames.indexOf( templateName ) == -1 ? (
+                //                 <div { ...innerBlocksProps }/>
+                //             )
+                //             :
+                //             (
+                //                 // <InnerBlocks 
+                //                 //     template={ template }
+                //                 //     renderAppender={
+                //                 //         hasInnerBlocks ? undefined
+                //                 //         : () => <InnerBlocks.ButtonBlockAppender />
+                //                 //     }
+                //                 // />
+                //                 <div { ...bannerInnerInnerBlocksProps }/>
+                //             )
+                //         }
+                //     </TagName>
+                // )
             }
 			{ controls }
 		</>

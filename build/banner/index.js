@@ -1845,6 +1845,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   rowWithCols_1_2_1: () => (/* binding */ rowWithCols_1_2_1),
 /* harmony export */   rowWithCols_2_1: () => (/* binding */ rowWithCols_2_1),
 /* harmony export */   rowWithCols_custom: () => (/* binding */ rowWithCols_custom),
+/* harmony export */   rowsCol: () => (/* binding */ rowsCol),
+/* harmony export */   rowsColFlexStatic: () => (/* binding */ rowsColFlexStatic),
+/* harmony export */   rowsColStaticFlex: () => (/* binding */ rowsColStaticFlex),
+/* harmony export */   rowsRow: () => (/* binding */ rowsRow),
 /* harmony export */   section: () => (/* binding */ section),
 /* harmony export */   sectionBadgeHeadingTextButtonImgColumns: () => (/* binding */ sectionBadgeHeadingTextButtonImgColumns),
 /* harmony export */   sectionBgHeadingIconHeadingTextColumns: () => (/* binding */ sectionBgHeadingIconHeadingTextColumns),
@@ -1943,6 +1947,54 @@ const checkListItem = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg"
   focusable: "false"
 }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
   d: "M10,12h8V9h-8V12z M3.29,12.71C3.48,12.89,3.73,13,4,13c0.27,0,0.52-0.1,0.71-0.29l2.5-2.5c0.39-0.39,0.39-1.02,0-1.41 c-0.39-0.39-1.02-0.39-1.41,0L4,10.58l-0.29-0.29c-0.39-0.39-1.02-0.39-1.41,0c-0.39,0.39-0.39,1.02,0,1.41L3.29,12.71z"
+}));
+const rowsCol = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "20",
+  height: "20",
+  viewBox: "0 0 20 20",
+  "aria-hidden": "true",
+  role: "img",
+  focusable: "false"
+}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "M1.29,1.29C1.11,1.48,1,1.74,1,2v16c0,0.26,0.11,0.52,0.29,0.71C1.48,18.89,1.74,19,2,19h16c0.26,0,0.52-0.11,0.71-0.29  C18.89,18.52,19,18.26,19,18V2c0-0.26-0.11-0.52-0.29-0.71C18.52,1.11,18.26,1,18,1H2C1.74,1,1.48,1.11,1.29,1.29z M3,8h14v4H3V8z M3,17v-3h14v3H3z M17,6H3V3l14,0V6z"
+}));
+const rowsRow = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "20",
+  height: "20",
+  viewBox: "0 0 20 20",
+  "aria-hidden": "true",
+  role: "img",
+  focusable: "false"
+}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "M1.29,1.29C1.11,1.48,1,1.74,1,2v16c0,0.26,0.11,0.52,0.29,0.71C1.48,18.89,1.74,19,2,19h16c0.26,0,0.52-0.11,0.71-0.29  C18.89,18.52,19,18.26,19,18V2c0-0.26-0.11-0.52-0.29-0.71C18.52,1.11,18.26,1,18,1H2C1.74,1,1.48,1.11,1.29,1.29z M3,8h14v4H3V8z M3,17v-3h14v3H3z M17,6H3V3l14,0V6z"
+}));
+const rowsColFlexStatic = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "48",
+  height: "48",
+  viewBox: "0 0 48 48",
+  role: "img",
+  "aria-hidden": "true",
+  focusable: "false"
+}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  "fill-rule": "evenodd",
+  "clip-rule": "evenodd",
+  d: "M39,12H9c-1.1,0-2,0.9-2,2v20c0,1.1,0.9,2,2,2h30c1.1,0,2-0.9,2-2V14C41,12.9,40.1,12,39,12z M39,34H9v-5h30V34z M39,27H9 V14h30V27z"
+}));
+const rowsColStaticFlex = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "48",
+  height: "48",
+  viewBox: "0 0 48 48",
+  role: "img",
+  "aria-hidden": "true",
+  focusable: "false"
+}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  "fill-rule": "evenodd",
+  "clip-rule": "evenodd",
+  d: "M39,36H9c-1.1,0-2-0.9-2-2V14c0-1.1,0.9-2,2-2h30c1.1,0,2,0.9,2,2v20C41,35.1,40.1,36,39,36z M39,14H9v5h30V14z M39,21H9v13 h30V21z"
 }));
 const container = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
@@ -3067,12 +3119,23 @@ function Edit({
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Link', 'bsx-blocks')
   }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.linkUrlInput)(href, onChangeHref), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.targetToggle)(target, onChangeTarget), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.relInput)(rel, onChangeRel), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.dataFnInput)(dataFn, onChangeDataFn))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorAdvancedControls, null, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.belowNavbarToggle)(belowNavbar, onChangeBelowNavbar), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.touchFooterToggle)(touchFooter, onChangeTouchFooter), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.nodeNameSelect)(nodeName, onChangeNodeName, ['div', 'section']), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.bgPositionSelect)(bgPosition, onChangeBgPosition), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.bgSizeSelect)(bgSize, onChangeBgSize), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.paddingBeforeSelect)(paddingBefore, onChangePaddingBefore), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.paddingAfterSelect)(paddingAfter, onChangePaddingAfter), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.disableResponsiveDownsizingToggle)(disableResponsiveDownsizing, onChangeDisableResponsiveDownsizing), (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.multilayerSelect)(multilayer, onChangeMultilayer)));
 
+  // console.log( 'template: ' + JSON.stringify( template, null, 2 ) );
+  // console.log( 'template[ 0 ][ 1 ].isBannerInner: ' + JSON.stringify( template[ 0 ][ 1 ].isBannerInner, null, 2 ) );
+
   // add class names to blockProps
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
     className: bannerClassName,
     style: bannerStyle
   });
   // console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
+  const innerBlocksProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useInnerBlocksProps)(blockProps, {
+    // defaultBlock: { name: 'bsx-blocks/container' },
+    directInsert: true,
+    template: template,
+    templateLock: false,
+    templateInsertUpdatesSelection: true
+  });
+  // console.log( 'innerBlocksProps: ' + JSON.stringify( innerBlocksProps, null, 2 ) );
 
   // prepare props for .banner-inner without additional 
   const bannerInnerBlockProps = {
@@ -3090,14 +3153,63 @@ function Edit({
 
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !templateName ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "bsxui-initial-inline-control"
-  }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.inlineTemplateSelect)(_templates__WEBPACK_IMPORTED_MODULE_11__["default"], onChangeTemplate)) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(TagName, {
+  }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_9__.inlineTemplateSelect)(_templates__WEBPACK_IMPORTED_MODULE_11__["default"], onChangeTemplate)) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,  false ? 0 : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, typeof template[0] !== 'undefined' && typeof template[0][1] !== 'undefined' && typeof template[0][1].isBannerInner !== 'undefined' && template[0][1].isBannerInner ?
+  // is column row with class name .banner-inner, needs no additional inner element, inset template directly
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(TagName, {
+    ...innerBlocksProps
+  }) :
+  // is not column row, needs additional inner element .banner-inner to inset template
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(TagName, {
     ...blockProps
-  },  false && 0, noBannerInnerTemplateNames.indexOf(templateName) == -1 ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...bannerInnerInnerBlocksProps
-  }) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks, {
-    template: template,
-    renderAppender: hasInnerBlocks ? undefined : () => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks.ButtonBlockAppender, null)
-  })), controls);
+  }))))
+
+  // (
+  // 	// check if image
+
+  // 	// else 
+  // 		// check if column-row -> put innerBlocksProps into root
+  // 		// else put bannerInnerInnerBlocksProps into child of root
+  //     <TagName { ...blockProps }>
+  //         {
+  //             false && ! imgId && (
+  //                 <div className="bsxui-in-widget-overlay-panel bsxui-top">
+  //                     <MediaUpload
+  //                         onSelect={ onSelectImage }
+  //                         allowedTypes="image"
+  //                         value={ imgId }
+  //                         render={ ( { open } ) => (
+  //                             <Button 
+  //                                 onClick={ open }
+  //                                 isSecondary
+  //                             >
+  //                                 { __( 'Select / upload Image', 'bsx-blocks' ) }
+  //                             </Button>
+  //                         ) }
+  //                     />
+  //                 </div>
+  //             )
+  //         }
+  //         {
+  //             noBannerInnerTemplateNames.indexOf( templateName ) == -1 ? (
+  //                 <div { ...innerBlocksProps }/>
+  //             )
+  //             :
+  //             (
+  //                 // <InnerBlocks 
+  //                 //     template={ template }
+  //                 //     renderAppender={
+  //                 //         hasInnerBlocks ? undefined
+  //                 //         : () => <InnerBlocks.ButtonBlockAppender />
+  //                 //     }
+  //                 // />
+  //                 <div { ...bannerInnerInnerBlocksProps }/>
+  //             )
+  //         }
+  //     </TagName>
+  // )
+  , controls);
 }
 
 /***/ }),
@@ -3118,8 +3230,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
 /* harmony import */ var _functions_attributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../_functions/attributes.js */ "./src/_functions/attributes.js");
-/* harmony import */ var _functions_img_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../_functions/img.js */ "./src/_functions/img.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils */ "./src/banner/utils.js");
+/* harmony import */ var _functions_utilities_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../_functions/utilities.js */ "./src/_functions/utilities.js");
+/* harmony import */ var _functions_img_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../_functions/img.js */ "./src/_functions/img.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils */ "./src/banner/utils.js");
+/* harmony import */ var _templates__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./templates */ "./src/banner/templates.js");
 
 /**
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
@@ -3129,11 +3243,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 // utils
 
 
-// insert directly into banner element without `.banner-inner`
-const noBannerInnerTemplateNames = ['column-row-banner'];
+// templates (required for checking selected template props)
+
 
 /**
  * @return {Element} Element to render.
@@ -3181,8 +3296,8 @@ function save({
   // initial set, replaces old attr 'imgSizes'
   const hasOldAttrImgSizes = typeof imgSizes !== 'undefined' && Array.isArray(imgSizes) && imgSizes.length > 0;
   const hasOldAttrPortraitImgSizes = typeof portraitImgSizes !== 'undefined' && Array.isArray(portraitImgSizes) && portraitImgSizes.length > 0;
-  const calcImgSizes = hasOldAttrImgSizes ? imgSizes : (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_4__.makeImgSizesFromImgData)(imgData);
-  const calcPortraitImgSizes = hasOldAttrPortraitImgSizes ? portraitImgSizes : (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_4__.makeImgSizesFromImgData)(portraitImgData);
+  const calcImgSizes = hasOldAttrImgSizes ? imgSizes : (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_5__.makeImgSizesFromImgData)(imgData);
+  const calcPortraitImgSizes = hasOldAttrPortraitImgSizes ? portraitImgSizes : (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_5__.makeImgSizesFromImgData)(portraitImgData);
 
   // TEST
   // console.log( 'props.attributes: ' + JSON.stringify( props.attributes, null, 2 ) );
@@ -3191,7 +3306,7 @@ function save({
 
   // class names
 
-  let bannerClassName = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.makeBannerClassNames)({
+  let bannerClassName = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.makeBannerClassNames)({
     bannerType,
     bannerSize,
     bgAttachment,
@@ -3216,10 +3331,10 @@ function save({
     paddingAfter,
     multilayer
   }, bannerClassName);
-  const bannerInnerClassName = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.makeBannerInnerClassNames)({
+  const bannerInnerClassName = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.makeBannerInnerClassNames)({
     templateName
   });
-  const srcsetJson = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.makeSrcsetJson)({
+  const srcsetJson = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.makeSrcsetJson)({
     calcImgSizes,
     imgSizeIndex,
     calcPortraitImgSizes,
@@ -3237,14 +3352,15 @@ function save({
     rel: href ? rel ? rel + ' noopener noreferrer' : 'noopener noreferrer' : ''
   });
   const TagName = href ? 'a' : nodeName;
+  const template = (0,_functions_utilities_js__WEBPACK_IMPORTED_MODULE_4__.getTemplate)(_templates__WEBPACK_IMPORTED_MODULE_7__["default"], templateName).template;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(TagName, {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
       className: bannerClassName,
       ...saveAttributes
     })
-  }, noBannerInnerTemplateNames.indexOf(templateName) == -1 ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, typeof template[0] !== 'undefined' && typeof template[0][1] !== 'undefined' && typeof template[0][1].isBannerInner !== 'undefined' && template[0][1].isBannerInner ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: bannerInnerClassName
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null)) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null));
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null)));
 }
 
 /***/ }),
@@ -3321,7 +3437,7 @@ const templates = [{
     templateName: 'default-auto',
     display: 'flex',
     flexDirection: 'column',
-    className: 'banner-inner'
+    isBannerInner: true
   }, [['bsx-blocks/column-row', {
     columnRowType: '',
     display: 'flex',

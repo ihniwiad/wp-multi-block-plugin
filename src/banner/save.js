@@ -5,6 +5,7 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 
 import { addClassNames } from './../_functions/add-class-names.js';
 import { makeSaveAttributes } from './../_functions/attributes.js';
+import { getTemplate } from './../_functions/utilities.js';
 import { 
     // getUrlTruncAndExtension,
     // fullImgIsScaled,
@@ -27,10 +28,9 @@ import {
 } from './utils';
 
 
-// insert directly into banner element without `.banner-inner`
-const noBannerInnerTemplateNames = [
-    'column-row-banner',
-];
+// templates (required for checking selected template props)
+import templates from './templates';
+
 
 /**
  * @return {Element} Element to render.
@@ -140,17 +140,19 @@ export default function save( { attributes } ) {
 
     const TagName = href ? 'a' : nodeName;
 
+    const template = getTemplate( templates, templateName ).template;
+
 	return (
         <TagName { ...useBlockProps.save( { className: bannerClassName, ...saveAttributes } ) }>
             {
-                noBannerInnerTemplateNames.indexOf( templateName ) == -1 ? (
-                    <div className={ bannerInnerClassName }>
-                        <InnerBlocks.Content />
-                    </div>
+                typeof template[ 0 ] !== 'undefined' && typeof template[ 0 ][ 1 ] !== 'undefined' && typeof template[ 0 ][ 1 ].isBannerInner !== 'undefined' && template[ 0 ][ 1 ].isBannerInner ? (
+                    <InnerBlocks.Content />
                 )
                 :
                 (
-                    <InnerBlocks.Content />
+                    <div className={ bannerInnerClassName }>
+                        <InnerBlocks.Content />
+                    </div>
                 )
             }
         </TagName>

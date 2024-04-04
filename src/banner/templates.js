@@ -102,7 +102,7 @@ const templates = [
                     templateName: 'default-auto',
                     display: 'flex',
                     flexDirection: 'column',
-                    className: 'banner-inner',
+                    isBannerInner: true,
                 },
                 [
                     [ 
