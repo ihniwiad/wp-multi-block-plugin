@@ -4,6 +4,7 @@ import {
     InnerBlocks,
     InspectorControls,
     InspectorAdvancedControls,
+    useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { 
     PanelBody,
@@ -12,8 +13,8 @@ import {
     SVG, 
     Path,
 } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
-import { store as blockEditorStore } from '@wordpress/block-editor';
+// import { useSelect } from '@wordpress/data';
+// import { store as blockEditorStore } from '@wordpress/block-editor';
 
 
 import { addClassNames } from './../_functions/add-class-names.js';
@@ -45,9 +46,9 @@ import makeContainerClassNames from './utils';
  *
  * @return {Element} Element to render.
  */
-export default function Edit( { attributes, setAttributes, clientId } ) {
+export default function Edit( { attributes, setAttributes } ) {
 
-	const { getBlock } = useSelect( blockEditorStore );
+	// const { getBlock } = useSelect( blockEditorStore );
 
 	const {
         // className,
@@ -63,11 +64,11 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         sized,
 	} = attributes;
 
-	const hasInnerBlocks = () => {
-		const block = getBlock( clientId );
-		if ( typeof block.innerBlocks === 'undefined' ) return false;
-		return block.innerBlocks.length > 0;
-	}
+	// const hasInnerBlocks = () => {
+	// 	const block = getBlock( clientId );
+	// 	if ( typeof block.innerBlocks === 'undefined' ) return false;
+	// 	return block.innerBlocks.length > 0;
+	// }
 
 
     const onChangeIsFluid = ( value ) => {
@@ -199,17 +200,13 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	const blockProps = useBlockProps( { className: containerClassName } );
 	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
+    // use if appending inner blocks directly into outer elem
+    const innerBlocksProps = useInnerBlocksProps( blockProps, {
+    } );
+
 	return (
 		<>
-			<div { ...blockProps }>
-                <InnerBlocks 
-                    renderAppender={
-                        hasInnerBlocks
-                        ? undefined
-                        : () => <InnerBlocks.ButtonBlockAppender />
-                    }
-                />
-            </div>
+			<div { ...innerBlocksProps }/>
 			{ controls }
 		</>
 	);

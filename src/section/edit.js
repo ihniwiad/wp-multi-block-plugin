@@ -1,10 +1,11 @@
 
 import { __ } from '@wordpress/i18n';
 import {
-	useBlockProps,
+    useBlockProps,
     InnerBlocks,
     InspectorControls,
     InspectorAdvancedControls,
+    useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { 
     PanelBody,
@@ -15,8 +16,8 @@ import {
     SVG, 
     Path,
 } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
-import { store as blockEditorStore } from '@wordpress/block-editor';
+// import { useSelect } from '@wordpress/data';
+// import { store as blockEditorStore } from '@wordpress/block-editor';
 
 
 import { addClassNames } from './../_functions/add-class-names.js';
@@ -47,9 +48,9 @@ import templates from './templates';
  *
  * @return {Element} Element to render.
  */
-export default function Edit( { attributes, setAttributes, clientId } ) {
+export default function Edit( { attributes, setAttributes } ) {
 
-	const { getBlock } = useSelect( blockEditorStore );
+    // const { getBlock } = useSelect( blockEditorStore );
 
     const {
         templateName,
@@ -64,11 +65,11 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         isGalleryParent,
     } = attributes;
 
-    const hasInnerBlocks = () => {
-    	const block = getBlock( clientId );
-		if ( typeof block.innerBlocks === 'undefined' ) return false;
-        return block.innerBlocks.length > 0;
-    }
+    // const hasInnerBlocks = () => {
+    //     const block = getBlock( clientId );
+    //     if ( typeof block.innerBlocks === 'undefined' ) return false;
+    //     return block.innerBlocks.length > 0;
+    // }
 
     let template = getTemplate( templates, templateName ).template;
 
@@ -194,8 +195,12 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     );
 
     // add class names to blockProps
-    const blockProps = useBlockProps( { className: sectionClassName } );
+    const blockProps = useBlockProps( { className: sectionClassName, id: id } );
     // console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
+
+    // use if appending inner blocks directly into outer elem
+    const innerBlocksProps = useInnerBlocksProps( blockProps, {
+    } );
 
     return (
         <>
@@ -227,16 +232,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                 )
                 : 
                 (
-                    <section id={ id } { ...blockProps }>
-                    	<InnerBlocks
-			                template={ template }
-                            renderAppender={
-                                hasInnerBlocks
-                                ? undefined
-                                : () => <InnerBlocks.ButtonBlockAppender />
-                            }
-			            />
-                    </section>
+                    <section { ...innerBlocksProps }/>
                 )
             }
             { controls }

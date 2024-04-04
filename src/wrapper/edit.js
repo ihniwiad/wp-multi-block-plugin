@@ -6,6 +6,7 @@ import {
     InspectorAdvancedControls,
     BlockControls,
     AlignmentToolbar,
+    useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { 
     PanelBody,
@@ -87,7 +88,7 @@ import {
  *
  * @return {Element} Element to render.
  */
-export default function Edit( { attributes, setAttributes, clientId } ) {
+export default function Edit( { attributes, setAttributes } ) {
 
 	// const { getBlock } = useSelect( blockEditorStore );
 
@@ -392,10 +393,6 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         isRight0,
         overflow,
     } );
-    
-    // add class names to blockProps
-    const blockProps = useBlockProps( { className: wrapperClassName } );
-	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
     const TagName = nodeName;
 
@@ -639,11 +636,16 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     	</>
 	);
 
+    // add class names to blockProps
+    const blockProps = useBlockProps( { className: wrapperClassName, id: id } );
+
+    // use if appending inner blocks directly into outer elem
+    const innerBlocksProps = useInnerBlocksProps( blockProps, {
+    } );
+
 	return (
 		<>
-			<TagName id={ id } { ...blockProps }>
-                <InnerBlocks />
-            </TagName>
+            <TagName { ...innerBlocksProps }/>
 			{ controls }
 		</>
 	);
