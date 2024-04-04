@@ -308,6 +308,7 @@ export const linkUrlInput = ( value, onChangeFunction ) => {
             label={ __( 'Link URL', 'bsx-blocks' ) }
             value={ value }
             onChange={ onChangeFunction }
+            __nextHasNoMarginBottom={ true }
         />
     )
 }
