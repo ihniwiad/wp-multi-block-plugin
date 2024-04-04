@@ -4,7 +4,7 @@
 import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 import { addClassNames } from './../_functions/add-class-names.js';
-// import { makeSaveAttributes } from './../_functions/attributes.js';
+import { makeSaveAttributes } from './../_functions/attributes.js';
 
 /**
  * @return {Element} Element to render.
@@ -18,6 +18,8 @@ export default function save( { attributes } ) {
         marginRight,
         marginBefore,
         marginAfter,
+        nodeName,
+        labelFor,
     } = attributes;
         
     const labelClassNames = addClassNames( {
@@ -28,10 +30,14 @@ export default function save( { attributes } ) {
         marginAfter,
     } );
 
-    const TagName = 'span';
+    const saveAttributes = makeSaveAttributes( {
+        'for': labelFor,
+    } );
+
+    const TagName = nodeName ? nodeName : 'span';
 
     return (
-        <TagName { ...useBlockProps.save( { className: labelClassNames } ) }>
+        <TagName { ...useBlockProps.save( { className: labelClassNames, ...saveAttributes } ) }>
             <RichText.Content value={ content } />
         </TagName>
     );

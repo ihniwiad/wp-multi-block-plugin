@@ -30,6 +30,7 @@ function bsx_blocks_init() {
     // incude blocks
 
 	// register_block_type( __DIR__ . '/build/block-1' );
+    register_block_type( __DIR__ . '/build/badge' );
     register_block_type( __DIR__ . '/build/banner' );
     register_block_type( __DIR__ . '/build/button' );
     register_block_type( __DIR__ . '/build/button-label' );

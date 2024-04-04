@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
     InspectorControls,
+    InspectorAdvancedControls,
     RichText,
 	// useInnerBlocksProps, // use if appending inner blocks directly into outer elem
 } from '@wordpress/block-editor';
@@ -16,7 +17,7 @@ import {
 
 
 import { addClassNames } from './../_functions/add-class-names.js';
-// import { makeSaveAttributes } from './../_functions/attributes.js';
+import { makeSaveAttributes } from './../_functions/attributes.js';
 // import { getTemplate } from './../_functions/utilities.js';
 import { 
     marginLeftSelect,
@@ -24,6 +25,8 @@ import {
     marginBeforeSelect,
     marginAfterSelect,
     displaySelect,
+    nodeNameSelect,
+    forInput,
 } from './../_functions/controls.js';
 
 
@@ -55,6 +58,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         marginRight,
         marginBefore,
         marginAfter,
+        nodeName,
+        labelFor,
 	} = attributes;
 
 	// const hasInnerBlocks = () => {
@@ -94,6 +99,14 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         setAttributes( { ignoreMailtoSpamProtection: ! value } );
     };
 
+    const onChangeNodeName = ( value ) => {
+        setAttributes( { nodeName: value } );
+    };
+
+    const onChangeLabelFor = ( value ) => {
+        setAttributes( { labelFor: value } );
+    };
+
     const labelClassNames = addClassNames( {
         display,
         marginLeft, 
@@ -103,39 +116,50 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     } );
 
     const controls = (
-    	<InspectorControls>
-            <PanelBody title={ __( 'Button Label appearance (optional)', 'bsx-blocks' ) }>
-                {
-                    displaySelect( display, onChangeDisplay, [ '', 'inline-block' ] )
-                }
-            </PanelBody>
+    	<>
+	    	<InspectorControls>
+	            <PanelBody title={ __( 'Button Label appearance (optional)', 'bsx-blocks' ) }>
+	                {
+	                    displaySelect( display, onChangeDisplay, [ 'span', 'label' ] )
+	                }
+	            </PanelBody>
 
-            <PanelBody title={ __( 'Margin (optional)', 'bsx-blocks' ) }>
+	            <PanelBody title={ __( 'Margin (optional)', 'bsx-blocks' ) }>
+	                {
+	                    marginLeftSelect( marginLeft, onChangeMarginLeft )
+	                }
+	                {
+	                    marginRightSelect( marginRight, onChangeMarginRight )
+	                }
+	                {
+	                    marginBeforeSelect( marginBefore, onChangeMarginBefore )
+	                }
+	                {
+	                    marginAfterSelect( marginAfter, onChangeMarginAfter )
+	                }
+	            </PanelBody>
+	        </InspectorControls>
+	    	<InspectorAdvancedControls>
                 {
-                    marginLeftSelect( marginLeft, onChangeMarginLeft )
+                    nodeNameSelect( nodeName, onChangeNodeName, [ 'span', 'label' ] )
                 }
                 {
-                    marginRightSelect( marginRight, onChangeMarginRight )
+                	forInput( labelFor, onChangeLabelFor )
                 }
-                {
-                    marginBeforeSelect( marginBefore, onChangeMarginBefore )
-                }
-                {
-                    marginAfterSelect( marginAfter, onChangeMarginAfter )
-                }
-            </PanelBody>
-        </InspectorControls>
+	    	</InspectorAdvancedControls>
+        </>
 	);
 
+    const TagName = nodeName ? nodeName : 'span';
+
     // add class names to blockProps
-    const blockProps = useBlockProps( { className: labelClassNames } );
+    const blockProps = useBlockProps( { className: labelClassNames, 'data-for': labelFor } );
 	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
 	return (
 		<>
             <RichText
-                tagName="span"
-                className={ labelClassNames }
+            	tagName={ TagName }
                 multiline={ false }
                 placeholder={ __( 'Add label...', 'bsx-blocks' ) }
                 value={ content }

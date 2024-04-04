@@ -467,6 +467,16 @@ export const tabindexInput = ( value, onChangeFunction ) => {
     )
 }
 
+export const forInput = ( value, onChangeFunction ) => {
+    return (
+        <TextControl 
+            label={ __( 'For (optional, required if Node Name is Label)', 'bsx-blocks' ) }
+            value={ value } 
+            onChange={ onChangeFunction }
+        />
+    )
+}
+
 
 // selects
 
@@ -746,6 +756,7 @@ export const nodeNameSelect = ( value, onChangeFunction, allowedValues ) => {
         { value: '', label: __( '– unset –', 'bsx-blocks' ) },
         { value: 'div', label: __( 'div', 'bsx-blocks' ) },
         { value: 'span', label: __( 'span', 'bsx-blocks' ) },
+        { value: 'label', label: __( 'label', 'bsx-blocks' ) },
         { value: 'section', label: __( 'section', 'bsx-blocks' ) },
         { value: 'figure', label: __( 'figure', 'bsx-blocks' ) },
         { value: 'ul', label: __( 'ul', 'bsx-blocks' ) },

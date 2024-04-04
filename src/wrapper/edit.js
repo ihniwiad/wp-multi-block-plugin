@@ -19,7 +19,7 @@ import {
 
 
 import { addClassNames } from './../_functions/add-class-names.js';
-import { makeSaveAttributes } from './../_functions/attributes.js';
+// import { makeSaveAttributes } from './../_functions/attributes.js';
 // import { getTemplate } from './../_functions/utilities.js';
 import { 
 	belowNavbarToggle,

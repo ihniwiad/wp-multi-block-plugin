@@ -1,47 +1,53 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
-    "name": "bsx-blocks/button-label",
+    "name": "bsx-blocks/badge",
     "version": "0.1.0",
-    "title": "BSX Button Label",
+    "title": "BSX Badge",
     "category": "design",
-    "parent": [ "bsx-blocks/buttons" ],
-    "description": "Button Label for Button in Buttons Block.",
+    "description": "Badge to emphasize some short text content.",
     "example": {},
     "attributes": {
-        "nodeName": {
-            "type": "string",
-            "default": "span"
-        },
-        "labelFor": {
+        "href": {
             "type": "string",
             "default": ""
         },
         "content": {
             "type": "string",
             "source": "html",
-            "selector": "span, label",
+            "selector": ".badge-content",
             "__experimentalRole": "content"
         },
-        "display": {
+        "state": {
             "type": "string",
-            "default": ""
+            "default": "primary"
+        },
+        "badgeType": {
+            "type": "string"
         },
         "marginLeft": {
-            "type": "string",
-            "default": ""
+            "type": "string"
         },
         "marginRight": {
-            "type": "string",
-            "default": ""
+            "type": "string"
         },
         "marginBefore": {
-            "type": "string",
-            "default": ""
+            "type": "string"
         },
         "marginAfter": {
-            "type": "string",
-            "default": ""
+            "type": "string"
+        },
+        "textColor": {
+            "type": "string"
+        },
+        "bgColor": {
+            "type": "string"
+        },
+        "iconKey": {
+            "type": "string"
+        },
+        "iconFamily": {
+            "type": "string"
         }
     },
     "supports": {
