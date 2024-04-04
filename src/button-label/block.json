@@ -1,0 +1,46 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bsx-blocks/button-label",
+    "version": "0.1.0",
+    "title": "BSX Button Label",
+    "category": "design",
+    "parent": [ "bsx-blocks/buttons" ],
+    "description": "Button Label for Button in Buttons Block.",
+    "example": {},
+    "attributes": {
+        "content": {
+            "type": "string",
+            "source": "html",
+            "selector": "span",
+            "__experimentalRole": "content"
+        },
+        "display": {
+            "type": "string",
+            "default": ""
+        },
+        "marginLeft": {
+            "type": "string",
+            "default": ""
+        },
+        "marginRight": {
+            "type": "string",
+            "default": ""
+        },
+        "marginBefore": {
+            "type": "string",
+            "default": ""
+        },
+        "marginAfter": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "supports": {
+        "html": false,
+        "className": false
+    },
+    "textdomain": "bsx-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css"
+}

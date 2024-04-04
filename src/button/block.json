@@ -1,0 +1,78 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bsx-blocks/button",
+    "version": "0.1.0",
+    "title": "BSX Button",
+    "category": "design",
+    "parent": [ "bsx-blocks/buttons" ],
+    "description": "Single Button for Buttons Block.",
+    "example": {},
+    "attributes": {
+        "href": {
+            "type": "string",
+            "default": ""
+        },
+        "content": {
+            "type": "string",
+            "source": "html",
+            "selector": ".btn, .text-link",
+            "__experimentalRole": "content"
+        },
+        "target": {
+            "type": "string",
+            "default": ""
+        },
+        "rel": {
+            "type": "string",
+            "default": ""
+        },
+        "state": {
+            "type": "string",
+            "default": "primary"
+        },
+        "stateType": {
+            "type": "string",
+            "default": "outline"
+        },
+        "size": {
+            "type": "string",
+            "default": ""
+        },
+        "dataFn": {
+            "type": "string",
+            "default": ""
+        },
+        "marginLeft": {
+            "type": "string",
+            "default": ""
+        },
+        "marginRight": {
+            "type": "string",
+            "default": ""
+        },
+        "marginBefore": {
+            "type": "string",
+            "default": ""
+        },
+        "marginAfter": {
+            "type": "string",
+            "default": ""
+        },
+        "ignoreMailtoSpamProtection": {
+            "type": "boolean"
+        },
+        "disabled": {
+            "type": "boolean",
+            "default": ""
+        }
+    },
+    "supports": {
+        "html": false,
+        "className": false,
+        "anchor": true
+    },
+    "textdomain": "bsx-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css"
+}

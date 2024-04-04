@@ -31,6 +31,9 @@ function bsx_blocks_init() {
 
 	// register_block_type( __DIR__ . '/build/block-1' );
     register_block_type( __DIR__ . '/build/banner' );
+    register_block_type( __DIR__ . '/build/button' );
+    register_block_type( __DIR__ . '/build/button-label' );
+    register_block_type( __DIR__ . '/build/buttons' );
 	register_block_type( __DIR__ . '/build/check-list' );
 	register_block_type( __DIR__ . '/build/check-list-item' );
     register_block_type( __DIR__ . '/build/container' );
