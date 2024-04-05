@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bsx-blocks/svg-img",
+    "version": "0.1.0",
+    "title": "BSX SVG Image",
+    "category": "design",
+    "description": "Creates an SVG Image by source code.",
+    "example": {},
+    "attributes": {
+        "content": {
+            "type": "string",
+            "source": "html"
+        },
+        "nodeName": {
+            "type": "string",
+            "default": "figure"
+        },
+        "href": {
+            "type": "string"
+        },
+        "target": {
+            "type": "string"
+        },
+        "rel": {
+            "type": "string"
+        },
+        "state": {
+            "type": "string"
+        },
+        "marginBefore": {
+            "type": "string"
+        },
+        "marginAfter": {
+            "type": "string"
+        },
+        "verticalAlign": {
+            "type": "string"
+        },
+        "textAlign": {
+            "type": "string"
+        },
+        "display": {
+            "type": "string"
+        }
+    },
+    "supports": {
+        "html": true,
+        "className": false
+    },
+    "textdomain": "bsx-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css"
+}

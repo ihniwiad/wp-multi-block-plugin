@@ -45,6 +45,7 @@ function bsx_blocks_init() {
     register_block_type( __DIR__ . '/build/rows-col' );
     register_block_type( __DIR__ . '/build/rows-row' );
     register_block_type( __DIR__ . '/build/section' );
+    register_block_type( __DIR__ . '/build/svg-img' );
     register_block_type( __DIR__ . '/build/wrapper' );
 }
 add_action( 'init', 'bsx_blocks_init' );
