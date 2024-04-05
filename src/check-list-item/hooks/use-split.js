@@ -29,13 +29,13 @@ export default function useSplit( clientId ) {
 			// remember: returned content will be recieved by onReplace function and so converted by convertToChecklistItems()
 
 			if ( isAfter.current ) {
-						console.log( '——-- clone block' )
+						// console.log( '——-- clone block' )
 				return cloneBlock( block, {
 					content: value,
 				} );
 			}
 			isAfter.current = true;
-						console.log( '——-- create block' )
+						// console.log( '——-- create block' )
 			return createBlock( block.name, {
 				...block.attributes,
 				content: value,

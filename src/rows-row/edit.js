@@ -137,6 +137,8 @@ export default function Edit( { attributes, setAttributes } ) {
 		// template: template,
 		// templateLock: false,
 		// templateInsertUpdatesSelection: true,
+        // renderAppender: false,
+        // __unstableDisableDropZone: true,
 	} );
 
 	return (

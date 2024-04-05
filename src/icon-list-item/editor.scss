@@ -1,0 +1,12 @@
+
+// fix conflict WordPress Block Editor vs. Font Awesome – reset margin left/right
+
+.editor-styles-wrapper [data-type="bsx-blocks/icon-list"].wp-block {
+    @if variable-exists(fa-li-margin) {
+        margin-left: $fa-li-margin;
+    }
+    @else {
+        margin-left: 2.5em;
+    }
+    margin-right: 0;
+}

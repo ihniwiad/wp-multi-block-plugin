@@ -11,22 +11,18 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import { checkListItem as icon } from './../_functions/icon';
+import { iconListItem as icon } from './../_functions/icon';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
+
+// import deprecated from './deprecated';
 
 /**
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType( metadata.name, {
 	icon,
-	merge( attributes, attributesToMerge ) {
-		return {
-			...attributes,
-			content: attributes.content + attributesToMerge.content,
-		};
-	},
 	edit: Edit,
 	save,
 } );

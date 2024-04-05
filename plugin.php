@@ -41,6 +41,8 @@ function bsx_blocks_init() {
     register_block_type( __DIR__ . '/build/columns-col' );
     register_block_type( __DIR__ . '/build/columns-row' );
     register_block_type( __DIR__ . '/build/icon' );
+    register_block_type( __DIR__ . '/build/icon-list' );
+    register_block_type( __DIR__ . '/build/icon-list-item' );
     register_block_type( __DIR__ . '/build/img-gallery' );
     register_block_type( __DIR__ . '/build/lazy-img' );
     register_block_type( __DIR__ . '/build/rows-col' );
