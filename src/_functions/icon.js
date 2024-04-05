@@ -262,19 +262,34 @@ export const sectionBgHeadingIconHeadingTextColumns = (
 	<svg/>
 );
 
-export const uiCarretLeft = (
+export const uiIconCarretLeft = (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
         <path d="M14 5l-5 5 5 5-1 2-7-7 7-7z"></path>
     </svg>
 );
-export const uiCarretRight = (
+export const uiIconCarretRight = (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
         <path d="M6 15l5-5-5-5 1-2 7 7-7 7z"></path>
     </svg>
 );
-export const uiTrash = (
+export const uiIconTrash = (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
         <path d="M12 4h3c.6 0 1 .4 1 1v1H3V5c0-.6.5-1 1-1h3c.2-1.1 1.3-2 2.5-2s2.3.9 2.5 2zM8 4h3c-.2-.6-.9-1-1.5-1S8.2 3.4 8 4zM4 7h11l-.9 10.1c0 .5-.5.9-1 .9H5.9c-.5 0-.9-.4-1-.9L4 7z"></path>
+    </svg>
+);
+
+export const uiPlaceholderVideo = (
+    <svg xmlns="http://www.w3.org/2000/svg" width="360" height="240" viewBox="0 0 360 240" aria-hidden="true" role="img" focusable="false">
+        <path fill-rule="evenodd" d="M0,0v240h360V0H0z M160,160V80l69.28,40L160,160z"/>
+    </svg>
+);
+
+export const video = (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
+            <path d="M17,4H3C1.9,4,1,5.07,1,6.4v7.2C1,14.93,1.9,16,3,16h14c1.1,0,2-1.07,2-2.4V6.4C19,5.07,18.1,4,17,4z M8,13V7l5.2,3L8,13z"
+              />
+        </svg>
     </svg>
 );
 

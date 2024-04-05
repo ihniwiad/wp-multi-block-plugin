@@ -44,9 +44,9 @@ import {
 } from './utils';
 
 import {
-	uiCarretLeft,
-	uiCarretRight,
-	uiTrash,
+	uiIconCarretLeft,
+	uiIconCarretRight,
+	uiIconTrash,
 } from './../_functions/icon.js';
 
 
@@ -357,21 +357,21 @@ export default function Edit( { attributes, setAttributes } ) {
                                             onClick={ () => { onClickMoveUp( index ) } }
                                             label={ __( 'Move backward', 'bsx-blocks' ) }
                                         >
-                                            { uiCarretLeft }
+                                            { uiIconCarretLeft }
                                         </Button>
                                         <Button 
                                             className="button bsxui-icon-button" 
                                             onClick={ () => { onClickMoveDown( index ) } }
                                             label={ __( 'Move forward', 'bsx-blocks' ) }
                                         >
-                                            { uiCarretRight }
+                                            { uiIconCarretRight }
                                         </Button>
                                         <Button 
                                             className="button bsxui-icon-button bsxui-text-danger bsxui-border-danger bsxui-ml-auto"
                                             onClick={ () => { onClickDelete( index ) } }
                                             label={ __( 'Remove Image', 'bsx-blocks' ) }
                                         >
-                                            { uiTrash }
+                                            { uiIconTrash }
                                         </Button>
                                     </div>
                                 </div>
