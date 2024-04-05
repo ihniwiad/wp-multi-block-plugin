@@ -1,0 +1,137 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bsx-blocks/slider",
+    "version": "0.1.0",
+    "title": "BSX Slider",
+    "category": "design",
+    "description": "Create a Slider.",
+    "example": {},
+    "attributes": {
+        "sliderType": {
+            "type": "string",
+            "default": "citation"
+        },
+        "imgSize": {
+            "type": "string"
+        },
+        "itemData": {
+            "type": "array",
+            "source": "query",
+            "selector": ".item",
+            "query": {
+                "imgId": {
+                    "type": "number",
+                    "source": "attribute",
+                    "selector": "figure",
+                    "attribute": "data-id"
+                },
+                "imgUrl": {
+                    "type": "string",
+                    "source": "attribute",
+                    "selector": "figure",
+                    "attribute": "data-url"
+                },
+                "imgWidth": {
+                    "type": "string",
+                    "source": "attribute",
+                    "selector": "figure",
+                    "attribute": "data-width"
+                },
+                "imgHeight": {
+                    "type": "string",
+                    "source": "attribute",
+                    "selector": "figure",
+                    "attribute": "data-height"
+                },
+                "imgAlt": {
+                    "type": "string",
+                    "source": "attribute",
+                    "selector": "figure",
+                    "attribute": "data-alt"
+                },
+                "heading": {
+                    "type": "string",
+                    "source": "html",
+                    "selector": "[data-slide-heading]"
+                },
+                "subline": {
+                    "type": "string",
+                    "source": "html",
+                    "selector": "[data-slide-subline]"
+                },
+                "text": {
+                    "type": "string",
+                    "source": "html",
+                    "selector": "[data-slide-text]"
+                },
+                "footerText_1": {
+                    "type": "string",
+                    "source": "html",
+                    "selector": "[data-slide-footer-1]"
+                },
+                "footerText_2": {
+                    "type": "string",
+                    "source": "html",
+                    "selector": "[data-slide-footer-2]"
+                },
+                "url": {
+                    "type": "string",
+                    "selector": "a",
+                    "source": "attribute",
+                    "attribute": "href"
+                },
+                "target": {
+                    "type": "string",
+                    "selector": "a",
+                    "source": "attribute",
+                    "attribute": "target"
+                },
+                "rel": {
+                    "type": "string",
+                    "selector": "a",
+                    "source": "attribute",
+                    "attribute": "rel"
+                }
+            },
+            "default": []
+        },
+        "hint": {
+            "type": "string"
+        },
+        "prevText": {
+            "type": "string"
+        },
+        "nextText": {
+            "type": "string"
+        },
+        "rounded": {
+            "type": "string",
+            "default": "circle"
+        },
+        "imgThumbnail": {
+            "type": "boolean"
+        },
+        "bgColor": {
+            "type": "string"
+        },
+        "borderState": {
+            "type": "string"
+        },
+        "marginBefore": {
+            "type": "string",
+            "default": ""
+        },
+        "marginAfter": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "supports": {
+        "html": false,
+        "className": false
+    },
+    "textdomain": "bsx-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css"
+}
