@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
     InspectorControls,
+    InspectorAdvancedControls,
     RichText,
 	// useInnerBlocksProps, // use if appending inner blocks directly into outer elem
 } from '@wordpress/block-editor';
@@ -31,6 +32,8 @@ import {
     marginRightSelect,
     marginBeforeSelect,
     marginAfterSelect,
+    typeInput,
+    onclickInput,
 } from './../_functions/controls.js';
 
 
@@ -59,7 +62,6 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 	// const { getBlock } = useSelect( blockEditorStore );
 
 	const {
-		className,
         href,
         content,
         target,
@@ -74,6 +76,8 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
         marginAfter,
         ignoreMailtoSpamProtection,
         disabled,
+        type,
+        onclick,
     } = attributes;
 
 	// const hasInnerBlocks = () => {
@@ -142,13 +146,21 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
         setAttributes( { disabled: value } );
     };
 
+    const onChangeType = ( value ) => {
+        setAttributes( { type: value } );
+    };
+
+    const onChangeOnclick = ( value ) => {
+        setAttributes( { onclick: value } );
+    };
+
     // exclude hrefIsEmailIsContent here to keep correct button title shown
     let buttonClassNames = makeButtonClassNames( { 
         state, 
         stateType, 
         size,
         // ignoreMailtoSpamProtection: true, // skip in Editor (edit.js)
-    }, className );
+    } );
     buttonClassNames = addClassNames( {
         marginLeft, 
         marginRight, 
@@ -177,67 +189,79 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 	    // else console.log( '---- no class name change' )
     }
 
+    const TagName = href || state == 'text-link' ? 'a' : 'button';
+
 
     const controls = (
-        <InspectorControls>
-            <PanelBody title={ __( 'Button link settings', 'bsx-blocks' ) }>
-                {
-                    linkUrlInput( href, onChangeHref )
-                }
-                {
-                    hrefIsEmail && (
-                        <>
-                            {
-                                ignoreMailtoSpamProtectionToggle( ignoreMailtoSpamProtection, onChangeIgnoreMailtoSpamProtection )
-                            }
-                        </>
-                    )
-                }
-                {
-                    targetToggle( target, onChangeTarget )
-                }
-                {
-                    disabledToggle( disabled, onChangeDisabled )
-                }
-                {
-                    relInput( rel, onChangeRel )
-                }
-                {
-                    dataFnInput( dataFn, onChangeDataFn )
-                }
-            </PanelBody>
+        <>
+            <InspectorControls>
+                <PanelBody title={ __( 'Button link settings', 'bsx-blocks' ) }>
+                    {
+                        linkUrlInput( href, onChangeHref )
+                    }
+                    {
+                        hrefIsEmail && (
+                            <>
+                                {
+                                    ignoreMailtoSpamProtectionToggle( ignoreMailtoSpamProtection, onChangeIgnoreMailtoSpamProtection )
+                                }
+                            </>
+                        )
+                    }
+                    {
+                        targetToggle( target, onChangeTarget )
+                    }
+                    {
+                        disabledToggle( disabled, onChangeDisabled )
+                    }
+                    {
+                        relInput( rel, onChangeRel )
+                    }
+                    {
+                        dataFnInput( dataFn, onChangeDataFn )
+                    }
+                </PanelBody>
 
-            <PanelBody title={ __( 'Button appearance', 'bsx-blocks' ) }>
-                {
-                    buttonStateSelect( state, onChangeState )
-                }
-                {
-                    stateTypeSelect( stateType, onChangeStateType )
-                }
-                {
-                    sizeSelect( size, onChangeSize )
-                }
-            </PanelBody>
+                <PanelBody title={ __( 'Button appearance', 'bsx-blocks' ) }>
+                    {
+                        buttonStateSelect( state, onChangeState )
+                    }
+                    {
+                        stateTypeSelect( stateType, onChangeStateType )
+                    }
+                    {
+                        sizeSelect( size, onChangeSize )
+                    }
+                </PanelBody>
 
-            <PanelBody title={ __( 'Margin', 'bsx-blocks' ) }>
+                <PanelBody title={ __( 'Margin', 'bsx-blocks' ) }>
+                    {
+                        marginLeftSelect( marginLeft, onChangeMarginLeft, [ '', '0', '1', '2', '3' ] )
+                    }
+                    {
+                        marginRightSelect( marginRight, onChangeMarginRight, [ '', '0', '1', '2', '3' ] )
+                    }
+                    {
+                        marginBeforeSelect( marginBefore, onChangeMarginBefore )
+                    }
+                    {
+                        marginAfterSelect( marginAfter, onChangeMarginAfter )
+                    }
+                </PanelBody>
+            </InspectorControls>
+            <InspectorAdvancedControls>
                 {
-                    marginLeftSelect( marginLeft, onChangeMarginLeft, [ '', '0', '1', '2', '3' ] )
+                    typeInput( type, onChangeType )
                 }
                 {
-                    marginRightSelect( marginRight, onChangeMarginRight, [ '', '0', '1', '2', '3' ] )
+                    onclickInput( onclick, onChangeOnclick )
                 }
-                {
-                    marginBeforeSelect( marginBefore, onChangeMarginBefore )
-                }
-                {
-                    marginAfterSelect( marginAfter, onChangeMarginAfter )
-                }
-            </PanelBody>
-        </InspectorControls>
+            </InspectorAdvancedControls>
+        </>
 	);
 
     // add class names to blockProps
-    const blockProps = useBlockProps( { className: buttonClassNames } );
+    const blockProps = useBlockProps( { className: buttonClassNames, 'data-tag-name': TagName, 'data-type': type, 'data-onclick': onclick } );
 	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
 	// use if appending inner blocks directly into outer elem
@@ -247,8 +271,8 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 	return (
 		<>
 			<RichText
-                tagName={ href || state == 'text-link' ? 'a' : 'button' }
-                className={ buttonClassNames }
+                // tagName={ href || state == 'text-link' ? 'a' : 'button' }
+                tagName={ 'a' }
                 multiline={ false }
                 placeholder={ __( 'Add Title...', 'bsx-blocks' ) }
                 value={ content }

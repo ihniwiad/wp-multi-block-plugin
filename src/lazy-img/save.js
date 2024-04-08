@@ -64,6 +64,8 @@ export default function save( { attributes } ) {
         noFigureTag,
     } = attributes;
 
+    // console.log( 'Hello from v2 save()!' )
+
 
     // TEST
     // console.log( 'imgData: ' + JSON.stringify( imgData, null, 2 ) );
@@ -258,6 +260,8 @@ export default function save( { attributes } ) {
             }
         </>
     );
+
+    // console.log( 'return v2 save()' )
 
 	return (
         <>

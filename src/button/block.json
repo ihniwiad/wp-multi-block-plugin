@@ -65,6 +65,14 @@
         "disabled": {
             "type": "boolean",
             "default": ""
+        },
+        "type": {
+            "type": "string",
+            "default": ""
+        },
+        "onclick": {
+            "type": "string",
+            "default": ""
         }
     },
     "supports": {

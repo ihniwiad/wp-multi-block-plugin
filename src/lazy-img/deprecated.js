@@ -19,6 +19,7 @@ import {
     SVG, 
     Path,
 } from '@wordpress/components';
+import { select, useSelect } from '@wordpress/data';
 
 
 // functions imports
@@ -32,6 +33,10 @@ import {
     makeBase64PreloadImgSrc as makeBase64PreloadImgSrc_v1,
     makeImgSizesFromImgData as makeImgSizesFromImgData_v1,
 } from './deprecated/img_v1.js';
+import { 
+    makeBase64PreloadImgSrc,
+    // makeImgSizesFromImgData,
+} from './../_functions/img.js';
 
 const makeSourcesAttributesList = ( attributes ) => {
 
@@ -214,8 +219,8 @@ const v1 = {
             type: 'string',
         },
         figcaption: {
-            type: 'array',
-            source: 'children',
+            type: 'string',
+            source: 'html',
             selector: 'figcaption',
         },
         rounded: {
@@ -276,6 +281,32 @@ const v1 = {
             type: 'boolean',
         }
     },
+
+    // migrate old attr to new one
+    migrate( { imgId, imgSizes, imgData } ) {
+        // replaces old attr 'imgSizes'
+        // const hasOldAttrImgSizes = typeof imgSizes !== 'undefined' && Array.isArray( imgSizes ) && imgSizes.length > 0;
+        // const hasOldAttrPortraitImgSizes = typeof portraitImgSizes !== 'undefined' && Array.isArray( portraitImgSizes ) && portraitImgSizes.length > 0;
+
+        // const calcImgSizes = hasOldAttrImgSizes ? imgSizes : makeImgSizesFromImgData( imgData );
+        // const calcPortraitImgSizes = hasOldAttrPortraitImgSizes ? portraitImgSizes : makeImgSizesFromImgData( portraitImgData );
+
+        // const imgObj = wp.data.select( 'core' ).getMedia( imgId );
+
+        console.log( 'Hello from migrate()!' )
+        const media = useSelect( () => select( 'core' ).getMedia( imgId ) );
+        console.log( '--> media( ' + imgId + ' ): ' + JSON.stringify( media, null, 2 ) + '\n' );
+
+
+        // console.log( 'imageObj( ' + imgId + ' ): ' + JSON.stringify( imgObj, null, 2 ) + '\n' );
+
+        return {
+            imgId,
+            imgSizes,
+            imgData,
+        };
+    },
+
     save: ( props ) => {
         const {
             // className,
@@ -284,6 +315,7 @@ const v1 = {
                 imgSizeIndex,
                 imgSizes,
                 imgData,
+                imgId,
                 url,
                 width,
                 height,
@@ -318,10 +350,15 @@ const v1 = {
             },
         } = props;
 
+        // console.log( 'Hello from deprecation v1 save()!' )
+
         // TEST
         // console.log( 'imgData: ' + JSON.stringify( imgData, null, 2 ) );
         // console.log( 'imgSizes: ' + JSON.stringify( imgSizes, null, 2 ) + '\n' );
 
+        // console.log( 'Hello from deprecation v1 save()!' )
+        // const media = useSelect( () => select( 'core' ).getMedia( imgId ) );
+        // console.log( '--> media( ' + imgId + ' ): ' + JSON.stringify( media, null, 2 ) + '\n' );
 
 
         // initial set, replaces old attr 'imgSizes'
@@ -432,6 +469,8 @@ const v1 = {
                 }
             </>
         );
+
+        // console.log( 'return deprecated v1 save()' )
 
         return (
             <>

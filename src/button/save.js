@@ -32,6 +32,8 @@ export default function save( { attributes } ) {
         marginAfter,
         ignoreMailtoSpamProtection,
         disabled,
+        type,
+        onclick,
     } = attributes;
 
     const checkEmail = isEmailFormat( href );
@@ -79,9 +81,12 @@ export default function save( { attributes } ) {
         'data-mt-s': ! ignoreMailtoSpamProtection && hrefIsEmail ? checkEmail.suffix : '',
         target: target, 
         rel: href ? ( rel ? rel + ' noopener noreferrer' : 'noopener noreferrer' ) : '',
-        'disabled': ! href && disabled
+        'disabled': ! href && disabled,
+        type: type,
+        onclick: onclick,
     } );
 
+    // text-link is only styles a and not a button
     const TagName = href || state == 'text-link' ? 'a' : 'button';
 
 	return (

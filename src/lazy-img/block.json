@@ -64,8 +64,8 @@
 			"type": "string"
 		},
 		"figcaption": {
-			"type": "array",
-			"source": "children",
+			"type": "string",
+			"source": "html",
 			"selector": "figcaption"
 		},
 		"rounded": {

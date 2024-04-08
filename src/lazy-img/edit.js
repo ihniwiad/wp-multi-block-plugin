@@ -19,7 +19,7 @@ import {
     SVG, 
     Path,
 } from '@wordpress/components';
-// import { useSelect } from '@wordpress/data';
+import { select, useSelect } from '@wordpress/data';
 // import { store as blockEditorStore } from '@wordpress/block-editor';
 
 
@@ -143,6 +143,21 @@ export default function Edit( { attributes, setAttributes } ) {
 
     const calcImgSizes = hasOldAttrImgSizes ? imgSizes : makeImgSizesFromImgData( imgData );
     const calcPortraitImgSizes = hasOldAttrPortraitImgSizes ? portraitImgSizes : makeImgSizesFromImgData( portraitImgData );
+
+
+    // console.log( 'Hello from edit()!' )
+    // const imgObj = wp.data.select( 'core' ).getMedia( imgId );
+    // const media = useSelect(
+    //     select => select( 'core' ).getMedia( imgId ),
+    //     [ imgId ],
+    // );
+    // const media = useSelect( () => select( 'core' ).getMedia( imgId ) );
+    // // media_details
+    // // sizes
+    // console.log( '--> media( ' + imgId + ' ): ' + JSON.stringify( media, null, 2 ) + '\n' );
+
+    // console.log( 'imgSizes (deprecated): ' + JSON.stringify( imgSizes, null, 2 ) + '\n' );
+    // console.log( 'calcImgSizes: ' + JSON.stringify( calcImgSizes, null, 2 ) + '\n' );
 
     // if ( imgId ) console.log( 'imgId: ' + imgId )
     // if ( imgSizeIndex ) console.log( 'imgSizeIndex: ' + imgSizeIndex )

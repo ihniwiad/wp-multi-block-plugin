@@ -477,6 +477,26 @@ export const forInput = ( value, onChangeFunction ) => {
     )
 }
 
+export const typeInput = ( value, onChangeFunction ) => {
+    return (
+        <TextControl 
+            label={ __( 'type (optional)', 'bsx-blocks' ) }
+            value={ value } 
+            onChange={ onChangeFunction }
+        />
+    )
+}
+
+export const onclickInput = ( value, onChangeFunction ) => {
+    return (
+        <TextControl 
+            label={ __( 'Onclick (optional)', 'bsx-blocks' ) }
+            value={ value } 
+            onChange={ onChangeFunction }
+        />
+    )
+}
+
 
 // selects
 

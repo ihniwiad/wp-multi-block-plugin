@@ -11,16 +11,18 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
+import { groups as icon } from './../_functions/icon';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
 
+// import deprecated from './deprecated';
+
 /**
- * Every block starts by registering a new block type definition.
- *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType( metadata.name, {
+	icon,
 	edit: Edit,
 	save,
 } );
