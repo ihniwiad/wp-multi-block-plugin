@@ -263,6 +263,47 @@ export default function save( { attributes } ) {
 
     // console.log( 'return v2 save()' )
 
+    // const testOutput = (
+    //     <>
+    //         {
+    //             ! noFigureTag ?
+    //             (
+    //                 <figure { ...useBlockProps.save( { ...saveAttributes } ) }>
+    //                     {
+    //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
+    //                             <>
+    //                                 { 
+    //                                     aOrImage
+    //                                 }
+    //                                 {
+    //                                     figcaption && ! RichText.isEmpty( figcaption ) && (
+    //                                         <RichText.Content tagName="figcaption" className="font-italic" value={ figcaption } />
+    //                                     )
+    //                                 }
+    //                             </>
+    //                         )
+    //                     }
+    //                 </figure>
+    //             )
+    //             :
+    //             (
+    //                 <>
+    //                     { 
+    //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
+    //                             <>
+    //                                 {
+    //                                     aOrImage
+    //                                 }
+    //                             </>
+    //                         )
+    //                     }
+    //                 </>
+    //             )
+    //         }
+    //     </>
+    // );
+    // console.log( 'testOutput: ' + JSON.stringify( testOutput, null, 2 ) + '\n' );
+
 	return (
         <>
             {

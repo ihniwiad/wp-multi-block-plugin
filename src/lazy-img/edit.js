@@ -21,6 +21,8 @@ import {
 } from '@wordpress/components';
 import { select, useSelect } from '@wordpress/data';
 // import { store as blockEditorStore } from '@wordpress/block-editor';
+import { store as coreStore } from '@wordpress/core-data';
+import { useEffect } from '@wordpress/element';
 
 
 import { addClassNames } from './../_functions/add-class-names.js';
@@ -53,6 +55,7 @@ import {
     makeBase64PreloadImgSrc,
     makeImgSizesFromImgData,
     makeImgData,
+    getSizeSlugFromUrl
 } from './../_functions/img.js';
 
 
@@ -60,6 +63,7 @@ import {
 import {
 	makeSourcesAttributesList,
 	makeSrcset,
+    getSrcsetUrlsFromImgHtml,
 } from './utils';
 
 
@@ -119,7 +123,24 @@ export default function Edit( { attributes, setAttributes } ) {
         displayedWidth,
         displayedHeight,
         noFigureTag,
+        imgHtml,
     } = attributes;
+
+    // console.log( 'TEST: imgHtml: ' + JSON.stringify( imgHtml, null, 2 ) + '\n' );
+    // function decodeHTMLEntities( text ) {
+    //     var textArea = document.createElement( 'textarea' );
+    //     textArea.innerHTML = text;
+    //     return textArea.value;
+    // }
+    // const parser = new DOMParser();
+    // const htmlContent = parser.parseFromString( decodeHTMLEntities( imgHtml ), 'text/html' );
+    // // console.log( 'decodeHTMLEntities( imgHtml ): ' + JSON.stringify( decodeHTMLEntities( imgHtml ), null, 2 ) + '\n' );
+    // var el = document.createElement( 'html' );
+    // el.innerHTML = '<html><head></head><body>' + decodeHTMLEntities( imgHtml ) + '</body></html>';
+
+    // const srcset_ = el.querySelector( 'img' ).getAttribute( 'srcset' ); // Live NodeList of your anchor elements
+    const srcsetUrls = getSrcsetUrlsFromImgHtml( imgHtml ); 
+    console.log( 'srcsetUrls (' + imgId + '): \n' + JSON.stringify( srcsetUrls, null, 2 ) + '\n' );
 
 	// const hasInnerBlocks = () => {
 	// 	const block = getBlock( clientId );
@@ -154,7 +175,90 @@ export default function Edit( { attributes, setAttributes } ) {
     // const media = useSelect( () => select( 'core' ).getMedia( imgId ) );
     // // media_details
     // // sizes
+
+    const media = useSelect(
+        ( select ) =>
+            imgId &&
+            select( coreStore ).getMedia( imgId ),
+        [ imgId ]
+    );
     // console.log( '--> media( ' + imgId + ' ): ' + JSON.stringify( media, null, 2 ) + '\n' );
+
+    // console.log( 'before useEffect' )
+    useEffect( () => {
+        if ( typeof media !== 'undefined' ) {
+            // console.log( '--> media( ' + imgId + ' ): ' + JSON.stringify( media, null, 2 ) + '\n' );
+            // get image sizes data
+            if ( typeof media.media_details !== 'undefined' && typeof media.media_details.sizes !== 'undefined' ) {
+                const mediaSizes = media.media_details.sizes;
+                // console.log( '--> mediaSizes ( ' + imgId + ' ): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+
+                // update attributes
+                if ( hasOldAttrImgSizes ) {
+                    console.log( 'hasOldAttrImgSizes' )
+                    // console.log( '----> Object.values( mediaSizes )[ Object.keys( mediaSizes ).length - 1 ].source_url: ' + JSON.stringify( Object.values( mediaSizes )[ Object.keys( mediaSizes ).length - 1 ].source_url, null, 2 ) + '\n' );
+                    
+                    const returnImgs = [];
+                    const largestMediaSize = Object.values( mediaSizes )[ Object.keys( mediaSizes ).length - 1 ];
+                    Object.values( mediaSizes ).forEach( ( mediaSize ) => {
+                        returnImgs.push( {
+                            url: mediaSize.source_url,
+                            sizeSlug: getSizeSlugFromUrl( mediaSize.source_url, largestMediaSize.source_url ),
+                            width: mediaSize.width,
+                            height: mediaSize.height, 
+                        } );
+                    } );
+
+
+                    // console.log( '----> returnImgs ( ' + imgId + ' ): ' + JSON.stringify( returnImgs, null, 2 ) + '\n' );
+
+                    const originalImgUrlTruncAndExt = getUrlTruncAndExtension( largestMediaSize.source_url );
+                    const truncWithoutSizeSlug = originalImgUrlTruncAndExt.trunc;
+                    const fileExt = originalImgUrlTruncAndExt.extension;
+
+                    // console.log( '----> truncWithoutSizeSlug ( ' + imgId + ' ): ' + JSON.stringify( truncWithoutSizeSlug, null, 2 ) + '\n' );
+                    // console.log( '----> fileExt ( ' + imgId + ' ): ' + JSON.stringify( fileExt, null, 2 ) + '\n' );
+                    
+                    const newImgData = makeImgData( returnImgs, truncWithoutSizeSlug, fileExt );
+                    console.log( '----> newImgData ( ' + imgId + ' ): ' + JSON.stringify( newImgData, null, 2 ) + '\n' );
+
+                    // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
+
+
+                    console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
+                    
+                    // // update to new attributes, remove old ones
+                    // setAttributes( {
+                    //     imgSizes: '', // save empty, replaced by imgData
+                    //     imgData: newImgData,
+                    //     imgSizeIndex: ( imgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString(), // small image sizes might be missing in old data due to bug
+                    //     url: '', // save empty, replaced by imgData
+                    //     width: '', // save empty, replaced by imgDat
+                    //     height: '', // save empty, replaced by imgDat
+                    //     origWidth: largestMediaSize.width,
+                    //     origHeight: largestMediaSize.height,
+                    //     zoomImgSizeIndex: ( zoomImgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString(), // small image sizes might be missing in old data due to bug,
+                    // } );
+                }
+                else {
+                    console.log( 'imgData up 2 date' )
+                }
+
+
+                if ( hasOldAttrPortraitImgSizes ) {
+                    console.log( 'hasOldAttrPortraitImgSizes' )
+                }
+                else {
+                    console.log( 'portraitImgData up 2 date' )
+                }
+
+
+            }
+        }                   
+    } );
+    // console.log( 'after useEffect' )
+
+
 
     // console.log( 'imgSizes (deprecated): ' + JSON.stringify( imgSizes, null, 2 ) + '\n' );
     // console.log( 'calcImgSizes: ' + JSON.stringify( calcImgSizes, null, 2 ) + '\n' );

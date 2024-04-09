@@ -1,3 +1,32 @@
+export const getSrcsetUrlsFromImgHtml = ( imgHtml ) => {
+
+    function decodeHTMLEntities( text ) {
+        var textArea = document.createElement( 'textarea' );
+        textArea.innerHTML = text;
+        return textArea.value;
+    }
+
+    const parser = new DOMParser();
+    const htmlContent = parser.parseFromString( decodeHTMLEntities( imgHtml ), 'text/html' );
+    // console.log( 'decodeHTMLEntities( imgHtml ): ' + JSON.stringify( decodeHTMLEntities( imgHtml ), null, 2 ) + '\n' );
+    var el = document.createElement( 'html' );
+    el.innerHTML = '<html><head></head><body>' + decodeHTMLEntities( imgHtml ) + '</body></html>';
+
+    // 
+    if ( el.querySelector( 'img' ) === null || ! el.querySelector( 'img' ).getAttribute( 'srcset' ) ) return [];
+
+    const srcset = el.querySelector( 'img' ).getAttribute( 'srcset' ); // Live NodeList of your anchor elements
+    // console.log( 'srcset: \n' + JSON.stringify( srcset, null, 2 ) + '\n' );
+
+    const srcsetArr = srcset.split( ',' );
+    const sourcesList = srcsetArr.map( ( sourceText ) => {
+        return sourceText.trim().split( ' ' )[ 0 ];
+    } );
+
+    return sourcesList;
+}
+
+
 export const makeSourcesAttributesList = ( attributes ) => {
 
     const {

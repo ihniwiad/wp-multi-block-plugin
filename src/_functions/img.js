@@ -57,6 +57,7 @@ export function removeFileExt( fullUrl ) {
 }
 
 export function getSizeSlugFromUrl( fullUrl, originalImgUrl ) {
+    // console.log( '------> fullUrl: ' + fullUrl + ', originalImgUrl: ' + originalImgUrl )
 
     const sizeSlugWithFileExt = fullUrl.replace( removeFileExt( originalImgUrl ), '' );
 

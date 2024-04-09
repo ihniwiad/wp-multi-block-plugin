@@ -19,7 +19,8 @@ import {
     SVG, 
     Path,
 } from '@wordpress/components';
-import { select, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 
 
 // functions imports
@@ -151,6 +152,17 @@ const makeSourcesAttributesList = ( attributes ) => {
     return sourcesAttributesList;
 
 }
+
+async function getImgObjFromId( imgId ) {
+    const media = useSelect(
+        select => {
+            const media = select( blockEditorStore ).getMedia( imgId, { context: 'view' } ); // undefined
+            return media;
+        },
+        [ imgId ]
+    )
+}
+
 // /v1 functions
 
 
@@ -351,6 +363,29 @@ const v1 = {
         } = props;
 
         // console.log( 'Hello from deprecation v1 save()!' )
+
+        // const id = imgId;
+        // const imageSizes = useSelect(
+        //     ( select ) => {
+        //         // return {
+        //         //     imageSizes: select( "core/editor" ).getEditorSettings().imageSizes,
+        //         //     image: id ? select( "core" ).getMedia( id ) : null,
+        //         // };
+        //     },
+        //     [ id ]
+        // );
+        
+        // const media = useSelect(
+        //     select => select( 'core' ).getMedia( imgId ),
+        //     [ imgId ],
+        // );
+        // console.log( 'media: ' + JSON.stringify( media, null, 2 ) + '\n' );
+
+        // const async function awaitImg( imgId ) {
+        //     const imgTestData = await getImgObjFromId( imgId );
+        //     return imgTestData;
+        // }
+        // console.log( 'awaitImg( imgId ): ' + JSON.stringify( awaitImg( imgId ), null, 2 ) + '\n' );
 
         // TEST
         // console.log( 'imgData: ' + JSON.stringify( imgData, null, 2 ) );

@@ -133,6 +133,11 @@
 		},
 		"noFigureTag": {
 			"type": "boolean"
+		},
+		"imgHtml": {
+            "type": "string",
+            "source": "html",
+            "selector": "noscript"
 		}
 	},
 	"supports": {
