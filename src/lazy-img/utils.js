@@ -1,3 +1,157 @@
+import { 
+    // getUrlTruncAndExtension,
+    // fullImgIsScaled,
+    // getOriginalImgUrl,
+    // getSizesAndWithoutSizesTruncFromUrlTrunc,
+    // makeSizedImgs,
+    // getImgWithHeight,
+    // imgExists,
+    // getImgSizesData,
+    makeBase64PreloadImgSrc,
+    // makeImgSizesFromImgData,
+    makeImgData,
+    // getSizeSlugFromUrl,
+    getImgAllDataFromMediaSizes,
+} from './../_functions/img.js';
+
+
+export function migrateToLazyimgV2( attributes, data, mediaSizes ) {
+    
+    const {
+        imgId,
+        imgSizes,
+        imgData,
+        imgSizeIndex,
+        url,
+        // width,
+        // height,
+        origWidth,
+        origHeight,
+        portraitImgId,
+        portraitImgSizes,
+        portraitImgData,
+        portraitImgSizeIndex,
+        portraitImgMaxWidthBreakpoint,
+        alt,
+        figcaption,
+        rounded,
+        imgThumbnail,
+        borderState,
+        zoomable,
+        externalGalleryParent,
+        zoomImgSizeIndex,
+        disableResponsiveDownsizing,
+        textAlign,
+        marginBefore,
+        marginAfter,
+        marginLeft,
+        marginRight,
+        aAdditionalClassName,
+        pictureAdditionalClassName,
+        imgAdditionalClassName,
+        href,
+        target,
+        rel,
+        scale,
+        displayedWidth,
+        displayedHeight,
+        noFigureTag,
+        imgHtml,
+    } = attributes;
+
+    const {
+        hasOldAttrImgSizes,
+        hasOldAttrPortraitImgSizes,
+        calcImgSizes,
+        calcPortraitImgSizes,
+    } = data;
+
+
+    console.log( '---- migrateToLazyimgV2()' );
+    console.log( '---- mediaSizes migrateToLazyimgV2() (' + imgId + '): \n' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+
+    // const newAttributes = {};
+
+
+    // console.log( '--> media( ' + imgId + ' ): ' + JSON.stringify( media, null, 2 ) + '\n' );
+    // get image sizes data
+    if ( typeof mediaSizes === 'undefined' ) {
+        return;
+    }
+
+
+    // const mediaSizes = media.media_details.sizes;
+    // console.log( '--> mediaSizes ( ' + imgId + ' ): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+
+    const newImgAllData = getImgAllDataFromMediaSizes( mediaSizes );
+    const originalWidth = newImgAllData.originalWidth;
+    const originalHeight = newImgAllData.originalHeight;
+    const returnImgs = newImgAllData.imgs;
+    console.log( '----> newImgAllData ( ' + imgId + ' ): ' + JSON.stringify( newImgAllData, null, 2 ) + '\n' );
+
+    // const newImgData = makeImgData( returnImgs, truncWithoutSizeSlug, fileExt );
+    const newImgData = makeImgData( newImgAllData.imgs, newImgAllData.truncWithoutSizeSlug, newImgAllData.fileExt );
+    // console.log( '----> newImgData ( ' + imgId + ' ): ' + JSON.stringify( newImgData, null, 2 ) + '\n' );
+
+    // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
+
+
+    console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
+
+
+    // TODO: check imgSizeIndex more complex
+
+    const imgIsBetween770And1024 = originalWidth <= 1024 && originalHeight >= 770;
+    console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
+    let newImgSizeIndex = imgSizeIndex;
+    let newZoomImgSizeIndex = zoomImgSizeIndex;
+    // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
+    // now there are all image sizes so we might need to increase imgSizeIndex
+    if ( imgIsBetween770And1024 ) {
+        // check to change imgSizeIndex
+        if ( parseInt( imgSizeIndex ) >= 2 ) {
+            newImgSizeIndex = ( imgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+        }
+        if ( parseInt( newZoomImgSizeIndex ) >= 2 ) {
+            newZoomImgSizeIndex = ( zoomImgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+        }
+    }
+    console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
+    console.log( '------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex )
+    
+    // update to new attributes, remove old ones
+    // setAttributes( {
+    //     imgSizes: '', // save empty, replaced by imgData
+    //     imgData: newImgData,
+    //     imgSizeIndex: newImgSizeIndex,
+    //     url: '', // save empty, replaced by imgData
+    //     width: '', // save empty, replaced by imgDat
+    //     height: '', // save empty, replaced by imgDat
+    //     origWidth: originalWidth,
+    //     origHeight: originalHeight,
+    //     zoomImgSizeIndex: newZoomImgSizeIndex,
+    // } );
+
+    const newAttributes = {
+        imgSizes: '', // save empty, replaced by imgData
+        imgData: newImgData,
+        imgSizeIndex: newImgSizeIndex,
+        url: '', // save empty, replaced by imgData
+        width: '', // save empty, replaced by imgDat
+        height: '', // save empty, replaced by imgDat
+        origWidth: originalWidth,
+        origHeight: originalHeight,
+        zoomImgSizeIndex: newZoomImgSizeIndex,
+    };
+
+    // console.log( 'otherAttributes: \n' + JSON.stringify( otherAttributes, null, 2 ) );
+
+    return [
+        { ...newAttributes },
+    ];
+}
+
+
 export const getSrcsetUrlsFromImgHtml = ( imgHtml ) => {
 
     function decodeHTMLEntities( text ) {

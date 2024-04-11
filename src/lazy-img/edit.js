@@ -19,10 +19,16 @@ import {
     SVG, 
     Path,
 } from '@wordpress/components';
-import { select, useSelect } from '@wordpress/data';
-// import { store as blockEditorStore } from '@wordpress/block-editor';
+import {
+    useDispatch,
+    useRegistry,
+    select,
+    useSelect,
+    withSelect,
+} from '@wordpress/data';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 import { store as coreStore } from '@wordpress/core-data';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 
 
 import { addClassNames } from './../_functions/add-class-names.js';
@@ -55,7 +61,8 @@ import {
     makeBase64PreloadImgSrc,
     makeImgSizesFromImgData,
     makeImgData,
-    getSizeSlugFromUrl
+    getSizeSlugFromUrl,
+    getImgAllDataFromMediaSizes,
 } from './../_functions/img.js';
 
 
@@ -64,6 +71,7 @@ import {
 	makeSourcesAttributesList,
 	makeSrcset,
     getSrcsetUrlsFromImgHtml,
+    migrateToLazyimgV2,
 } from './utils';
 
 
@@ -75,12 +83,189 @@ import {
  */
 // import './editor.scss';
 
+
+function useMigrateOnLoad( attributes, clientId, data, mediaSizes ) {
+    
+    console.log( 'useMigrateOnLoad()' )
+
+    const {
+        imgId,
+        imgSizes,
+        imgData,
+        imgSizeIndex,
+        url,
+        // width,
+        // height,
+        origWidth,
+        origHeight,
+        portraitImgId,
+        portraitImgSizes,
+        portraitImgData,
+        portraitImgSizeIndex,
+        portraitImgMaxWidthBreakpoint,
+        alt,
+        figcaption,
+        rounded,
+        imgThumbnail,
+        borderState,
+        zoomable,
+        externalGalleryParent,
+        zoomImgSizeIndex,
+        disableResponsiveDownsizing,
+        textAlign,
+        marginBefore,
+        marginAfter,
+        marginLeft,
+        marginRight,
+        aAdditionalClassName,
+        pictureAdditionalClassName,
+        imgAdditionalClassName,
+        href,
+        target,
+        rel,
+        scale,
+        displayedWidth,
+        displayedHeight,
+        noFigureTag,
+        imgHtml,
+    } = attributes;
+
+    const {
+        hasOldAttrImgSizes,
+        hasOldAttrPortraitImgSizes,
+        calcImgSizes,
+        calcPortraitImgSizes,
+    } = data;
+
+
+    if ( ! mediaSizes ) {
+        return;
+    }
+
+
+    // console.log( 'mediaSizes useMigrateOnLoad() (' + imgId + '): \n' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+
+    const registry = useRegistry();
+    const { updateBlockAttributes } =
+        useDispatch( blockEditorStore );
+
+
+    // const media = useSelect(
+    //     ( select ) =>
+    //         imgId &&
+    //         select( coreStore ).getMedia( imgId ),
+    //     [ imgId ]
+    // );
+
+    // const mediaSizes = media.media_details.sizes;
+    // console.log( '--> mediaSizes ( ' + imgId + ' ): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+
+    const newImgAllData = getImgAllDataFromMediaSizes( mediaSizes );
+    const originalWidth = newImgAllData.originalWidth;
+    const originalHeight = newImgAllData.originalHeight;
+    const returnImgs = newImgAllData.imgs;
+    console.log( '----> newImgAllData ( ' + imgId + ' ): ' + JSON.stringify( newImgAllData, null, 2 ) + '\n' );
+
+    // const newImgData = makeImgData( returnImgs, truncWithoutSizeSlug, fileExt );
+    const newImgData = makeImgData( newImgAllData.imgs, newImgAllData.truncWithoutSizeSlug, newImgAllData.fileExt );
+    // console.log( '----> newImgData ( ' + imgId + ' ): ' + JSON.stringify( newImgData, null, 2 ) + '\n' );
+
+    // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
+
+
+    console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
+
+
+    // TODO: check imgSizeIndex more complex
+
+    const imgIsBetween770And1024 = originalWidth <= 1024 && originalHeight >= 770;
+    console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
+    let newImgSizeIndex = imgSizeIndex;
+    let newZoomImgSizeIndex = zoomImgSizeIndex;
+    // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
+    // now there are all image sizes so we might need to increase imgSizeIndex
+    if ( imgIsBetween770And1024 ) {
+        // check to change imgSizeIndex
+        if ( parseInt( imgSizeIndex ) >= 2 ) {
+            newImgSizeIndex = ( imgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+        }
+        if ( parseInt( newZoomImgSizeIndex ) >= 2 ) {
+            newZoomImgSizeIndex = ( zoomImgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+        }
+    }
+    console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
+    console.log( '------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex )
+    
+    // update to new attributes, remove old ones
+    // setAttributes( {
+    //     imgSizes: '', // save empty, replaced by imgData
+    //     imgData: newImgData,
+    //     imgSizeIndex: newImgSizeIndex,
+    //     url: '', // save empty, replaced by imgData
+    //     width: '', // save empty, replaced by imgDat
+    //     height: '', // save empty, replaced by imgDat
+    //     origWidth: originalWidth,
+    //     origHeight: originalHeight,
+    //     zoomImgSizeIndex: newZoomImgSizeIndex,
+    // } );
+
+
+    // useEffect( () => {
+        // As soon as the block is loaded, migrate it to the new version.
+
+        // if ( ! mediaSizes ) {
+        //     return;
+        // }
+
+
+        // if ( mediaSizes ) {
+        //     console.log( '____ mediaSizes == true' )
+
+
+        //     const [ newAttributes ] = migrateToLazyimgV2( attributes, data, mediaSizes );
+
+        //     registry.batch( () => {
+        //         updateBlockAttributes( clientId, newAttributes );
+        //     } );
+        // }
+        // else {
+        //     console.log( '____ mediaSizes == false' )
+        // }
+
+
+
+        // if ( ! mediaSizes ) {
+        //     return;
+        // }
+
+        // const [ newAttributes ] = migrateToLazyimgV2( attributes, data, mediaSizes );
+        const newAttributes = {
+            imgSizes: '', // save empty, replaced by imgData
+            imgData: newImgData,
+            imgSizeIndex: newImgSizeIndex,
+            url: '', // save empty, replaced by imgData
+            width: '', // save empty, replaced by imgDat
+            height: '', // save empty, replaced by imgDat
+            origWidth: originalWidth,
+            origHeight: originalHeight,
+            zoomImgSizeIndex: newZoomImgSizeIndex,
+        };
+
+        registry.batch( () => {
+            updateBlockAttributes( clientId, newAttributes );
+        } );
+
+    // }, [ attributes ] );
+}
+
+
 /**
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
  *
  * @return {Element} Element to render.
  */
-export default function Edit( { attributes, setAttributes } ) {
+// export default function Edit( { attributes, setAttributes, clientId } ) {
+function Edit( { attributes, setAttributes, clientId, mediaSizes } ) {
 
 	// const { getBlock } = useSelect( blockEditorStore );
 
@@ -126,21 +311,11 @@ export default function Edit( { attributes, setAttributes } ) {
         imgHtml,
     } = attributes;
 
-    // console.log( 'TEST: imgHtml: ' + JSON.stringify( imgHtml, null, 2 ) + '\n' );
-    // function decodeHTMLEntities( text ) {
-    //     var textArea = document.createElement( 'textarea' );
-    //     textArea.innerHTML = text;
-    //     return textArea.value;
-    // }
-    // const parser = new DOMParser();
-    // const htmlContent = parser.parseFromString( decodeHTMLEntities( imgHtml ), 'text/html' );
-    // // console.log( 'decodeHTMLEntities( imgHtml ): ' + JSON.stringify( decodeHTMLEntities( imgHtml ), null, 2 ) + '\n' );
-    // var el = document.createElement( 'html' );
-    // el.innerHTML = '<html><head></head><body>' + decodeHTMLEntities( imgHtml ) + '</body></html>';
 
-    // const srcset_ = el.querySelector( 'img' ).getAttribute( 'srcset' ); // Live NodeList of your anchor elements
-    const srcsetUrls = getSrcsetUrlsFromImgHtml( imgHtml ); 
-    console.log( 'srcsetUrls (' + imgId + '): \n' + JSON.stringify( srcsetUrls, null, 2 ) + '\n' );
+    // console.log( 'mediaSizes Edit() (' + imgId + '): \n' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+
+    // const srcsetUrls = getSrcsetUrlsFromImgHtml( imgHtml ); 
+    // console.log( 'srcsetUrls (' + imgId + '): \n' + JSON.stringify( srcsetUrls, null, 2 ) + '\n' );
 
 	// const hasInnerBlocks = () => {
 	// 	const block = getBlock( clientId );
@@ -167,96 +342,248 @@ export default function Edit( { attributes, setAttributes } ) {
 
 
     // console.log( 'Hello from edit()!' )
-    // const imgObj = wp.data.select( 'core' ).getMedia( imgId );
-    // const media = useSelect(
-    //     select => select( 'core' ).getMedia( imgId ),
-    //     [ imgId ],
-    // );
-    // const media = useSelect( () => select( 'core' ).getMedia( imgId ) );
-    // // media_details
-    // // sizes
 
-    const media = useSelect(
-        ( select ) =>
-            imgId &&
-            select( coreStore ).getMedia( imgId ),
-        [ imgId ]
-    );
-    // console.log( '--> media( ' + imgId + ' ): ' + JSON.stringify( media, null, 2 ) + '\n' );
+    // migrate deprecated attributes to new once
 
-    // console.log( 'before useEffect' )
-    useEffect( () => {
-        if ( typeof media !== 'undefined' ) {
-            // console.log( '--> media( ' + imgId + ' ): ' + JSON.stringify( media, null, 2 ) + '\n' );
-            // get image sizes data
-            if ( typeof media.media_details !== 'undefined' && typeof media.media_details.sizes !== 'undefined' ) {
-                const mediaSizes = media.media_details.sizes;
-                // console.log( '--> mediaSizes ( ' + imgId + ' ): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
-
-                // update attributes
-                if ( hasOldAttrImgSizes ) {
-                    console.log( 'hasOldAttrImgSizes' )
-                    // console.log( '----> Object.values( mediaSizes )[ Object.keys( mediaSizes ).length - 1 ].source_url: ' + JSON.stringify( Object.values( mediaSizes )[ Object.keys( mediaSizes ).length - 1 ].source_url, null, 2 ) + '\n' );
-                    
-                    const returnImgs = [];
-                    const largestMediaSize = Object.values( mediaSizes )[ Object.keys( mediaSizes ).length - 1 ];
-                    Object.values( mediaSizes ).forEach( ( mediaSize ) => {
-                        returnImgs.push( {
-                            url: mediaSize.source_url,
-                            sizeSlug: getSizeSlugFromUrl( mediaSize.source_url, largestMediaSize.source_url ),
-                            width: mediaSize.width,
-                            height: mediaSize.height, 
-                        } );
-                    } );
+    const registry = useRegistry();
+    const { updateBlockAttributes } =
+        useDispatch( blockEditorStore );
 
 
-                    // console.log( '----> returnImgs ( ' + imgId + ' ): ' + JSON.stringify( returnImgs, null, 2 ) + '\n' );
 
-                    const originalImgUrlTruncAndExt = getUrlTruncAndExtension( largestMediaSize.source_url );
-                    const truncWithoutSizeSlug = originalImgUrlTruncAndExt.trunc;
-                    const fileExt = originalImgUrlTruncAndExt.extension;
+    // class names
 
-                    // console.log( '----> truncWithoutSizeSlug ( ' + imgId + ' ): ' + JSON.stringify( truncWithoutSizeSlug, null, 2 ) + '\n' );
-                    // console.log( '----> fileExt ( ' + imgId + ' ): ' + JSON.stringify( fileExt, null, 2 ) + '\n' );
-                    
-                    const newImgData = makeImgData( returnImgs, truncWithoutSizeSlug, fileExt );
-                    console.log( '----> newImgData ( ' + imgId + ' ): ' + JSON.stringify( newImgData, null, 2 ) + '\n' );
-
-                    // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
-
-
-                    console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
-                    
-                    // // update to new attributes, remove old ones
-                    // setAttributes( {
-                    //     imgSizes: '', // save empty, replaced by imgData
-                    //     imgData: newImgData,
-                    //     imgSizeIndex: ( imgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString(), // small image sizes might be missing in old data due to bug
-                    //     url: '', // save empty, replaced by imgData
-                    //     width: '', // save empty, replaced by imgDat
-                    //     height: '', // save empty, replaced by imgDat
-                    //     origWidth: largestMediaSize.width,
-                    //     origHeight: largestMediaSize.height,
-                    //     zoomImgSizeIndex: ( zoomImgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString(), // small image sizes might be missing in old data due to bug,
-                    // } );
-                }
-                else {
-                    console.log( 'imgData up 2 date' )
-                }
-
-
-                if ( hasOldAttrPortraitImgSizes ) {
-                    console.log( 'hasOldAttrPortraitImgSizes' )
-                }
-                else {
-                    console.log( 'portraitImgData up 2 date' )
-                }
-
-
-            }
-        }                   
+    const classNames = addClassNames( {
+        textAlign,
+        marginBefore,
+        marginAfter,
+        marginLeft,
+        marginRight,
     } );
-    // console.log( 'after useEffect' )
+
+    const blockProps = useBlockProps( { className: classNames } );
+
+    // update attributes
+    if ( hasOldAttrImgSizes ) {
+        console.log( 'hasOldAttrImgSizes' )
+
+        const data = {
+            hasOldAttrImgSizes,
+            hasOldAttrPortraitImgSizes,
+            calcImgSizes,
+            calcPortraitImgSizes,
+        };
+        useMigrateOnLoad( attributes, clientId, data, mediaSizes )
+
+        // const media = useSelect(
+        //     ( select ) =>
+        //         imgId &&
+        //         select( coreStore ).getMedia( imgId ),
+        //     [ imgId ]
+        // );
+
+
+        // useEffect( () => {
+        //     ( async () => {
+        //         if ( typeof media !== 'undefined' ) {
+        //             const mediaSizes = media.media_details.sizes;
+        //             // console.log( '--> mediaSizes ( ' + imgId + ' ): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+
+        //             const newImgAllData = getImgAllDataFromMediaSizes( mediaSizes );
+        //             const originalWidth = newImgAllData.originalWidth;
+        //             const originalHeight = newImgAllData.originalHeight;
+        //             const returnImgs = newImgAllData.imgs;
+        //             console.log( '----> newImgAllData ( ' + imgId + ' ): ' + JSON.stringify( newImgAllData, null, 2 ) + '\n' );
+
+        //             // const newImgData = makeImgData( returnImgs, truncWithoutSizeSlug, fileExt );
+        //             const newImgData = makeImgData( newImgAllData.imgs, newImgAllData.truncWithoutSizeSlug, newImgAllData.fileExt );
+        //             // console.log( '----> newImgData ( ' + imgId + ' ): ' + JSON.stringify( newImgData, null, 2 ) + '\n' );
+
+        //             // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
+
+
+        //             console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
+
+
+        //             // TODO: check imgSizeIndex more complex
+
+        //             const imgIsBetween770And1024 = originalWidth <= 1024 && originalHeight >= 770;
+        //             console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
+        //             let newImgSizeIndex = imgSizeIndex;
+        //             let newZoomImgSizeIndex = zoomImgSizeIndex;
+        //             // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
+        //             // now there are all image sizes so we might need to increase imgSizeIndex
+        //             if ( imgIsBetween770And1024 ) {
+        //                 // check to change imgSizeIndex
+        //                 if ( parseInt( imgSizeIndex ) >= 2 ) {
+        //                     newImgSizeIndex = ( imgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+        //                 }
+        //                 if ( parseInt( newZoomImgSizeIndex ) >= 2 ) {
+        //                     newZoomImgSizeIndex = ( zoomImgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+        //                 }
+        //             }
+        //             console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
+        //             console.log( '------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex )
+                    
+        //             // update to new attributes, remove old ones
+        //             setAttributes( {
+        //                 imgSizes: '', // save empty, replaced by imgData
+        //                 imgData: newImgData,
+        //                 imgSizeIndex: newImgSizeIndex,
+        //                 url: '', // save empty, replaced by imgData
+        //                 width: '', // save empty, replaced by imgDat
+        //                 height: '', // save empty, replaced by imgDat
+        //                 origWidth: originalWidth,
+        //                 origHeight: originalHeight,
+        //                 zoomImgSizeIndex: newZoomImgSizeIndex,
+        //             } );
+        //         }
+        //         else {
+        //             console.log( 'media is undefined' )
+        //         }
+
+        //     } )();
+        //     // Disable reason: Update the block only when the featured image changes.
+        //     // eslint-disable-next-line react-hooks/exhaustive-deps
+        // }, [ media ] );
+
+
+
+
+        // useEffect( () => {
+        //     // wait for media to be defined
+        //     if ( typeof media !== 'undefined' ) {
+        //         // console.log( '--> media( ' + imgId + ' ): ' + JSON.stringify( media, null, 2 ) + '\n' );
+        //         // get image sizes data
+        //         if ( typeof media.media_details !== 'undefined' && typeof media.media_details.sizes !== 'undefined' ) {
+        //             const mediaSizes = media.media_details.sizes;
+        //             // console.log( '--> mediaSizes ( ' + imgId + ' ): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+
+        //             const newImgAllData = getImgAllDataFromMediaSizes( mediaSizes );
+        //             const originalWidth = newImgAllData.originalWidth;
+        //             const originalHeight = newImgAllData.originalHeight;
+        //             const returnImgs = newImgAllData.imgs;
+        //             console.log( '----> newImgAllData ( ' + imgId + ' ): ' + JSON.stringify( newImgAllData, null, 2 ) + '\n' );
+
+        //             // const newImgData = makeImgData( returnImgs, truncWithoutSizeSlug, fileExt );
+        //             const newImgData = makeImgData( newImgAllData.imgs, newImgAllData.truncWithoutSizeSlug, newImgAllData.fileExt );
+        //             // console.log( '----> newImgData ( ' + imgId + ' ): ' + JSON.stringify( newImgData, null, 2 ) + '\n' );
+
+        //             // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
+
+
+        //             console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
+
+
+        //             // TODO: check imgSizeIndex more complex
+
+        //             const imgIsBetween770And1024 = originalWidth <= 1024 && originalHeight >= 770;
+        //             console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
+        //             let newImgSizeIndex = imgSizeIndex;
+        //             let newZoomImgSizeIndex = zoomImgSizeIndex;
+        //             // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
+        //             // now there are all image sizes so we might need to increase imgSizeIndex
+        //             if ( imgIsBetween770And1024 ) {
+        //                 // check to change imgSizeIndex
+        //                 if ( parseInt( imgSizeIndex ) >= 2 ) {
+        //                     newImgSizeIndex = ( imgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+        //                 }
+        //                 if ( parseInt( newZoomImgSizeIndex ) >= 2 ) {
+        //                     newZoomImgSizeIndex = ( zoomImgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+        //                 }
+        //             }
+        //             console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
+        //             console.log( '------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex )
+                    
+        //             // // update to new attributes, remove old ones
+        //             // setAttributes( {
+        //             //     imgSizes: '', // save empty, replaced by imgData
+        //             //     imgData: newImgData,
+        //             //     imgSizeIndex: newImgSizeIndex,
+        //             //     url: '', // save empty, replaced by imgData
+        //             //     width: '', // save empty, replaced by imgDat
+        //             //     height: '', // save empty, replaced by imgDat
+        //             //     origWidth: originalWidth,
+        //             //     origHeight: originalHeight,
+        //             //     zoomImgSizeIndex: newZoomImgSizeIndex,
+        //             // } );
+
+
+        //             // blockProps = useBlockProps( { className: classNames } );
+
+        //             // const newAttributes = {
+        //             //     imgSizes: '', // save empty, replaced by imgData
+        //             //     imgData: newImgData,
+        //             //     imgSizeIndex: newImgSizeIndex,
+        //             //     url: '', // save empty, replaced by imgData
+        //             //     width: '', // save empty, replaced by imgDat
+        //             //     height: '', // save empty, replaced by imgDat
+        //             //     origWidth: originalWidth,
+        //             //     origHeight: originalHeight,
+        //             //     zoomImgSizeIndex: newZoomImgSizeIndex,
+        //             // }
+
+        //             // registry.batch( () => {
+        //             //     updateBlockAttributes( clientId, newAttributes );
+        //             // } );
+
+        //         }
+        //     }
+        //     else {
+        //         console.log( 'XXX --> media is undefined' )
+        //     }
+        // } );
+
+    }
+    else {
+        console.log( 'imgData up 2 date' )
+    }
+
+
+    if ( hasOldAttrPortraitImgSizes ) {
+        console.log( 'hasOldAttrPortraitImgSizes' )
+
+
+
+
+    }
+    else {
+        console.log( 'portraitImgData up 2 date' )
+    }
+
+
+    // const ref = useRef();
+    // const image_ = useSelect(
+    //     ( select ) =>
+    //         imgId
+    //             ? select( coreStore ).getMedia( imgId, { context: 'view' } )
+    //             : null,
+    //     [ imgId ]
+    // );
+
+    // const imageSizeOptions = imageSizes
+    //     .filter(
+    //         ( { slug } ) => image_?.media_details?.sizes?.[ slug ]?.source_url
+    //     )
+    //     .map( ( { name, slug } ) => ( { value: slug, label: name } ) );
+
+    // console.log( 'imageSizeOptions: ' + JSON.stringify( imageSizeOptions, null, 2 ) + '\n' );
+
+
+
+    // const featuredImageMedia = useSelect(
+    //     ( select ) =>
+    //         imgId &&
+    //         select( coreStore ).getMedia( imgId, { context: 'view' } ),
+    //     [ imgId ]
+    // );
+
+    // // const featuredImageURL = ''
+    // //     ? featuredImageMedia?.source_url
+    // //     : '';
+    // console.log( 'featuredImageMedia: ' + JSON.stringify( featuredImageMedia, null, 2 ) + '\n' );
+
+
 
 
 
@@ -631,13 +958,13 @@ export default function Edit( { attributes, setAttributes } ) {
 
     // class names
 
-    const classNames = addClassNames( {
-        textAlign,
-        marginBefore,
-        marginAfter,
-        marginLeft,
-        marginRight,
-    } );
+    // const classNames = addClassNames( {
+    //     textAlign,
+    //     marginBefore,
+    //     marginAfter,
+    //     marginLeft,
+    //     marginRight,
+    // } );
 
     const imgClassName = addClassNames( {
         rounded,
@@ -1034,7 +1361,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	);
 
     // add class names to blockProps
-    const blockProps = useBlockProps( { className: imgClassName } );
+    // const blockProps = useBlockProps( { className: imgClassName } );
 	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
 	return (
@@ -1090,3 +1417,10 @@ export default function Edit( { attributes, setAttributes } ) {
 		</>
 	);
 }
+
+export default withSelect( ( select, props ) => {
+    // TODO: check for condition before load mediaSizes, elde do nothing
+    return {
+        mediaSizes: props.attributes.imgId ? select( 'core' ).getMedia( props.attributes.imgId )?.media_details?.sizes : null,
+    };
+} )( Edit );

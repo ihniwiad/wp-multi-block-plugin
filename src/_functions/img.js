@@ -331,6 +331,31 @@ export async function getImgSizesData( img ) {
     };
 }
 
+export const getImgAllDataFromMediaSizes = ( mediaSizes ) => {
+
+    const returnImgs = [];
+    const largestMediaSize = Object.values( mediaSizes )[ Object.keys( mediaSizes ).length - 1 ];
+    Object.values( mediaSizes ).forEach( ( mediaSize ) => {
+        returnImgs.push( {
+            url: mediaSize.source_url,
+            sizeSlug: getSizeSlugFromUrl( mediaSize.source_url, largestMediaSize.source_url ),
+            width: mediaSize.width,
+            height: mediaSize.height, 
+        } );
+    } );
+    // console.log( '----> returnImgs ( ' + imgId + ' ): ' + JSON.stringify( returnImgs, null, 2 ) + '\n' );
+
+    const originalImgUrlTruncAndExt = getUrlTruncAndExtension( largestMediaSize.source_url );
+
+    return {
+        imgs: returnImgs,
+        originalWidth: largestMediaSize.width,
+        originalHeight: largestMediaSize.height,
+        truncWithoutSizeSlug: originalImgUrlTruncAndExt.trunc,
+        fileExt: originalImgUrlTruncAndExt.extension,
+    };
+}
+
 export const makeBase64PreloadImgSrc = ( imgWidth, imgHeight ) => {
     const img = '<svg xmlns="http://www.w3.org/2000/svg" width="' + imgWidth + 'px" height="' + imgHeight + 'px" viewBox="0 0 ' + imgWidth + ' ' + imgHeight + '"><rect fill="none" width="' + imgWidth + '" height="' + imgHeight + '"/></svg>'
     const imgBase64 = btoa( img )
