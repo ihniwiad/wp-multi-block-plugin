@@ -165,16 +165,6 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes, portraitMedia
         useDispatch( blockEditorStore );
 
 
-    // const media = useSelect(
-    //     ( select ) =>
-    //         imgId &&
-    //         select( coreStore ).getMedia( imgId ),
-    //     [ imgId ]
-    // );
-
-    // const mediaSizes = media.media_details.sizes;
-    // console.log( '--> mediaSizes ( ' + imgId + ' ): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
-
     let newAttributes = {};
 
     if ( mediaSizes && imgData.length === 0 ) {
@@ -196,7 +186,7 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes, portraitMedia
 
         // TODO: check imgSizeIndex more complex
 
-        const imgIsBetween770And1024 = originalWidth <= 1024 && originalHeight >= 770;
+        const imgIsBetween770And1024 = originalWidth <= 1024 && originalWidth >= 770;
         console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
         let newImgSizeIndex = typeof imgSizeIndex !== 'undefined' ? imgSizeIndex : imgSizes.length - 1;
         let newZoomImgSizeIndex = zoomImgSizeIndex;
@@ -205,10 +195,10 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes, portraitMedia
         if ( imgIsBetween770And1024 ) {
             // check to change imgSizeIndex
             if ( parseInt( imgSizeIndex ) >= 2 ) {
-                newImgSizeIndex = ( imgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+                newImgSizeIndex = ( parseInt( imgSizeIndex ) + ( returnImgs.length - imgSizes.length ) ).toString();
             }
             if ( parseInt( newZoomImgSizeIndex ) >= 2 ) {
-                newZoomImgSizeIndex = ( zoomImgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+                newZoomImgSizeIndex = ( parseInt( zoomImgSizeIndex ) + ( returnImgs.length - imgSizes.length ) ).toString();
             }
         }
         console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
@@ -236,8 +226,8 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes, portraitMedia
     if ( portraitMediaSizes && portraitImgData.length === 0 ) {
         console.log( '--------> make portrait img attr' )
         const newPortraitImgAllData = getImgAllDataFromMediaSizes( portraitMediaSizes );
-        const portraitOriginalWidth = newPortraitImgAllData.originalWidth;
-        const portraitOriginalHeight = newPortraitImgAllData.originalHeight;
+        // const portraitOriginalWidth = newPortraitImgAllData.originalWidth;
+        // const portraitOriginalHeight = newPortraitImgAllData.originalHeight;
         const portraitReturnImgs = newPortraitImgAllData.imgs;
 
         const newPortraitImgData = makeImgData( newPortraitImgAllData.imgs, newPortraitImgAllData.truncWithoutSizeSlug, newPortraitImgAllData.fileExt );
@@ -247,19 +237,11 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes, portraitMedia
 
         console.log( '------> portraitImgSizes.length: ' + portraitImgSizes.length + ', portraitReturnImgs.length: ' + portraitReturnImgs.length )
 
-
-        // TODO: check imgSizeIndex more complex
-
-        const portraitImgIsBetween770And1024 = portraitOriginalWidth <= 1024 && portraitOriginalHeight >= 770;
-        console.log( 'portraitImgIsBetween770And1024: ' + portraitImgIsBetween770And1024 )
         let newPortraitImgSizeIndex = typeof portraitImgSizeIndex !== 'undefined' ? portraitImgSizeIndex : portraitImgSizes.length - 1;
-        // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
+        // some existing image sizes due to bug in old sizes calculation on protrait formats
         // now there are all image sizes so we might need to increase imgSizeIndex
-        if ( portraitImgIsBetween770And1024 ) {
-            // check to change imgSizeIndex
-            if ( parseInt( portraitImgSizeIndex ) >= 2 ) {
-                newPortraitImgSizeIndex = ( portraitImgSizeIndex + ( portraitReturnImgs.length - portraitImgSizes.length ) ).toString();
-            }
+        if ( parseInt( portraitImgSizeIndex ) >= 2 ) {
+            newPortraitImgSizeIndex = ( parseInt( portraitImgSizeIndex ) + ( portraitReturnImgs.length - portraitImgSizes.length ) ).toString();
         }
         console.log( '------> portraitImgSizeIndex: ' + portraitImgSizeIndex + ', newPortraitImgSizeIndex: ' + newPortraitImgSizeIndex )
     
@@ -274,67 +256,36 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes, portraitMedia
 
     }
 
-    
-    // update to new attributes, remove old ones
-    // setAttributes( {
-    //     imgSizes: '', // save empty, replaced by imgData
-    //     imgData: newImgData,
-    //     imgSizeIndex: newImgSizeIndex,
-    //     url: '', // save empty, replaced by imgData
-    //     width: '', // save empty, replaced by imgDat
-    //     height: '', // save empty, replaced by imgDat
-    //     origWidth: originalWidth,
-    //     origHeight: originalHeight,
-    //     zoomImgSizeIndex: newZoomImgSizeIndex,
-    // } );
-
 
     // useEffect( () => {
         // As soon as the block is loaded, migrate it to the new version.
 
-        // if ( ! mediaSizes ) {
+        // if ( 
+        //     ! mediaSizes 
+        //     || attributes.imgData.length > 0 
+        //     || ! portraitMediaSizes 
+        //     || attributes.portraitImgData.length > 0 
+        // ) {
         //     return;
         // }
 
+        // let newAttributes = migrateToLazyimgV2( attributes, data, mediaSizes, portraitMediaSizes );
 
-        // if ( mediaSizes ) {
-        //     console.log( '____ mediaSizes == true' )
+        // if ( ! imgData || ! portraitImgData ) {
+        if ( ( mediaSizes && imgData.length === 0 ) || ( portraitMediaSizes && portraitImgData.length === 0 ) ) {
+            // stop after both atrributes have been updated to avoid endless loop
 
+            console.log( '>>>>>>>>>>>>>>>>> UPDATE!' )
 
-        //     const [ newAttributes ] = migrateToLazyimgV2( attributes, data, mediaSizes );
-
-        //     registry.batch( () => {
-        //         updateBlockAttributes( clientId, newAttributes );
-        //     } );
-        // }
-        // else {
-        //     console.log( '____ mediaSizes == false' )
-        // }
-
-
-
-        // if ( ! mediaSizes ) {
-        //     return;
-        // }
-
-        // const [ newAttributes ] = migrateToLazyimgV2( attributes, data, mediaSizes );
-
-
-    // if ( ! imgData || ! portraitImgData ) {
-    if ( ( mediaSizes && imgSizeIndex ) || ( portraitMediaSizes && portraitImgSizeIndex ) ) {
-        // stop after both atrributes have been updated to avoid endless loop
-
-        console.log( '>>>>>>>>>>>>>>>>> UPDATE!' )
-
-        registry.batch( () => {
-            updateBlockAttributes( clientId, newAttributes );
-        } );
-    }
+            registry.batch( () => {
+                updateBlockAttributes( clientId, newAttributes );
+            } );
+        }
 
 
 
 
-    // }, [ attributes ] );
+    // }, [ mediaSizes, attributes.imgData, portraitMediaSizes, attributes.portraitImgData ] );
 }
 
 
