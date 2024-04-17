@@ -333,6 +333,10 @@ export async function getImgSizesData( img ) {
 
 export const getImgAllDataFromMediaSizes = ( mediaSizes ) => {
 
+    if ( typeof mediaSizes === 'undefined' ) {
+        return {};
+    }
+
     const returnImgs = [];
     const largestMediaSize = Object.values( mediaSizes )[ Object.keys( mediaSizes ).length - 1 ];
     Object.values( mediaSizes ).forEach( ( mediaSize ) => {
@@ -346,6 +350,16 @@ export const getImgAllDataFromMediaSizes = ( mediaSizes ) => {
     // console.log( '----> returnImgs ( ' + imgId + ' ): ' + JSON.stringify( returnImgs, null, 2 ) + '\n' );
 
     const originalImgUrlTruncAndExt = getUrlTruncAndExtension( largestMediaSize.source_url );
+
+    // sort by width or height
+    if ( largestMediaSize.width > largestMediaSize.height ) {
+        // landscape format, sort by width
+        returnImgs.sort( ( a, b ) => a.width - b.width );
+    }
+    else {
+        // portrait format, sort by height
+        returnImgs.sort( ( a, b ) => a.height - b.height );
+    }
 
     return {
         imgs: returnImgs,

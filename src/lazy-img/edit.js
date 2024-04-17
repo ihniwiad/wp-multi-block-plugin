@@ -84,8 +84,8 @@ import {
 // import './editor.scss';
 
 
-function useMigrateOnLoad( attributes, clientId, data, mediaSizes ) {
-    
+function useMigrateOnLoad( attributes, clientId, data, mediaSizes, portraitMediaSizes ) {
+
     console.log( 'useMigrateOnLoad()' )
 
     const {
@@ -137,13 +137,28 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes ) {
         calcPortraitImgSizes,
     } = data;
 
+    // console.log( '--------> mediaSizes useMigrateOnLoad(): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+    // console.log( '--------> portraitMediaSizes useMigrateOnLoad(): ' + JSON.stringify( portraitMediaSizes, null, 2 ) + '\n' );
+    if ( mediaSizes ) {
+        console.log( '>>>> IMAGE SIZES' )
+    }
+    else {
+        console.log( '>>>> NOT IMAGE SIZES' )
+    }
+    if ( portraitMediaSizes ) {
+        console.log( '>>>> PORTRAIT IMAGE SIZES' )
+    }
+    else {
+        console.log( '>>>> NOT PORTRAIT IMAGE SIZES' )
+    }
 
-    if ( ! mediaSizes ) {
+    if ( ! mediaSizes && ! portraitMediaSizes ) {
         return;
     }
 
 
     // console.log( 'mediaSizes useMigrateOnLoad() (' + imgId + '): \n' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+    // console.log( 'portraitMediaSizes useMigrateOnLoad() (' + imgId + '): \n' + JSON.stringify( portraitMediaSizes, null, 2 ) + '\n' );
 
     const registry = useRegistry();
     const { updateBlockAttributes } =
@@ -160,41 +175,105 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes ) {
     // const mediaSizes = media.media_details.sizes;
     // console.log( '--> mediaSizes ( ' + imgId + ' ): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
 
-    const newImgAllData = getImgAllDataFromMediaSizes( mediaSizes );
-    const originalWidth = newImgAllData.originalWidth;
-    const originalHeight = newImgAllData.originalHeight;
-    const returnImgs = newImgAllData.imgs;
-    console.log( '----> newImgAllData ( ' + imgId + ' ): ' + JSON.stringify( newImgAllData, null, 2 ) + '\n' );
+    let newAttributes = {};
 
-    // const newImgData = makeImgData( returnImgs, truncWithoutSizeSlug, fileExt );
-    const newImgData = makeImgData( newImgAllData.imgs, newImgAllData.truncWithoutSizeSlug, newImgAllData.fileExt );
-    // console.log( '----> newImgData ( ' + imgId + ' ): ' + JSON.stringify( newImgData, null, 2 ) + '\n' );
+    if ( mediaSizes && imgData.length === 0 ) {
+        const newImgAllData = getImgAllDataFromMediaSizes( mediaSizes );
+        const originalWidth = newImgAllData.originalWidth;
+        const originalHeight = newImgAllData.originalHeight;
+        const returnImgs = newImgAllData.imgs;
+        // console.log( '----> newImgAllData useMigrateOnLoad() ( ' + imgId + ' ): ' + JSON.stringify( newImgAllData, null, 2 ) + '\n' );
 
-    // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
+        // const newImgData = makeImgData( returnImgs, truncWithoutSizeSlug, fileExt );
+        const newImgData = makeImgData( newImgAllData.imgs, newImgAllData.truncWithoutSizeSlug, newImgAllData.fileExt );
+        // console.log( '----> newImgData ( ' + imgId + ' ): ' + JSON.stringify( newImgData, null, 2 ) + '\n' );
+
+        // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
 
 
-    console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
+        console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
 
 
-    // TODO: check imgSizeIndex more complex
+        // TODO: check imgSizeIndex more complex
 
-    const imgIsBetween770And1024 = originalWidth <= 1024 && originalHeight >= 770;
-    console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
-    let newImgSizeIndex = imgSizeIndex;
-    let newZoomImgSizeIndex = zoomImgSizeIndex;
-    // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
-    // now there are all image sizes so we might need to increase imgSizeIndex
-    if ( imgIsBetween770And1024 ) {
-        // check to change imgSizeIndex
-        if ( parseInt( imgSizeIndex ) >= 2 ) {
-            newImgSizeIndex = ( imgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+        const imgIsBetween770And1024 = originalWidth <= 1024 && originalHeight >= 770;
+        console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
+        let newImgSizeIndex = typeof imgSizeIndex !== 'undefined' ? imgSizeIndex : imgSizes.length - 1;
+        let newZoomImgSizeIndex = zoomImgSizeIndex;
+        // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
+        // now there are all image sizes so we might need to increase imgSizeIndex
+        if ( imgIsBetween770And1024 ) {
+            // check to change imgSizeIndex
+            if ( parseInt( imgSizeIndex ) >= 2 ) {
+                newImgSizeIndex = ( imgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+            }
+            if ( parseInt( newZoomImgSizeIndex ) >= 2 ) {
+                newZoomImgSizeIndex = ( zoomImgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
+            }
         }
-        if ( parseInt( newZoomImgSizeIndex ) >= 2 ) {
-            newZoomImgSizeIndex = ( zoomImgSizeIndex + ( returnImgs.length - imgSizes.length ) ).toString();
-        }
+        console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
+        console.log( '------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex )
+
+        console.log( '--------> make (first) img attr' )
+
+        newAttributes = {
+            imgSizes: '', // save empty, replaced by imgData
+            imgData: newImgData,
+            imgSizeIndex: newImgSizeIndex,
+            url: '', // save empty, replaced by imgData
+            width: '', // save empty, replaced by imgDat
+            height: '', // save empty, replaced by imgDat
+            origWidth: originalWidth,
+            origHeight: originalHeight,
+            zoomImgSizeIndex: newZoomImgSizeIndex,
+
+            // portraitImgData: typeof newPortraitImgData !== 'undefined' ? newPortraitImgData : null,
+            // portraitImgSizeIndex: typeof newPortraitImgSizeIndex !== 'undefined' ? newPortraitImgSizeIndex.toString() : null,
+        };
+        // console.log( '--------> newAttributes (img): ' + JSON.stringify( newAttributes, null, 2 ) + '\n' );
     }
-    console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
-    console.log( '------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex )
+
+    if ( portraitMediaSizes && portraitImgData.length === 0 ) {
+        console.log( '--------> make portrait img attr' )
+        const newPortraitImgAllData = getImgAllDataFromMediaSizes( portraitMediaSizes );
+        const portraitOriginalWidth = newPortraitImgAllData.originalWidth;
+        const portraitOriginalHeight = newPortraitImgAllData.originalHeight;
+        const portraitReturnImgs = newPortraitImgAllData.imgs;
+
+        const newPortraitImgData = makeImgData( newPortraitImgAllData.imgs, newPortraitImgAllData.truncWithoutSizeSlug, newPortraitImgAllData.fileExt );
+        
+        // console.log( '----> newPortraitImgData ( ' + portraitImgId + ' ): ' + JSON.stringify( newPortraitImgData, null, 2 ) + '\n' );
+
+
+        console.log( '------> portraitImgSizes.length: ' + portraitImgSizes.length + ', portraitReturnImgs.length: ' + portraitReturnImgs.length )
+
+
+        // TODO: check imgSizeIndex more complex
+
+        const portraitImgIsBetween770And1024 = portraitOriginalWidth <= 1024 && portraitOriginalHeight >= 770;
+        console.log( 'portraitImgIsBetween770And1024: ' + portraitImgIsBetween770And1024 )
+        let newPortraitImgSizeIndex = typeof portraitImgSizeIndex !== 'undefined' ? portraitImgSizeIndex : portraitImgSizes.length - 1;
+        // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
+        // now there are all image sizes so we might need to increase imgSizeIndex
+        if ( portraitImgIsBetween770And1024 ) {
+            // check to change imgSizeIndex
+            if ( parseInt( portraitImgSizeIndex ) >= 2 ) {
+                newPortraitImgSizeIndex = ( portraitImgSizeIndex + ( portraitReturnImgs.length - portraitImgSizes.length ) ).toString();
+            }
+        }
+        console.log( '------> portraitImgSizeIndex: ' + portraitImgSizeIndex + ', newPortraitImgSizeIndex: ' + newPortraitImgSizeIndex )
+    
+
+        newAttributes = {
+            portraitImgSizes: '', // save empty, replaced by portraitImgData
+            portraitImgData: newPortraitImgData,
+            portraitImgSizeIndex: newPortraitImgSizeIndex.toString(),
+            ...newAttributes,
+        };
+        // console.log( '--------> newAttributes (portrait): ' + JSON.stringify( newAttributes, null, 2 ) + '\n' );
+
+    }
+
     
     // update to new attributes, remove old ones
     // setAttributes( {
@@ -239,21 +318,21 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes ) {
         // }
 
         // const [ newAttributes ] = migrateToLazyimgV2( attributes, data, mediaSizes );
-        const newAttributes = {
-            imgSizes: '', // save empty, replaced by imgData
-            imgData: newImgData,
-            imgSizeIndex: newImgSizeIndex,
-            url: '', // save empty, replaced by imgData
-            width: '', // save empty, replaced by imgDat
-            height: '', // save empty, replaced by imgDat
-            origWidth: originalWidth,
-            origHeight: originalHeight,
-            zoomImgSizeIndex: newZoomImgSizeIndex,
-        };
+
+
+    // if ( ! imgData || ! portraitImgData ) {
+    if ( ( mediaSizes && imgSizeIndex ) || ( portraitMediaSizes && portraitImgSizeIndex ) ) {
+        // stop after both atrributes have been updated to avoid endless loop
+
+        console.log( '>>>>>>>>>>>>>>>>> UPDATE!' )
 
         registry.batch( () => {
             updateBlockAttributes( clientId, newAttributes );
         } );
+    }
+
+
+
 
     // }, [ attributes ] );
 }
@@ -265,7 +344,7 @@ function useMigrateOnLoad( attributes, clientId, data, mediaSizes ) {
  * @return {Element} Element to render.
  */
 // export default function Edit( { attributes, setAttributes, clientId } ) {
-function Edit( { attributes, setAttributes, clientId, mediaSizes } ) {
+function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaSizes } ) {
 
 	// const { getBlock } = useSelect( blockEditorStore );
 
@@ -341,7 +420,7 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes } ) {
     const calcPortraitImgSizes = hasOldAttrPortraitImgSizes ? portraitImgSizes : makeImgSizesFromImgData( portraitImgData );
 
 
-    // console.log( 'Hello from edit()!' )
+    console.log( 'edit()' )
 
     // migrate deprecated attributes to new once
 
@@ -363,9 +442,11 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes } ) {
 
     const blockProps = useBlockProps( { className: classNames } );
 
-    // update attributes
-    if ( hasOldAttrImgSizes ) {
-        console.log( 'hasOldAttrImgSizes' )
+    if (
+        ( mediaSizes && imgData.length === 0 )
+        || ( portraitMediaSizes && portraitImgData.length === 0 )
+    ) {
+        console.log( 'call useMigrateOnLoad()' )
 
         const data = {
             hasOldAttrImgSizes,
@@ -373,7 +454,22 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes } ) {
             calcImgSizes,
             calcPortraitImgSizes,
         };
-        useMigrateOnLoad( attributes, clientId, data, mediaSizes )
+        useMigrateOnLoad( attributes, clientId, data, mediaSizes, portraitMediaSizes )
+    }
+    else {
+        console.log( 'NOT call useMigrateOnLoad()' )
+    }
+    // update attributes
+    if ( hasOldAttrImgSizes ) {
+        console.log( 'hasOldAttrImgSizes' )
+
+        // const data = {
+        //     hasOldAttrImgSizes,
+        //     hasOldAttrPortraitImgSizes,
+        //     calcImgSizes,
+        //     calcPortraitImgSizes,
+        // };
+        // useMigrateOnLoad( attributes, clientId, data, mediaSizes, portraitMediaSizes )
 
         // const media = useSelect(
         //     ( select ) =>
@@ -1419,8 +1515,61 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes } ) {
 }
 
 export default withSelect( ( select, props ) => {
-    // TODO: check for condition before load mediaSizes, elde do nothing
+    // check for migration v1 to v2, else do nothing
+    const {
+        attributes: {
+            imgId,
+            imgSizes, // old attr
+            imgData, // new attr
+            portraitImgId,
+            portraitImgSizes, // old attr
+            portraitImgData, // new attr
+        },
+    } = props;
+
+    let mediaSizes, portraitMediaSizes;
+
+    // check if img has to be updated
+    if ( 
+        typeof imgSizes !== 'undefined' 
+        && Array.isArray( imgSizes ) 
+        && imgSizes.length > 0 
+        && ( 
+                typeof imgData === 'undefined' 
+                || imgData.length === 0
+            )
+        && imgId
+    ) {
+        mediaSizes = select( 'core' ).getMedia( imgId )?.media_details?.sizes;
+    }
+    else {
+        mediaSizes = null;
+    }
+
+    // check if portrait img has to be updated
+    if ( 
+        typeof portraitImgSizes !== 'undefined' 
+        && Array.isArray( portraitImgSizes ) 
+        && portraitImgSizes.length > 0 
+        && ( 
+                typeof portraitImgData === 'undefined' 
+                || portraitImgData.length === 0
+            )
+        && portraitImgId
+    ) {
+        portraitMediaSizes = select( 'core' ).getMedia( portraitImgId )?.media_details?.sizes;
+    }
+    else {
+        portraitMediaSizes = null;
+    }
+
+    // console.log( 'mediaSizes withSelect() ( ' + imgId + ' ): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+    // console.log( 'portraitMediaSizes withSelect() ( ' + portraitImgId + ' ): ' + JSON.stringify( portraitMediaSizes, null, 2 ) + '\n' );
+    console.log( 'withSelect() mediaSizes: ' + ( !! mediaSizes ? 'defined' : 'null or undefined' ) )
+    console.log( 'withSelect() portraitMediaSizes: ' + ( !! portraitMediaSizes ? 'defined' : 'null or undefined' ) )
+
     return {
-        mediaSizes: props.attributes.imgId ? select( 'core' ).getMedia( props.attributes.imgId )?.media_details?.sizes : null,
+        mediaSizes: mediaSizes,
+        portraitMediaSizes: portraitMediaSizes,
     };
 } )( Edit );
