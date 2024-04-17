@@ -16,7 +16,7 @@ import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
 
-// import deprecated from './deprecated';
+import deprecated from './deprecated';
 
 /**
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
@@ -25,4 +25,5 @@ registerBlockType( metadata.name, {
 	icon,
 	edit: Edit,
 	save,
+    deprecated,
 } );

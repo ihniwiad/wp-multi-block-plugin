@@ -36,8 +36,8 @@ export default function save( { attributes } ) {
     // } );
 
 	return (
-		<div { ...useBlockProps.save( { className: ulClassNames } ) }>
+		<ul { ...useBlockProps.save( { className: ulClassNames } ) }>
             <InnerBlocks.Content />
-		</div>
+		</ul>
 	);
 }

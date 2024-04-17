@@ -15,7 +15,8 @@ import {
 } from './../_functions/img.js';
 
 
-export function migrateToLazyimgV2( attributes, data, mediaSizes, portraitMediaSizes ) {
+// do not use – external function causes react error for unknown reason
+export function migrateToLazyimgV2( attributes, mediaSizes, portraitMediaSizes ) {
     
     const {
         imgId,
@@ -58,13 +59,6 @@ export function migrateToLazyimgV2( attributes, data, mediaSizes, portraitMediaS
         noFigureTag,
         imgHtml,
     } = attributes;
-
-    const {
-        hasOldAttrImgSizes,
-        hasOldAttrPortraitImgSizes,
-        calcImgSizes,
-        calcPortraitImgSizes,
-    } = data;
 
 
     console.log( '---- migrateToLazyimgV2()' );
