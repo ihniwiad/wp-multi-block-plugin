@@ -29,6 +29,18 @@ import { addClassNames } from './../_functions/add-class-names.js';
 import { makeSaveAttributes } from './../_functions/attributes.js';
 
 
+// // v2 functions
+// import { 
+//     makeSrcset as makeSrcset_v2,
+// } from './deprecated/utils_v2.js';
+// // /v2 functions
+
+
+
+
+
+
+
 // v1 functions
 import { 
     makeBase64PreloadImgSrc as makeBase64PreloadImgSrc_v1,
@@ -374,7 +386,7 @@ const v1 = {
         //     },
         //     [ id ]
         // );
-        
+
         // const media = useSelect(
         //     select => select( 'core' ).getMedia( imgId ),
         //     [ imgId ],
