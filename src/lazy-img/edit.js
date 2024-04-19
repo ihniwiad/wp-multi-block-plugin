@@ -87,7 +87,7 @@ import {
 
 function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes, calcImgSizes, calcPortraitImgSizes ) {
 
-    console.log( 'useMigrateOnLoad()' )
+    // console.log( 'useMigrateOnLoad()' )
 
     const {
         imgId,
@@ -282,6 +282,8 @@ function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes,
 // export default function Edit( { attributes, setAttributes, clientId } ) {
 function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaSizes } ) {
 
+    // console.log( 'Edit()' )
+
 	const {
         imgId,
         imgSizes,
@@ -342,8 +344,12 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
     const calcImgSizes = hasOldAttrImgSizes ? imgSizes : makeImgSizesFromImgData( imgData );
     const calcPortraitImgSizes = hasOldAttrPortraitImgSizes ? portraitImgSizes : makeImgSizesFromImgData( portraitImgData );
 
-
+    // console.log( 'imgData: ' + JSON.stringify( imgData, null, 2 ) + '\n' );
+    // console.log( 'hasOldAttrImgSizes: ' + hasOldAttrImgSizes )
+    // console.log( 'attributes: ' + JSON.stringify( attributes, null, 2 ) + '\n' );
+    // console.log( 'calcImgSizes: ' + JSON.stringify( calcImgSizes, null, 2 ) + '\n' );
     // console.log( 'edit()' )
+    // console.log( 'imgSizeIndex: ' + imgSizeIndex )
 
     // migrate deprecated attributes to new once
 
@@ -369,11 +375,11 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
     //     || ( portraitMediaSizes && portraitImgData.length === 0 )
     // ) {
     if ( mediaSizes || portraitMediaSizes ) {
-        console.log( 'call useMigrateOnLoad()' )
+        // console.log( 'call useMigrateOnLoad()' )
         useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes, calcImgSizes, calcPortraitImgSizes )
     }
     else {
-        console.log( 'NOT call useMigrateOnLoad()' )
+        // console.log( 'NOT call useMigrateOnLoad()' )
     }
 
     // if ( hasOldAttrImgSizes ) console.log( 'hasOldAttrImgSizes' )
@@ -1268,7 +1274,7 @@ export default withSelect( async ( select, props ) => {
 
     // note: sending any value non `null`will run migration on edit
     return {
-        // mediaSizes: mediaSizes,
-        // portraitMediaSizes: portraitMediaSizes,
+        mediaSizes: mediaSizes,
+        portraitMediaSizes: portraitMediaSizes,
     };
 } )( Edit );

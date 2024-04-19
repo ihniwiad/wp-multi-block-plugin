@@ -427,6 +427,8 @@ export const makeImgSizesFromImgData = ( imgData ) => {
         } );
 
     }
+    
+    // console.log( 'imgSizes: ' + JSON.stringify( imgSizes, null, 2 ) + '\n' );
 
     return imgSizes;
 }
