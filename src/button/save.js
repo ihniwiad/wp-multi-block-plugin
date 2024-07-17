@@ -34,6 +34,7 @@ export default function save( { attributes } ) {
         disabled,
         type,
         onclick,
+        className,
     } = attributes;
 
     const checkEmail = isEmailFormat( href );
@@ -61,6 +62,7 @@ export default function save( { attributes } ) {
         size,
         hrefIsEmailIsContent,
         ignoreMailtoSpamProtection,
+        className,
     } );
     buttonClassNames = addClassNames( {
         marginLeft, 

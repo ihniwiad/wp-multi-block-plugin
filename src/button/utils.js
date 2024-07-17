@@ -36,7 +36,7 @@ export const makeButtonClassNames = ( attributes, className ) => {
     }
 
     if ( !! className ) {
-        classNames.push( className );
+        classNames.push( className.split( 'create-mt' ).join( '' ).trim() );
     }
 
     return classNames.join( ' ' );

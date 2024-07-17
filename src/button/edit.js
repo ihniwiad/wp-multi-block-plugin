@@ -78,6 +78,7 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
         disabled,
         type,
         onclick,
+        className,
     } = attributes;
 
 	// const hasInnerBlocks = () => {
@@ -160,6 +161,7 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
         stateType, 
         size,
         // ignoreMailtoSpamProtection: true, // skip in Editor (edit.js)
+        className,
     } );
     buttonClassNames = addClassNames( {
         marginLeft, 
@@ -169,25 +171,42 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
         disabled,
     }, buttonClassNames );
 
-    // console.log( 'content: ' + content );
+    // console.log( 'content: ' + ( content ? content : '(empty)' ) );
     // console.log( '-- typeof content: ' + typeof content );
-    // console.log( '-- content.length: ' + content.length );
+    // console.log( '-- content.length: ' + ( content ? content.length : '(undefined)' ) );
     // console.log( '-- hrefIsEmailIsContent: ' + hrefIsEmailIsContent );
+
+    /*
+        WT* is this?!
+
+        Since we’re protecting e-mail adresses from robots (if not disabled), a link/button 
+        containing an e-mail address might be saved as an empty HTML tag (really no content 
+        at all). CSS styling will make it look like a proper e-mail adress.
+        That’s fine for the frontend, but in the backend we need to edit this non existing 
+        content (which prepresents the e-mail adress containend as mailto-link in the href 
+        attribute). So we reconstruct it from the attribute and put it as content into the
+        edit markup.
+    */
+    let newContent = '';
+    let newButtonClassNames = '';
 
     // get content if is empty since content is spam protected email, get content from href instead of from html
     if ( ! ignoreMailtoSpamProtection && ! isSelected && typeof content == 'string' && content.length == 0 && hrefIsEmailIsContent ) {
         // recreate button content (containing e-mail adress) from href mailto (HTML has been saved empty for spam protection)
-        setAttributes( { content: href.substring( 7 ) } );
+        // setAttributes( { content: href.substring( 7 ) } );
+        newContent = href.substring( 7 );
 
 	    // remove .create-mt from className
 	    if ( typeof className !== 'undefined' && className.indexOf( 'create-mt' ) !== -1 ) {
-	        let newClassName = className.split( 'create-mt' ).join( '' ).trim();
-	        newClassName = newClassName.replace( '  ', ' ' );
 	        // console.log( '---- new class name: ' + newClassName )
-	        setAttributes( { className: newClassName } );
+	        setAttributes( { className: className.replace( 'create-mt', '' ).trim() } );
+            newButtonClassNames = className.replace( 'create-mt', '' ).trim()
 	    }
 	    // else console.log( '---- no class name change' )
     }
+
+    // console.log( '-- newContent: ' + ( newContent ? newContent : '(empty)' ) );
+    // console.log( '-- newButtonClassNames: ' + ( newButtonClassNames ? newButtonClassNames : '(empty)' ) );
 
     const TagName = href || state == 'text-link' ? 'a' : 'button';
 
@@ -261,7 +280,7 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 	);
 
     // add class names to blockProps
-    const blockProps = useBlockProps( { className: buttonClassNames, 'data-tag-name': TagName, 'data-type': type, 'data-onclick': onclick } );
+    const blockProps = useBlockProps( { className: ( newButtonClassNames ? newButtonClassNames : buttonClassNames ), 'data-tag-name': TagName, 'data-type': type, 'data-onclick': onclick } );
 	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
 	// use if appending inner blocks directly into outer elem
@@ -275,7 +294,7 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
                 tagName={ 'a' }
                 multiline={ false }
                 placeholder={ __( 'Add Title...', 'bsx-blocks' ) }
-                value={ content }
+                value={ ( newContent ? newContent : content ) }
                 onChange={ onChangeContent }
                 allowedFormats={ [] }
                 keepPlaceholderOnFocus
