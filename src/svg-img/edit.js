@@ -83,10 +83,13 @@ export default function Edit( { attributes, setAttributes } ) {
 
 
     // unwrap content (remove wrapping outer element)
-    setAttributes( { content: unwrapContent( content ) } );
+    // setAttributes( { content: unwrapContent( content ) } );
+    let unwrappedContent = unwrapContent( content );
 
 
     const onChangeContent = ( value ) => {
+        // reset initial unvrapped content
+        unwrappedContent = '';
         setAttributes( { content: value } );
     };
     const onChangeHref = ( value ) => {
@@ -156,7 +159,7 @@ export default function Edit( { attributes, setAttributes } ) {
                 <PanelBody title={ __( 'Content', 'bsx-blocks' ) }>
                     <TextareaControl 
                         label={ __( 'SVG code', 'bsx-blocks' ) }
-                        value={ content } 
+                        value={ unwrappedContent } 
                         onChange={ onChangeContent }
                     />
                 </PanelBody>
@@ -215,12 +218,12 @@ export default function Edit( { attributes, setAttributes } ) {
                             TagName ? 
                             (
                                 <TagName { ...blockProps }>
-                                    <RawHTML>{ content }</RawHTML>
+                                    <RawHTML>{ unwrappedContent ? unwrappedContent : content }</RawHTML>
                                 </TagName>
                             )
                             : 
                             (
-                                <RawHTML { ...blockProps }>{ content }</RawHTML>
+                                <RawHTML { ...blockProps }>{ unwrappedContent ? unwrappedContent : content }</RawHTML>
                             )
                         }
                     </>
