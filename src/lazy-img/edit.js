@@ -85,9 +85,9 @@ import {
 // import './editor.scss';
 
 
-function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes, calcImgSizes, calcPortraitImgSizes ) {
+async function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes, calcImgSizes, calcPortraitImgSizes ) {
 
-    // console.log( 'useMigrateOnLoad()' )
+    console.log( 'useMigrateOnLoad()' )
 
     const {
         imgId,
@@ -119,7 +119,7 @@ function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes,
         marginLeft,
         marginRight,
         aAdditionalClassName,
-        pictureAdditionalClassName,
+        pictureAdditionalClassName, // deprecated
         imgAdditionalClassName,
         href,
         target,
@@ -163,6 +163,31 @@ function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes,
 
     // if ( mediaSizes && imgData.length === 0 ) {
     if ( mediaSizes ) {
+
+
+        if ( mediaSizes?.original ) {
+            console.log( '---- has original size' )
+
+            const sourceUrl = mediaSizes?.original.source_url;
+
+            // get width and height by loading file since not defined in media object
+            let originalSizes;
+            try {
+                originalSizes = await getImgWidthHeight( sourceUrl );
+            } catch( err ) {
+                console.error( err );
+            }
+            console.log( '------ originalSizes.width: ' + originalSizes.width + ', originalSizes.height: ' + originalSizes.height )
+            mediaSizes.original.width = originalSizes.width;
+            mediaSizes.original.height = originalSizes.height;
+
+            console.log( 'mediaSizes (after set width/height) (' + imgId + '): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+
+        }
+        else {
+            console.log( '---- NOT has original size' )
+        }
+
         // console.log( '--------> make img attr' )
         const newImgAllData = getImgAllDataFromMediaSizes( mediaSizes );
         const originalWidth = newImgAllData.originalWidth;
@@ -264,7 +289,7 @@ function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes,
     if ( mediaSizes || portraitMediaSizes ) {
         // stop after both atrributes have been updated to avoid endless loop
 
-        // console.log( '>>>>>>>>>>>>>>>>> UPDATE!' )
+        console.log( '>>>>>>>>>>>>>>>>> UPDATE!' )
 
         registry.batch( () => {
             updateBlockAttributes( clientId, newAttributes );
@@ -282,7 +307,7 @@ function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes,
 // export default function Edit( { attributes, setAttributes, clientId } ) {
 function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaSizes } ) {
 
-    // console.log( 'Edit()' )
+    console.log( 'Edit()' )
 
 	const {
         imgId,
@@ -314,7 +339,7 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
         marginLeft,
         marginRight,
         aAdditionalClassName,
-        pictureAdditionalClassName,
+        pictureAdditionalClassName, // deprecated
         imgAdditionalClassName,
         href,
         target,
@@ -374,23 +399,28 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
     //     ( mediaSizes && imgData.length === 0 )
     //     || ( portraitMediaSizes && portraitImgData.length === 0 )
     // ) {
-    if ( mediaSizes || portraitMediaSizes ) {
-        // console.log( 'call useMigrateOnLoad()' )
+    // if ( mediaSizes || portraitMediaSizes ) {
+    if (
+        ( typeof mediaSizes !== 'undefined' && mediaSizes != null )
+        || ( typeof portraitMediaSizes !== 'undefined' && portraitMediaSizes != null )
+    ) {
+        console.log( 'call useMigrateOnLoad()' )
         useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes, calcImgSizes, calcPortraitImgSizes )
     }
     else {
-        // console.log( 'NOT call useMigrateOnLoad()' )
+        console.log( 'NOT call useMigrateOnLoad()' )
     }
 
-    // if ( hasOldAttrImgSizes ) console.log( 'hasOldAttrImgSizes' )
-    // else console.log( 'imgData up 2 date' )
-    // if ( hasOldAttrPortraitImgSizes ) console.log( 'hasOldAttrPortraitImgSizes' )
-    // else console.log( 'portraitImgData up 2 date' )
+    if ( hasOldAttrImgSizes ) console.log( 'hasOldAttrImgSizes' )
+    else console.log( 'imgData up 2 date' )
+    if ( hasOldAttrPortraitImgSizes ) console.log( 'hasOldAttrPortraitImgSizes' )
+    else console.log( 'portraitImgData up 2 date' )
 
     // remove deprecated attribute if set
-    if ( pictureAdditionalClassName ) {
-        setAttributes( { pictureAdditionalClassName: '' } );
-    }
+    // TODO: check if use of `setAttributes()` causes problems in reusable block (may load infinite)
+    // if ( pictureAdditionalClassName ) {
+    //     setAttributes( { pictureAdditionalClassName: '' } );
+    // }
 
     async function onSelectImage( img ) {
 
@@ -595,6 +625,7 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
     const onChangeAAdditionalClassName = ( value ) => {
         setAttributes( { aAdditionalClassName: value } );
     };
+     // deprecated:
     const onChangePictureAdditionalClassName = ( value ) => {
         setAttributes( { pictureAdditionalClassName: value } );
     };
@@ -1144,7 +1175,8 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
 	);
 }
 
-export default withSelect( async ( select, props ) => {
+// export default withSelect( async ( select, props ) => {
+export default withSelect( ( select, props ) => {
 
     // console.log( 'withSelect()' )
 
@@ -1207,6 +1239,7 @@ export default withSelect( async ( select, props ) => {
 
     // check if img has to be updated
     if ( hasDeprecatedAttrImgSizes || hasMissingSize768 ) {
+        console.log( '-- get media' )
         // mediaSizes = select( 'core' ).getMedia( imgId )?.media_details?.sizes;
         const media = select( 'core' ).getMedia( imgId );
         const originalImage = media?.media_details?.original_image;
@@ -1218,26 +1251,37 @@ export default withSelect( async ( select, props ) => {
         if ( typeof media !== 'undefined' && typeof originalImage !== 'undefined' ) {
             // if originalImage is defined original image size exists
 
-            // get original image url
-            const sourceUrl = media?.guid?.raw;
+            // // get original image url
+            // const sourceUrl = media?.guid?.raw;
 
-            // get width and height by loading file since not defined in media object
-            let originalSizes;
-            try {
-                originalSizes = await getImgWidthHeight( sourceUrl );
-            } catch( err ) {
-                console.error( err );
-            }
-            // console.log( 'originalSizes.width: ' + originalSizes.width + ', originalSizes.height: ' + originalSizes.height )
+            // // get width and height by loading file since not defined in media object
+            // let originalSizes;
+            // try {
+            //     originalSizes = await getImgWidthHeight( sourceUrl );
+            // } catch( err ) {
+            //     console.error( err );
+            // }
+            // // console.log( 'originalSizes.width: ' + originalSizes.width + ', originalSizes.height: ' + originalSizes.height )
+
+            // const originalImgSize = {
+            //     original: {
+            //         file: originalImage, // media?.media_details?.original_image,
+            //         width: originalSizes.width, // is not defined in media object
+            //         height: originalSizes.height, // is not defined in media object
+            //         filesize: media?.media_details?.filesize,
+            //         mime_type: media?.mime_type,
+            //         source_url: sourceUrl, // media?.guid?.raw,
+            //     }
+            // };
 
             const originalImgSize = {
                 original: {
                     file: originalImage, // media?.media_details?.original_image,
-                    width: originalSizes.width, // is not defined in media object
-                    height: originalSizes.height, // is not defined in media object
+                    width: null, // is not defined in media object
+                    height: null, // is not defined in media object
                     filesize: media?.media_details?.filesize,
                     mime_type: media?.mime_type,
-                    source_url: sourceUrl, // media?.guid?.raw,
+                    source_url: media?.guid?.raw, // media?.guid?.raw,
                 }
             };
 
@@ -1251,10 +1295,11 @@ export default withSelect( async ( select, props ) => {
             mediaSizes = media?.media_details?.sizes;
         }
         // console.log( 'media: ' + JSON.stringify( media, null, 2 ) + '\n' );
-        // console.log( 'mediaSizes: ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+        // console.log( 'mediaSizes (' + imgId + '): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
         // console.log( 'originalImgSize: ' + JSON.stringify( originalImgSize, null, 2 ) + '\n' );
     }
     else {
+        console.log( '-- NOT get media' )
         mediaSizes = null;
     }
 
