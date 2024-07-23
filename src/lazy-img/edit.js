@@ -177,11 +177,11 @@ async function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMedia
             } catch( err ) {
                 console.error( err );
             }
-            console.log( '------ originalSizes.width: ' + originalSizes.width + ', originalSizes.height: ' + originalSizes.height )
+            // console.log( '------ originalSizes.width: ' + originalSizes.width + ', originalSizes.height: ' + originalSizes.height )
             mediaSizes.original.width = originalSizes.width;
             mediaSizes.original.height = originalSizes.height;
 
-            console.log( 'mediaSizes (after set width/height) (' + imgId + '): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
+            // console.log( 'mediaSizes (after set width/height) (' + imgId + '): ' + JSON.stringify( mediaSizes, null, 2 ) + '\n' );
 
         }
         else {
@@ -289,7 +289,7 @@ async function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMedia
     if ( mediaSizes || portraitMediaSizes ) {
         // stop after both atrributes have been updated to avoid endless loop
 
-        console.log( '>>>>>>>>>>>>>>>>> UPDATE!' )
+        // console.log( '>>>>>>>>>>>>>>>>> UPDATE!' )
 
         registry.batch( () => {
             updateBlockAttributes( clientId, newAttributes );
@@ -307,7 +307,7 @@ async function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMedia
 // export default function Edit( { attributes, setAttributes, clientId } ) {
 function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaSizes } ) {
 
-    console.log( 'Edit()' )
+    // console.log( 'Edit()' )
 
 	const {
         imgId,
@@ -404,17 +404,17 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
         ( typeof mediaSizes !== 'undefined' && mediaSizes != null )
         || ( typeof portraitMediaSizes !== 'undefined' && portraitMediaSizes != null )
     ) {
-        console.log( 'call useMigrateOnLoad()' )
+        // console.log( 'call useMigrateOnLoad()' )
         useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes, calcImgSizes, calcPortraitImgSizes )
     }
     else {
-        console.log( 'NOT call useMigrateOnLoad()' )
+        // console.log( 'NOT call useMigrateOnLoad()' )
     }
 
-    if ( hasOldAttrImgSizes ) console.log( 'hasOldAttrImgSizes' )
-    else console.log( 'imgData up 2 date' )
-    if ( hasOldAttrPortraitImgSizes ) console.log( 'hasOldAttrPortraitImgSizes' )
-    else console.log( 'portraitImgData up 2 date' )
+    // if ( hasOldAttrImgSizes ) console.log( 'hasOldAttrImgSizes' )
+    // else console.log( 'imgData up 2 date' )
+    // if ( hasOldAttrPortraitImgSizes ) console.log( 'hasOldAttrPortraitImgSizes' )
+    // else console.log( 'portraitImgData up 2 date' )
 
     // remove deprecated attribute if set
     // TODO: check if use of `setAttributes()` causes problems in reusable block (may load infinite)
@@ -1299,7 +1299,7 @@ export default withSelect( ( select, props ) => {
         // console.log( 'originalImgSize: ' + JSON.stringify( originalImgSize, null, 2 ) + '\n' );
     }
     else {
-        console.log( '-- NOT get media' )
+        // console.log( '-- NOT get media' )
         mediaSizes = null;
     }
 

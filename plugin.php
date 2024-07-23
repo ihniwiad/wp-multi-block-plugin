@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name:       BSX Blocks 2.0 (Multiple Blocks Plugin)
+ * Plugin Name:       BSX Blocks 2.0 Beta (Multiple Blocks Plugin)
  * Description:       Bootstrap Blocks for a compatible Theme (e.g. BSX WordPress).
  * Requires at least: 6.1
  * Requires PHP:      7.0
  * Version:           0.1.0
  * Author:            ihniwiad
- * Plugin URI: https://github.com/ihniwiad/bsx-blocks
+ * Plugin URI:        https://github.com/ihniwiad/wp-multi-block-plugin
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       bsx-blocks

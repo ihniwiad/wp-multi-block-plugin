@@ -310,7 +310,7 @@ export default function save( { attributes } ) {
             {
                 ! noFigureTag ?
                 (
-                    <figure { ...useBlockProps.save( { ...saveAttributes } ) }>
+                    <figure { ...useBlockProps.save( { className: classNames, ...saveAttributes } ) }>
                         {
                             typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
                                 <>

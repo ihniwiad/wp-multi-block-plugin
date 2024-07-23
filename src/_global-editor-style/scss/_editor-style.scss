@@ -23,12 +23,12 @@
 
 // [data-type^="bsx-blocks/"]
 // :not([data-type="bsx-blocks/check-list-item"])
-[data-type]:hover {
+[data-type]:not(:focus):hover {
 
 	//@include bsx-make-hover-block-identifier()
-/*
-	// border
-	&:before {
+
+	// flag
+	&:after {
 		content: "";
 		z-index: 100;
 		position: absolute;
@@ -46,8 +46,8 @@
 		pointer-events: none;
 	}
 
-	// flag
-	&:after {
+	// border
+	&:before {
 		content: attr(data-title);
 		z-index: unset;
 		position: absolute;
@@ -61,8 +61,13 @@
 		font-size: 9px;
 		padding: 1px 4px;
 		pointer-events: none;
+		// reset check list frontend style from backend editor element
+		width: auto;
+		white-space: nowrap;
+		font-family: inherit;
+		margin-left: 0;
 	}
-*/
+
 }
 
 

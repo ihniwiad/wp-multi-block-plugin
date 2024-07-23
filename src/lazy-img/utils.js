@@ -317,7 +317,7 @@ export const makeSrcset = ( attributes ) => {
     const srcsetList = [];
     calcImgSizes.forEach( ( imgSize, index ) => {
         if ( index === 0 ) {
-            // first loop, thumbnail image – add only if selected or if image has square format (ose largest size since current loop size will always be square at first loop)
+            // first loop, thumbnail image – add only if selected or if image has square format (use largest size since current loop size will always be square at first loop)
             if ( imgSizeIndex == 0 || calcImgSizes[ calcImgSizes.length - 1 ].width == calcImgSizes[ calcImgSizes.length - 1 ].height ) {
                 // add thumbnail to srcset
                 srcsetList.push( imgSize.url + ' ' + imgSize.width + 'w' );
