@@ -1,12 +1,12 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "create-block/check-list",
+  "name": "bsx-blocks/check-list",
   "version": "0.1.0",
-  "title": "CB Check List",
+  "title": "BSX Check List",
   "category": "text",
   "allowedBlocks": [
-    "create-block/check-list-item"
+    "bsx-blocks/check-list-item"
   ],
   "description": "Create a check list.",
   "example": {},
@@ -53,9 +53,7 @@
     "__experimentalSlashInserter": true,
     "__experimentalOnEnter": true
   },
-  "textdomain": "multiple-blocks-plugin-textdomain",
+  "textdomain": "bsx-blocks",
   "editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
-  "viewScript": "file:./view.js"
+  "editorStyle": "file:./index.css"
 }

@@ -1,0 +1,134 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bsx-blocks/banner",
+  "version": "0.1.0",
+  "title": "BSX Banner",
+  "category": "layout",
+  "description": "Image or color background banner e.g. for header of Page.",
+  "example": {},
+  "attributes": {
+    "nodeName": {
+      "type": "string",
+      "default": "div"
+    },
+    "templateName": {
+      "type": "string"
+    },
+    "belowNavbar": {
+      "type": "boolean",
+      "default": false
+    },
+    "touchFooter": {
+      "type": "boolean",
+      "default": false
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "imgId": {
+      "type": "number"
+    },
+    "imgSizes": {
+      "type": "array",
+      "default": []
+    },
+    "imgData": {
+      "type": "array",
+      "default": []
+    },
+    "imgSizeIndex": {
+      "type": "string",
+      "default": "6"
+    },
+    "url": {
+      "type": "string"
+    },
+    "portraitImgId": {
+      "type": "number"
+    },
+    "portraitImgSizes": {
+      "type": "array",
+      "default": []
+    },
+    "portraitImgData": {
+      "type": "array",
+      "default": []
+    },
+    "portraitImgSizeIndex": {
+      "type": "string",
+      "default": "3"
+    },
+    "bannerType": {
+      "type": "string",
+      "default": "vh"
+    },
+    "bannerSize": {
+      "type": "string",
+      "default": "2"
+    },
+    "bgAttachment": {
+      "type": "string",
+      "default": "fixed"
+    },
+    "bgAttachmentFixedLimited": {
+      "type": "boolean"
+    },
+    "bgSize": {
+      "type": "string",
+      "default": "cover"
+    },
+    "bgPosition": {
+      "type": "string",
+      "default": "c"
+    },
+    "alignItems": {
+      "type": "string",
+      "default": "center"
+    },
+    "rounded": {
+      "type": "boolean"
+    },
+    "marginBefore": {
+      "type": "string",
+      "default": ""
+    },
+    "marginAfter": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingBefore": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingAfter": {
+      "type": "string",
+      "default": ""
+    },
+    "href": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "rel": {
+      "type": "string"
+    },
+    "dataFn": {
+      "type": "string"
+    },
+    "disableResponsiveDownsizing": {
+      "type": "boolean"
+    },
+    "multilayer": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "html": false,
+    "className": false
+  },
+  "textdomain": "bsx-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css"
+}

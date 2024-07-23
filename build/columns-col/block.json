@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bsx-blocks/col",
+  "version": "0.1.0",
+  "title": "BSX Column",
+  "category": "layout",
+  "parent": [
+    "bsx-blocks/row-with-cols"
+  ],
+  "description": "Column within a Row for responsive content layout.",
+  "example": {},
+  "attributes": {
+    "colType": {
+      "type": "string",
+      "default": "custom"
+    },
+    "enableInheritanceFromRow": {
+      "type": "boolean",
+      "default": true
+    },
+    "sizeXs": {
+      "type": "string",
+      "default": ""
+    },
+    "sizeSm": {
+      "type": "string",
+      "default": ""
+    },
+    "sizeMd": {
+      "type": "string",
+      "default": "4"
+    },
+    "sizeLg": {
+      "type": "string",
+      "default": ""
+    },
+    "sizeXl": {
+      "type": "string",
+      "default": ""
+    },
+    "nodeName": {
+      "type": "string",
+      "default": "div"
+    },
+    "marginAfter": {
+      "type": "string",
+      "default": "3"
+    },
+    "display": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "html": false,
+    "className": false
+  },
+  "textdomain": "bsx-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css"
+}

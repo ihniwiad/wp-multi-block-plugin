@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bsx-blocks/img-gallery",
+  "version": "0.1.0",
+  "title": "BSX Image Gallery",
+  "category": "design",
+  "description": "Creating an Image Gallery with multiple images and zoomable shadowbox.",
+  "example": {},
+  "attributes": {
+    "mediaList": {
+      "type": "array",
+      "default": []
+    },
+    "galleryType": {
+      "type": "string",
+      "default": "columns"
+    },
+    "figcaption": {
+      "type": "string",
+      "source": "html",
+      "selector": ".bsx-gallery-figcaption",
+      "__experimentalRole": "content"
+    },
+    "rounded": {
+      "type": "boolean"
+    },
+    "imgThumbnail": {
+      "type": "boolean"
+    },
+    "borderState": {
+      "type": "string"
+    },
+    "hoverShadow": {
+      "type": "boolean"
+    },
+    "hoverMove": {
+      "type": "boolean"
+    },
+    "marginBefore": {
+      "type": "string",
+      "default": ""
+    },
+    "marginAfter": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "className": false
+  },
+  "textdomain": "bsx-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css"
+}

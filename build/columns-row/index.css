@@ -1,0 +1,14 @@
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/columns-row/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+.editor-styles-wrapper [data-type="bsx-blocks/row-with-cols"].row.wp-block:not(.no-gutters) {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.editor-styles-wrapper [data-type="bsx-blocks/row-with-cols"].form-row.wp-block:not(.no-gutters) {
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+/*# sourceMappingURL=index.css.map*/
