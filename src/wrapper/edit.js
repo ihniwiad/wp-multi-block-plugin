@@ -394,7 +394,7 @@ export default function Edit( { attributes, setAttributes } ) {
         overflow,
     } );
 
-    const TagName = nodeName;
+    const TagName = !! nodeName ? nodeName : 'div';
 
     const controls = (
     	<>

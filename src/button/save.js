@@ -47,7 +47,9 @@ export default function save( { attributes } ) {
 
     // after reload content is empty in case of valid mailto href
     const hrefIsEmail = checkEmail.valid;
-    const hrefIsEmailIsContent = hrefIsEmail && ( href == 'mailto:' + content || ( typeof content == 'object' && content.length == 0 ) );
+    // const hrefIsEmailIsContent = hrefIsEmail && ( href == 'mailto:' + content || ( typeof content == 'object' && content.length == 0 ) );
+    // const hrefIsEmailIsContent = hrefIsEmail && ( href == 'mailto:' + content || ! content );
+    const hrefIsEmailIsContent = hrefIsEmail && ( href == 'mailto:' + content || ( typeof content == 'string' && content.length == 0 ) );
 
     // console.log( '---------- checkEmail.valid: ' + checkEmail.valid );
     // console.log( '----- href: ' + href );
@@ -71,6 +73,9 @@ export default function save( { attributes } ) {
         marginAfter,
         disabled,
     }, buttonClassNames );
+
+    // console.log( 'attributes: \n' + JSON.stringify( attributes, null, 2 ) );
+    // console.log('buttonClassNames: ' + buttonClassNames)
 
     // save spam-protected mailto link format (no href-attribute, no content – both will be set via css / js):
     // `<a class="create-mt" data-fn="create-mt" data-mt-n="MY_NAME" data-mt-d="MY_DOMAIN" data-mt-s="MY_DOMAIN_SUFFIX"></a>`

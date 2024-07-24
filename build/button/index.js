@@ -2651,14 +2651,16 @@ function Edit({
   const checkEmail = (0,_utils__WEBPACK_IMPORTED_MODULE_7__.isEmailFormat)(href);
   const hrefIsEmail = checkEmail.valid;
   // const hrefIsEmailIsContent = checkEmail.valid && href == 'mailto:' + content;
+  // let hrefIsEmailIsContent = hrefIsEmail && ( href == 'mailto:' + content || ( typeof content == 'string' && content.length == 0 ) );
   let hrefIsEmailIsContent = hrefIsEmail && (href == 'mailto:' + content || typeof content == 'string' && content.length == 0);
   const onChangeContent = value => {
+    // if content is e-mail address of mailto link in href, save function will save empty content
     setAttributes({
       content: value
     });
   };
   const onChangeHref = value => {
-    // TODO: check hrefIsEmailIsContent
+    // check if is mailto link with e-mail address equal content
     const checkEmail = (0,_utils__WEBPACK_IMPORTED_MODULE_7__.isEmailFormat)(href);
     const hrefIsEmail = checkEmail.valid;
     hrefIsEmailIsContent = hrefIsEmail && (href == 'mailto:' + content || typeof content == 'string' && content.length == 0);
@@ -2753,6 +2755,9 @@ function Edit({
     disabled
   }, buttonClassNames);
 
+  // for edit remove .create-mt
+  buttonClassNames = buttonClassNames.split('create-mt').join('').trim();
+
   // console.log( 'content: ' + ( content ? content : '(empty)' ) );
   // console.log( '-- typeof content: ' + typeof content );
   // console.log( '-- content.length: ' + ( content ? content.length : '(undefined)' ) );
@@ -2772,7 +2777,8 @@ function Edit({
   let newButtonClassNames = '';
 
   // get content if is empty since content is spam protected email, get content from href instead of from html
-  if (!ignoreMailtoSpamProtection && !isSelected && typeof content == 'string' && content.length == 0 && hrefIsEmailIsContent) {
+  // if ( ! ignoreMailtoSpamProtection && ! isSelected && typeof content == 'string' && content.length == 0 && hrefIsEmailIsContent ) {
+  if (!ignoreMailtoSpamProtection && typeof content == 'string' && content.length == 0 && hrefIsEmailIsContent) {
     // recreate button content (containing e-mail adress) from href mailto (HTML has been saved empty for spam protection)
     // setAttributes( { content: href.substring( 7 ) } );
     newContent = href.substring(7);
@@ -2893,7 +2899,9 @@ function save({
 
   // after reload content is empty in case of valid mailto href
   const hrefIsEmail = checkEmail.valid;
-  const hrefIsEmailIsContent = hrefIsEmail && (href == 'mailto:' + content || typeof content == 'object' && content.length == 0);
+  // const hrefIsEmailIsContent = hrefIsEmail && ( href == 'mailto:' + content || ( typeof content == 'object' && content.length == 0 ) );
+  // const hrefIsEmailIsContent = hrefIsEmail && ( href == 'mailto:' + content || ! content );
+  const hrefIsEmailIsContent = hrefIsEmail && (href == 'mailto:' + content || typeof content == 'string' && content.length == 0);
 
   // console.log( '---------- checkEmail.valid: ' + checkEmail.valid );
   // console.log( '----- href: ' + href );
@@ -2917,6 +2925,9 @@ function save({
     marginAfter,
     disabled
   }, buttonClassNames);
+
+  // console.log( 'attributes: \n' + JSON.stringify( attributes, null, 2 ) );
+  // console.log('buttonClassNames: ' + buttonClassNames)
 
   // save spam-protected mailto link format (no href-attribute, no content – both will be set via css / js):
   // `<a class="create-mt" data-fn="create-mt" data-mt-n="MY_NAME" data-mt-d="MY_DOMAIN" data-mt-s="MY_DOMAIN_SUFFIX"></a>`
@@ -2987,9 +2998,11 @@ const makeButtonClassNames = (attributes, className) => {
   if (!ignoreMailtoSpamProtection && hrefIsEmailIsContent) {
     classNames.push('create-mt');
   }
-  if (!!className) {
-    classNames.push(className.split('create-mt').join('').trim());
-  }
+
+  // if ( !! className ) {
+  //     classNames.push( className.split( 'create-mt' ).join( '' ).trim() );
+  // }
+
   return classNames.join(' ');
 };
 const isEmailFormat = href => {

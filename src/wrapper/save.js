@@ -137,11 +137,11 @@ export default function save( { attributes } ) {
         'hidden': hidden,
     } );
 
-    const TagName = nodeName;
+    const TagName = !! nodeName ? nodeName : 'div';
 
 	return (
-		<div { ...useBlockProps.save( { className: wrapperClassName, ...saveAttributes } ) }>
+		<TagName { ...useBlockProps.save( { className: wrapperClassName, ...saveAttributes } ) }>
             <InnerBlocks.Content />
-		</div>
+		</TagName>
 	);
 }

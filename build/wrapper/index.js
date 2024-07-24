@@ -3012,7 +3012,7 @@ function Edit({
     isRight0,
     overflow
   });
-  const TagName = nodeName;
+  const TagName = !!nodeName ? nodeName : 'div';
   const controls = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, null, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_5__.textAlignToolbar)(textAlign, onChangeTextAlign)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Texte', 'bsx-blocks')
   }, (0,_functions_controls_js__WEBPACK_IMPORTED_MODULE_5__.textColorSelect)(textColor, onChangeTextColor), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
@@ -3265,8 +3265,8 @@ function save({
     'tabindex': tabindex,
     'hidden': hidden
   });
-  const TagName = nodeName;
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  const TagName = !!nodeName ? nodeName : 'div';
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(TagName, {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
       className: wrapperClassName,
       ...saveAttributes
