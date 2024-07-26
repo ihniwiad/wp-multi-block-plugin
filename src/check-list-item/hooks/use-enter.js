@@ -31,7 +31,7 @@ export default function useEnter( props ) {
 			if ( event.defaultPrevented || event.keyCode !== ENTER ) {
 				return;
 			}
-					console.log( 'ENTER pressed in block' )
+					// console.log( 'ENTER pressed in block' )
 		    		// console.log( 'propsRef: \n' + JSON.stringify( propsRef, null, 2 ) );
 		    		// console.log( 'props: \n' + JSON.stringify( props, null, 2 ) );
 			const { content, clientId } = propsRef.current;
@@ -44,7 +44,7 @@ export default function useEnter( props ) {
 			// 		getBlockRootClientId(
 			// 			getBlockRootClientId( propsRef.current.clientId )
 			// 		)
-			// 	) === 'create-block/check-list-item';
+			// 	) === 'bsx-blocks/check-list-item';
 			// if ( canOutdent ) {
 			// 	// outdentListItem();
 			// 	return;

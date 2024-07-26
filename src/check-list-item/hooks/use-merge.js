@@ -23,7 +23,7 @@ export default function useMerge( clientId, onMerge ) {
 	// const outdentListItem = useOutdentListItem();
 
 	function getTrailingId( id ) {
-			console.log( 'useMerge() getTrailingId()' )
+			// console.log( 'useMerge() getTrailingId()' )
 		const order = getBlockOrder( id );
 
 		if ( ! order.length ) {
@@ -34,11 +34,11 @@ export default function useMerge( clientId, onMerge ) {
 	}
 
 	function getParentListItemId( id ) {
-			console.log( 'useMerge() getParentListItemId()' )
+			// console.log( 'useMerge() getParentListItemId()' )
 		const listId = getBlockRootClientId( id );
 		const parentListItemId = getBlockRootClientId( listId );
 		if ( ! parentListItemId ) return;
-		if ( getBlockName( parentListItemId ) !== 'create-block/check-list-item' ) return;
+		if ( getBlockName( parentListItemId ) !== 'bsx-blocks/check-list-item' ) return;
 		return parentListItemId;
 	}
 
@@ -50,7 +50,7 @@ export default function useMerge( clientId, onMerge ) {
 	 * @return {string?} The client ID of the next list item.
 	 */
 	function _getNextId( id ) {
-			console.log( 'useMerge() _getNextId()' )
+			// console.log( 'useMerge() _getNextId()' )
 		const next = getNextBlockClientId( id );
 		if ( next ) return next;
 		const parentListItemId = getParentListItemId( id );
@@ -66,7 +66,7 @@ export default function useMerge( clientId, onMerge ) {
 	 * @return {string?} The client ID of the next list item.
 	 */
 	function getNextId( id ) {
-			console.log( 'useMerge() getNextId()' )
+			// console.log( 'useMerge() getNextId()' )
 		const order = getBlockOrder( id );
 
 		// If the list item does not have a nested list, return the next list
@@ -80,7 +80,7 @@ export default function useMerge( clientId, onMerge ) {
 	}
 
 	return ( forward ) => {
-			console.log( 'useMerge() return' )
+			// console.log( 'useMerge() return' )
 		function mergeWithNested( clientIdA, clientIdB ) {
 			registry.batch( () => {
 				// When merging a sub list item with a higher next list item, we

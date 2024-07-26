@@ -1,0 +1,86 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bsx-blocks/row-with-cols",
+	"version": "0.1.0",
+	"title": "BSX Columns",
+	"category": "layout",
+	"allowedBlocks": [ "bsx-blocks/col" ],
+	"description": "Row with Columns for responsive content layout.",
+	"example": {},
+	"attributes": {
+	"templateName": {
+		"type": "string"
+	},
+	"enableInheritanceToCols": {
+		"type": "boolean",
+		"default": false
+	},
+	"alignItems": {
+		"type": "string"
+	},
+	"justifyContent": {
+		"type": "string"
+	},
+	"noGutters": {
+		"type": "boolean"
+	},
+	"formRow": {
+		"type": "boolean"
+	},
+	"rowReverse": {
+		"type": "string"
+	},
+	"sizeXs": {
+		"type": "string",
+		"default": ""
+	},
+	"sizeSm": {
+		"type": "string",
+		"default": ""
+	},
+	"sizeMd": {
+		"type": "string",
+		"default": "4"
+	},
+	"sizeLg": {
+		"type": "string",
+		"default": ""
+	},
+	"sizeXl": {
+		"type": "string",
+		"default": ""
+	},
+	"colsNodeName": {
+		"type": "string",
+		"default": "div"
+	},
+	"colsMarginAfter": {
+		"type": "string",
+		"default": "3"
+	},
+	"marginBefore": {
+		"type": "string",
+		"default": ""
+	},
+	"marginAfter": {
+		"type": "string",
+		"default": ""
+	},
+	"paddingBefore": {
+		"type": "string",
+		"default": ""
+	},
+	"paddingAfter": {
+		"type": "string",
+		"default": ""
+	}
+},
+	"supports": {
+		"html": false,
+		"className": false
+	},
+	"textdomain": "bsx-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

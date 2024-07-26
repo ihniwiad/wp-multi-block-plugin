@@ -1,0 +1,65 @@
+
+// block e.g. heading in Editor will be wrapped into div so it might miss font/color settings
+// so inherit most common settings to headings
+
+.editor-styles-wrapper {
+
+  // inherit font size to heading
+
+  .bsxui-core-block-wrapper.lead,
+  .bsxui-core-block-wrapper.small,
+  .bsxui-core-block-wrapper.h1,
+  .bsxui-core-block-wrapper.h2,
+  .bsxui-core-block-wrapper.h3,
+  .bsxui-core-block-wrapper.h4,
+  .bsxui-core-block-wrapper.h5,
+  .bsxui-core-block-wrapper.h6,
+  .bsxui-core-block-wrapper.display-1,
+  .bsxui-core-block-wrapper.display-2,
+  .bsxui-core-block-wrapper.display-3,
+  .bsxui-core-block-wrapper.display-4 {
+    > h1,
+    > h2,
+    > h3,
+    > h4,
+    > h5,
+    > h6,
+    > .h1,
+    > .h2,
+    > .h3,
+    > .h4,
+    > .h5,
+    > .h6 {
+      font-size: inherit;
+      font-weight: inherit;
+    }
+  }
+
+  .bsxui-core-block-wrapper.text-primary,
+  .bsxui-core-block-wrapper.text-secondary,
+  .bsxui-core-block-wrapper.text-info,
+  .bsxui-core-block-wrapper.text-success,
+  .bsxui-core-block-wrapper.text-warning,
+  .bsxui-core-block-wrapper.text-danger,
+  .bsxui-core-block-wrapper.text-light,
+  .bsxui-core-block-wrapper.text-dark,
+  .bsxui-core-block-wrapper.text-white,
+  .bsxui-core-block-wrapper.text-black {
+    > h1,
+    > h2,
+    > h3,
+    > h4,
+    > h5,
+    > h6,
+    > .h1,
+    > .h2,
+    > .h3,
+    > .h4,
+    > .h5,
+    > .h6 {
+      color: inherit;
+    }
+
+  }
+  
+}

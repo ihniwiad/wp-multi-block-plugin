@@ -25,7 +25,7 @@ export function migrateToListV2( attributes ) {
 			// console.log( '---- listItem: \n' + JSON.stringify( listItem, null, 2 ) );
 			if ( typeof listItem.attributes !== 'undefined' && typeof listItem.attributes.content !== 'undefined' ) {
 				return createBlock(
-					'create-block/check-list-item',
+					'bsx-blocks/check-list-item',
 					{ content: listItem.attributes.content }
 				);
 			}

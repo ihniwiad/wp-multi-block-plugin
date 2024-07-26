@@ -1,0 +1,149 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bsx-blocks/lazy-img",
+  "version": "0.1.0",
+  "title": "BSX Lazy Image",
+  "category": "widgets",
+  "description": "Lazy loading image with responsive image sizes.",
+  "example": {},
+  "attributes": {
+    "hasFigure": {
+      "boolean": "string",
+      "default": true
+    },
+    "imgSizes": {
+      "type": "array",
+      "default": []
+    },
+    "imgData": {
+      "type": "array",
+      "default": []
+    },
+    "imgSizeIndex": {
+      "type": "string",
+      "default": "3"
+    },
+    "imgId": {
+      "type": "number"
+    },
+    "url": {
+      "type": "string"
+    },
+    "width": {
+      "type": "number"
+    },
+    "height": {
+      "type": "number"
+    },
+    "origWidth": {
+      "type": "number"
+    },
+    "origHeight": {
+      "type": "number"
+    },
+    "portraitImgId": {
+      "type": "number"
+    },
+    "portraitImgSizes": {
+      "type": "array",
+      "default": []
+    },
+    "portraitImgData": {
+      "type": "array",
+      "default": []
+    },
+    "portraitImgSizeIndex": {
+      "type": "string",
+      "default": "3"
+    },
+    "portraitImgMaxWidthBreakpoint": {
+      "type": "string"
+    },
+    "alt": {
+      "type": "string"
+    },
+    "figcaption": {
+      "type": "string",
+      "source": "html",
+      "selector": "figcaption"
+    },
+    "rounded": {
+      "type": "string"
+    },
+    "imgThumbnail": {
+      "type": "boolean"
+    },
+    "borderState": {
+      "type": "string"
+    },
+    "zoomable": {
+      "type": "boolean"
+    },
+    "externalGalleryParent": {
+      "type": "boolean"
+    },
+    "zoomImgSizeIndex": {
+      "type": "string"
+    },
+    "disableResponsiveDownsizing": {
+      "type": "boolean"
+    },
+    "textAlign": {
+      "type": "string"
+    },
+    "marginBefore": {
+      "type": "string"
+    },
+    "marginAfter": {
+      "type": "string"
+    },
+    "marginLeft": {
+      "type": "string"
+    },
+    "marginRight": {
+      "type": "string"
+    },
+    "aAdditionalClassName": {
+      "type": "string"
+    },
+    "pictureAdditionalClassName": {
+      "type": "string"
+    },
+    "imgAdditionalClassName": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "rel": {
+      "type": "string"
+    },
+    "scale": {
+      "type": "number"
+    },
+    "displayedWidth": {
+      "type": "text"
+    },
+    "displayedHeight": {
+      "type": "text"
+    },
+    "noFigureTag": {
+      "type": "boolean"
+    },
+    "imgHtml": {
+      "type": "string",
+      "source": "html",
+      "selector": "noscript"
+    }
+  },
+  "supports": {
+    "html": false,
+    "className": false
+  },
+  "textdomain": "bsx-blocks",
+  "editorScript": "file:./index.js"
+}

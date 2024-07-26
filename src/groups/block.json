@@ -1,0 +1,23 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bsx-blocks/groups",
+    "version": "0.1.0",
+    "title": "BSX Groups",
+    "category": "layout",
+    "description": "Create preselected groups of Blocks.",
+    "example": {},
+    "attributes": {
+        "templateName": {
+            "type": "string"
+        }
+    },
+    "supports": {
+        "html": false,
+        "className": false,
+        "customClassName": false
+    },
+    "textdomain": "bsx-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css"
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"rows-col/index.css","mappings":";;;AACA;EACC;EACA;AAAD,C","sources":["webpack://multiple-blocks-plugin/./src/rows-col/editor.scss"],"sourcesContent":["\n.editor-styles-wrapper [data-type=\"bsx-blocks/column-rows\"] > .wp-block {\n\tmargin-left: unset;\n\tmargin-right: unset;\n}"],"names":[],"sourceRoot":""}

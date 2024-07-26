@@ -1,0 +1,140 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bsx-blocks/video",
+  "version": "0.1.0",
+  "title": "BSX Video",
+  "category": "media",
+  "description": "Create a video from uploaded file(s).",
+  "example": {},
+  "attributes": {
+    "notHasFigure": {
+      "boolean": "string"
+    },
+    "figcaption": {
+      "type": "string",
+      "source": "html",
+      "selector": "figcaption",
+      "__experimentalRole": "content"
+    },
+    "videoId": {
+      "type": "number"
+    },
+    "videoUrl": {
+      "type": "string",
+      "selector": "source:first-of-type",
+      "source": "attribute",
+      "attribute": "src"
+    },
+    "videoIsHvc1": {
+      "type": "boolean"
+    },
+    "video2Id": {
+      "type": "number"
+    },
+    "video2Url": {
+      "type": "string",
+      "selector": "source:nth-of-type(2)",
+      "source": "attribute",
+      "attribute": "src"
+    },
+    "video3Id": {
+      "type": "number"
+    },
+    "video3Url": {
+      "type": "string",
+      "selector": "source:nth-of-type(3)",
+      "source": "attribute",
+      "attribute": "src"
+    },
+    "videoWidth": {
+      "type": "number"
+    },
+    "videoHeight": {
+      "type": "number"
+    },
+    "posterId": {
+      "type": "number"
+    },
+    "posterUrl": {
+      "type": "string",
+      "selector": "video",
+      "source": "attribute",
+      "attribute": "poster"
+    },
+    "scale": {
+      "type": "number"
+    },
+    "width": {
+      "type": "string"
+    },
+    "height": {
+      "type": "string"
+    },
+    "displayedWidth": {
+      "type": "text",
+      "selector": "video",
+      "source": "attribute",
+      "attribute": "width"
+    },
+    "displayedHeight": {
+      "type": "text",
+      "selector": "video",
+      "source": "attribute",
+      "attribute": "height"
+    },
+    "controls": {
+      "type": "boolean",
+      "selector": "video",
+      "source": "attribute",
+      "attribute": "controls"
+    },
+    "autoplay": {
+      "type": "boolean",
+      "selector": "video",
+      "source": "attribute",
+      "attribute": "autoplay",
+      "default": true
+    },
+    "playsinline": {
+      "type": "boolean",
+      "selector": "video",
+      "source": "attribute",
+      "attribute": "playsinline",
+      "default": true
+    },
+    "loop": {
+      "type": "boolean",
+      "selector": "video",
+      "source": "attribute",
+      "attribute": "loop",
+      "default": true
+    },
+    "muted": {
+      "type": "boolean",
+      "selector": "video",
+      "source": "attribute",
+      "attribute": "muted",
+      "default": true
+    },
+    "textAlign": {
+      "type": "string"
+    },
+    "marginAfter": {
+      "type": "string"
+    },
+    "objectFit": {
+      "type": "string"
+    },
+    "overflow": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "html": false,
+    "className": false
+  },
+  "textdomain": "bsx-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css"
+}

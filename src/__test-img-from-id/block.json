@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bsx-blocks/example-block-1",
+	"version": "0.1.0",
+	"title": "BSX Example Block 1",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Example block 1.",
+	"example": {},
+    "attributes": {
+        "imgId": {
+            "type": "string",
+            "default": "156"
+        },
+        "foo": {
+            "type": "string",
+            "default": "blub"
+        },
+        "bar": {
+            "type": "string"
+        },
+        "imgUrl": {
+            "type": "string"
+        }
+    },
+	"supports": {
+		"html": false
+	},
+	"textdomain": "bsx-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

@@ -93,7 +93,7 @@ const v1 = {
 		// 		console.log( '---- listItem: \n' + JSON.stringify( listItem, null, 2 ) );
 		// 		// if ( typeof listItem.props !== 'undefined' && typeof listItem.props.children !== 'undefined' && typeof listItem.props.children[ 0 ] !== 'undefined' ) {
 		// 		// 	return createBlock(
-		// 		// 		'create-block/check-list-item',
+		// 		// 		'bsx-blocks/check-list-item',
 		// 		// 		{ content: listItem.props.children[ 0 ] }
 		// 		// 	);
 		// 		// }

@@ -6,6 +6,8 @@
 .editor-styles-wrapper {
 	background-color: $body-bg;
 	color: $body-color;
+	padding-left: calc($bsx-grid-gutter-width / 2);
+	padding-right: calc($bsx-grid-gutter-width / 2);
 }
 
 
@@ -20,13 +22,13 @@
 // TODO: test & make variables
 
 // [data-type^="bsx-blocks/"]
-// :not([data-type="create-block/check-list-item"])
-[data-type]:hover {
+// :not([data-type="bsx-blocks/check-list-item"])
+[data-type]:not(:focus):hover {
 
-	@include bsx-make-hover-block-identifier()
-/*
-	// border
-	&:before {
+	//@include bsx-make-hover-block-identifier()
+
+	// flag
+	&:after {
 		content: "";
 		z-index: 100;
 		position: absolute;
@@ -44,8 +46,8 @@
 		pointer-events: none;
 	}
 
-	// flag
-	&:after {
+	// border
+	&:before {
 		content: attr(data-title);
 		z-index: unset;
 		position: absolute;
@@ -59,8 +61,13 @@
 		font-size: 9px;
 		padding: 1px 4px;
 		pointer-events: none;
+		// reset check list frontend style from backend editor element
+		width: auto;
+		white-space: nowrap;
+		font-family: inherit;
+		margin-left: 0;
 	}
-	*/
+
 }
 
 

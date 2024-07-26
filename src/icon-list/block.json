@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bsx-blocks/icon-list",
+    "version": "0.1.0",
+    "title": "BSX Icon List",
+    "category": "text",
+    "allowedBlocks": [ "bsx-blocks/icon-list-item" ],
+    "description": "Create an icon list.",
+    "example": {},
+    "attributes": {
+        "globalIconFamily": {
+            "type": "string"
+        },
+        "globalIconTextColor": {
+            "type": "string",
+            "default": "primary"
+        },
+        "textAlign": {
+            "type": "string"
+        },
+        "display": {
+            "type": "string"
+        },
+        "marginLeft": {
+            "type": "string"
+        },
+        "marginRight": {
+            "type": "string"
+        },
+        "marginBefore": {
+            "type": "string"
+        },
+        "marginAfter": {
+            "type": "string"
+        }
+    },
+    "supports": {
+        "html": false,
+        "className": false
+    },
+    "textdomain": "bsx-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css"
+}

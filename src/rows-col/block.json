@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bsx-blocks/column-rows",
+	"version": "0.1.0",
+	"title": "BSX Rows",
+	"category": "layout",
+	"allowedBlocks": [ "bsx-blocks/column-rows" ],
+	"description": "Column containing multiple Rows for vertical layouting.",
+	"example": {},
+	"attributes": {
+		"templateName": {
+			"type": "string"
+		},
+		"display": {
+			"type": "string",
+			"default": "flex"
+		},
+		"flexDirection": {
+			"type": "string",
+			"default": "column"
+		},
+		"width": {
+			"type": "string",
+			"default": "100"
+		},
+		"justifyContent": {
+			"type": "string"
+		},
+		"multilayer": {
+			"type": "string"
+		},
+		"zIndex": {
+			"type": "string"
+		},
+		"isBannerInner": {
+			"type": "boolean"
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false
+	},
+	"textdomain": "bsx-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

@@ -1,0 +1,12 @@
+
+
+
+
+
+
+[data-type="bsx-blocks/banner"][data-multilayer="parent"] {
+	& > [class*="banner-"].multilayer-parent {
+		//padding-top: 0 !important;
+		overflow: hidden;
+	}
+}

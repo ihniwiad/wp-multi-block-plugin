@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bsx-blocks/badge",
+    "version": "0.1.0",
+    "title": "BSX Badge",
+    "category": "design",
+    "description": "Badge to emphasize some short text content.",
+    "example": {},
+    "attributes": {
+        "href": {
+            "type": "string",
+            "default": ""
+        },
+        "content": {
+            "type": "string",
+            "source": "html",
+            "selector": ".badge-content",
+            "__experimentalRole": "content"
+        },
+        "state": {
+            "type": "string",
+            "default": "primary"
+        },
+        "badgeType": {
+            "type": "string"
+        },
+        "marginLeft": {
+            "type": "string"
+        },
+        "marginRight": {
+            "type": "string"
+        },
+        "marginBefore": {
+            "type": "string"
+        },
+        "marginAfter": {
+            "type": "string"
+        },
+        "textColor": {
+            "type": "string"
+        },
+        "bgColor": {
+            "type": "string"
+        },
+        "iconKey": {
+            "type": "string"
+        },
+        "iconFamily": {
+            "type": "string"
+        }
+    },
+    "supports": {
+        "html": false,
+        "className": false
+    },
+    "textdomain": "bsx-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css"
+}

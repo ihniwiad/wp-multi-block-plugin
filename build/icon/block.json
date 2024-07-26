@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bsx-blocks/icon",
+  "version": "0.1.0",
+  "title": "BSX Icon",
+  "category": "design",
+  "description": "Creating a Font Awesome Icon.",
+  "example": {},
+  "attributes": {
+    "iconKey": {
+      "type": "string",
+      "default": "heart"
+    },
+    "iconFamily": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "rel": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "default": "primary"
+    },
+    "hoverState": {
+      "type": "string"
+    },
+    "iconType": {
+      "type": "string"
+    },
+    "iconSize": {
+      "type": "string"
+    },
+    "marginLeft": {
+      "type": "string"
+    },
+    "marginRight": {
+      "type": "string"
+    },
+    "marginBefore": {
+      "type": "string"
+    },
+    "marginAfter": {
+      "type": "string"
+    },
+    "verticalAlign": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "html": false,
+    "className": false
+  },
+  "textdomain": "bsx-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css"
+}
