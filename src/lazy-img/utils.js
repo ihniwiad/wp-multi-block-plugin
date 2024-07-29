@@ -61,7 +61,7 @@ export function migrateToLazyimgV2( attributes, mediaSizes, portraitMediaSizes )
     } = attributes;
 
 
-    console.log( '---- migrateToLazyimgV2()' );
+    // console.log( '---- migrateToLazyimgV2()' );
     
     let newAttributes = {};
 
@@ -79,13 +79,13 @@ export function migrateToLazyimgV2( attributes, mediaSizes, portraitMediaSizes )
         // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
 
 
-        console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
+        // console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
 
 
         // TODO: check imgSizeIndex more complex
 
         const imgIsBetween770And1024 = originalWidth <= 1024 && originalWidth >= 770;
-        console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
+        // console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
         let newImgSizeIndex = typeof imgSizeIndex !== 'undefined' ? imgSizeIndex : imgSizes.length - 1;
         let newZoomImgSizeIndex = zoomImgSizeIndex;
         // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
@@ -99,10 +99,10 @@ export function migrateToLazyimgV2( attributes, mediaSizes, portraitMediaSizes )
                 newZoomImgSizeIndex = ( parseInt( zoomImgSizeIndex ) + ( returnImgs.length - imgSizes.length ) ).toString();
             }
         }
-        console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
-        console.log( '------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex )
+        // console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
+        // console.log( '------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex )
 
-        console.log( '--------> make (first) img attr' )
+        // console.log( '--------> make (first) img attr' )
 
         newAttributes = {
             imgSizes: '', // save empty, replaced by imgData
@@ -122,7 +122,7 @@ export function migrateToLazyimgV2( attributes, mediaSizes, portraitMediaSizes )
     }
 
     if ( portraitMediaSizes && portraitImgData.length === 0 ) {
-        console.log( '--------> make portrait img attr' )
+        // console.log( '--------> make portrait img attr' )
         const newPortraitImgAllData = getImgAllDataFromMediaSizes( portraitMediaSizes );
         // const portraitOriginalWidth = newPortraitImgAllData.originalWidth;
         // const portraitOriginalHeight = newPortraitImgAllData.originalHeight;
@@ -133,7 +133,7 @@ export function migrateToLazyimgV2( attributes, mediaSizes, portraitMediaSizes )
         // console.log( '----> newPortraitImgData ( ' + portraitImgId + ' ): ' + JSON.stringify( newPortraitImgData, null, 2 ) + '\n' );
 
 
-        console.log( '------> portraitImgSizes.length: ' + portraitImgSizes.length + ', portraitReturnImgs.length: ' + portraitReturnImgs.length )
+        // console.log( '------> portraitImgSizes.length: ' + portraitImgSizes.length + ', portraitReturnImgs.length: ' + portraitReturnImgs.length )
 
         let newPortraitImgSizeIndex = typeof portraitImgSizeIndex !== 'undefined' ? portraitImgSizeIndex : portraitImgSizes.length - 1;
         // some existing image sizes due to bug in old sizes calculation on protrait formats
@@ -141,7 +141,7 @@ export function migrateToLazyimgV2( attributes, mediaSizes, portraitMediaSizes )
         if ( parseInt( portraitImgSizeIndex ) >= 2 ) {
             newPortraitImgSizeIndex = ( parseInt( portraitImgSizeIndex ) + ( portraitReturnImgs.length - portraitImgSizes.length ) ).toString();
         }
-        console.log( '------> portraitImgSizeIndex: ' + portraitImgSizeIndex + ', newPortraitImgSizeIndex: ' + newPortraitImgSizeIndex )
+        // console.log( '------> portraitImgSizeIndex: ' + portraitImgSizeIndex + ', newPortraitImgSizeIndex: ' + newPortraitImgSizeIndex )
     
 
         newAttributes = {
@@ -309,28 +309,37 @@ export const makeSrcset = ( attributes ) => {
     const {
         calcImgSizes,
         imgSizeIndex,
+        disableResponsiveDownsizing,
     } = attributes;
 
     // console.log( 'calcImgSizes: ' + JSON.stringify( calcImgSizes, null, 2 ) + '\n' );
     // console.log( 'imgSizeIndex: ' + imgSizeIndex );
 
     const srcsetList = [];
-    calcImgSizes.forEach( ( imgSize, index ) => {
-        if ( index === 0 ) {
-            // first loop, thumbnail image – add only if selected or if image has square format (use largest size since current loop size will always be square at first loop)
-            if ( imgSizeIndex == 0 || calcImgSizes[ calcImgSizes.length - 1 ].width == calcImgSizes[ calcImgSizes.length - 1 ].height ) {
-                // add thumbnail to srcset
-                srcsetList.push( imgSize.url + ' ' + imgSize.width + 'w' );
+    if ( disableResponsiveDownsizing ) {
+        // exactly one src
+        srcsetList.push( calcImgSizes[ imgSizeIndex ].url + ' ' + calcImgSizes[ imgSizeIndex ].width + 'w' );
+    }
+    else {
+        // multiple sources
+        calcImgSizes.forEach( ( imgSize, index ) => {
+            if ( index === 0 ) {
+                // first loop, thumbnail image – add only if selected or if image has square format (use largest size since current loop size will always be square at first loop)
+                if ( imgSizeIndex == 0 || calcImgSizes[ calcImgSizes.length - 1 ].width == calcImgSizes[ calcImgSizes.length - 1 ].height ) {
+                    // add thumbnail to srcset
+                    srcsetList.push( imgSize.url + ' ' + imgSize.width + 'w' );
+                }
             }
-        }
-        else {
-            // other loops, non thumbnail images
-            // if ( index <= imgSizeIndex ) {
-                // add if current size is smaller than selected size
-                srcsetList.push( imgSize.url + ' ' + imgSize.width + 'w' );
-            // }
-        }
-    } );
+            else {
+                // other loops, non thumbnail images
+                // never add img larger current selected size (or if allowing larger sizes than selected, never allow unscaled img index >6)
+                if ( index <= imgSizeIndex ) {
+                    // add if current size is smaller than selected size
+                    srcsetList.push( imgSize.url + ' ' + imgSize.width + 'w' );
+                }
+            }
+        } );
+    }
 
     // console.log( 'srcsetList: ' + JSON.stringify( srcsetList, null, 2 ) + '\n' );
 

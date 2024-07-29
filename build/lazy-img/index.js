@@ -3004,8 +3004,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../_functions/add-class-names.js */ "./src/_functions/add-class-names.js");
 /* harmony import */ var _functions_attributes_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../_functions/attributes.js */ "./src/_functions/attributes.js");
-/* harmony import */ var _deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./deprecated/img_v1.js */ "./src/lazy-img/deprecated/img_v1.js");
-/* harmony import */ var _functions_img_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../_functions/img.js */ "./src/_functions/img.js");
+/* harmony import */ var _functions_img_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./../_functions/img.js */ "./src/_functions/img.js");
+/* harmony import */ var _deprecated_utils_v2_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./deprecated/utils_v2.js */ "./src/lazy-img/deprecated/utils_v2.js");
+/* harmony import */ var _deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./deprecated/img_v1.js */ "./src/lazy-img/deprecated/img_v1.js");
 
 
 
@@ -3018,11 +3019,369 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// // v2 functions
-// import { 
-//     makeSrcset as makeSrcset_v2,
-// } from './deprecated/utils_v2.js';
-// // /v2 functions
+// v2 functions
+
+
+// /v2 functions
+
+const v2 = {
+  supports: {
+    html: false,
+    className: false // else would add `wp-block-bsx-blocks-lazy-img`
+  },
+  attributes: {
+    hasFigure: {
+      boolean: "string",
+      default: true
+    },
+    imgSizes: {
+      type: "array",
+      default: []
+    },
+    imgData: {
+      type: "array",
+      default: []
+    },
+    imgSizeIndex: {
+      type: "string",
+      default: "3"
+    },
+    imgId: {
+      type: "number"
+    },
+    url: {
+      type: "string"
+    },
+    width: {
+      type: "number"
+    },
+    height: {
+      type: "number"
+    },
+    origWidth: {
+      type: "number"
+    },
+    origHeight: {
+      type: "number"
+    },
+    portraitImgId: {
+      type: "number"
+    },
+    portraitImgSizes: {
+      type: "array",
+      default: []
+    },
+    portraitImgData: {
+      type: "array",
+      default: []
+    },
+    portraitImgSizeIndex: {
+      type: "string",
+      default: "3"
+    },
+    portraitImgMaxWidthBreakpoint: {
+      type: "string"
+    },
+    alt: {
+      type: "string"
+    },
+    figcaption: {
+      type: "string",
+      source: "html",
+      selector: "figcaption"
+    },
+    rounded: {
+      type: "string"
+    },
+    imgThumbnail: {
+      type: "boolean"
+    },
+    borderState: {
+      type: "string"
+    },
+    zoomable: {
+      type: "boolean"
+    },
+    externalGalleryParent: {
+      type: "boolean"
+    },
+    zoomImgSizeIndex: {
+      type: "string"
+    },
+    disableResponsiveDownsizing: {
+      type: "boolean"
+    },
+    textAlign: {
+      type: "string"
+    },
+    marginBefore: {
+      type: "string"
+    },
+    marginAfter: {
+      type: "string"
+    },
+    marginLeft: {
+      type: "string"
+    },
+    marginRight: {
+      type: "string"
+    },
+    aAdditionalClassName: {
+      type: "string"
+    },
+    pictureAdditionalClassName: {
+      type: "string"
+    },
+    imgAdditionalClassName: {
+      type: "string"
+    },
+    href: {
+      type: "string"
+    },
+    target: {
+      type: "string"
+    },
+    rel: {
+      type: "string"
+    },
+    scale: {
+      type: "number"
+    },
+    displayedWidth: {
+      type: "text"
+    },
+    displayedHeight: {
+      type: "text"
+    },
+    noFigureTag: {
+      type: "boolean"
+    }
+    // imgHtml: {
+    //     type: "string",
+    //     source: "html",
+    //     selector: "noscript"
+    // }
+  },
+  save: ({
+    attributes
+  }) => {
+    // console.log( 'Hello from deprecation v2 save()!' );
+
+    const {
+      className,
+      imgSizeIndex,
+      imgSizes,
+      imgData,
+      url,
+      // width,
+      // height,
+      origWidth,
+      origHeight,
+      portraitImgId,
+      portraitImgSizes,
+      portraitImgData,
+      portraitImgSizeIndex,
+      portraitImgMaxWidthBreakpoint,
+      alt,
+      figcaption,
+      rounded,
+      imgThumbnail,
+      borderState,
+      zoomable,
+      externalGalleryParent,
+      zoomImgSizeIndex,
+      disableResponsiveDownsizing,
+      textAlign,
+      marginBefore,
+      marginAfter,
+      marginLeft,
+      marginRight,
+      aAdditionalClassName,
+      pictureAdditionalClassName,
+      imgAdditionalClassName,
+      href,
+      target,
+      rel,
+      scale,
+      displayedWidth,
+      displayedHeight,
+      noFigureTag
+    } = attributes;
+
+    // TEST
+    // console.log( 'imgData: ' + JSON.stringify( imgData, null, 2 ) );
+    // console.log( 'imgSizes: ' + JSON.stringify( imgSizes, null, 2 ) + '\n' );
+
+    // initial set, replaces old attr 'imgSizes'
+    const hasOldAttrImgSizes = typeof imgSizes !== 'undefined' && Array.isArray(imgSizes) && imgSizes.length > 0;
+    const hasOldAttrPortraitImgSizes = typeof portraitImgSizes !== 'undefined' && Array.isArray(portraitImgSizes) && portraitImgSizes.length > 0;
+    const calcImgSizes = hasOldAttrImgSizes ? imgSizes : (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_7__.makeImgSizesFromImgData)(imgData);
+    const calcPortraitImgSizes = hasOldAttrPortraitImgSizes ? portraitImgSizes : (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_7__.makeImgSizesFromImgData)(portraitImgData);
+
+    // console.log( 'calcImgSizes: ' + JSON.stringify( calcImgSizes, null, 2 ) + '\n' );
+
+    // class names
+
+    const classNames = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_5__.addClassNames)({
+      textAlign,
+      marginBefore,
+      marginAfter,
+      marginLeft,
+      marginRight
+    }, className);
+    const aClassName = zoomable ? 'zoomable-img' : !!href && !!aAdditionalClassName ? aAdditionalClassName : '';
+    const imgClassName = (0,_functions_add_class_names_js__WEBPACK_IMPORTED_MODULE_5__.addClassNames)({
+      rounded,
+      imgThumbnail,
+      borderState
+    }, 'img-fluid' + (imgAdditionalClassName ? ' ' + imgAdditionalClassName : ''));
+
+    // attributes
+
+    // allow zoomable img
+    const saveAttributes = zoomable && !externalGalleryParent ? (0,_functions_attributes_js__WEBPACK_IMPORTED_MODULE_6__.makeSaveAttributes)({
+      'data-fn': 'photoswipe'
+    }) : {};
+
+    // manage zoomImgSizeIndex & href, target, rel
+    const aSaveAttributes = zoomable && typeof calcImgSizes[zoomImgSizeIndex] != 'undefined' ? (0,_functions_attributes_js__WEBPACK_IMPORTED_MODULE_6__.makeSaveAttributes)({
+      'href': calcImgSizes[zoomImgSizeIndex].url,
+      'data-size': calcImgSizes[zoomImgSizeIndex].width + 'x' + calcImgSizes[zoomImgSizeIndex].height
+    }) : !!href ? {
+      'href': href,
+      'target': target,
+      rel: href ? rel ? rel + ' noopener noreferrer' : 'noopener noreferrer' : ''
+    } : {};
+
+    // check if valid image(s)
+    const hasValidImg = typeof calcImgSizes !== 'undefined' && calcImgSizes.length > 0 && typeof calcImgSizes[imgSizeIndex] !== 'undefined' && imgSizeIndex < calcImgSizes.length;
+    const hasValidPortraitImg = typeof calcPortraitImgSizes !== 'undefined' && typeof calcPortraitImgSizes[portraitImgSizeIndex] !== 'undefined' && !!portraitImgSizeIndex;
+    const srcset = (0,_deprecated_utils_v2_js__WEBPACK_IMPORTED_MODULE_8__.makeSrcset)({
+      calcImgSizes,
+      imgSizeIndex
+    });
+    const src = hasValidImg ? calcImgSizes[imgSizeIndex].url : '';
+    const width = hasValidImg && !!displayedWidth ? displayedWidth : hasValidImg ? calcImgSizes[imgSizeIndex].width : '';
+    const height = hasValidImg && !!displayedHeight ? displayedHeight : hasValidImg ? calcImgSizes[imgSizeIndex].height : '';
+    const sizes = width && height ? '(max-width: ' + width + 'px) 100vw, ' + width + 'px' : '';
+    const landscapeImgClassName = hasValidPortraitImg ? imgClassName + ' d-portrait-none' : imgClassName;
+
+    // TODO: manage className (if is outer element)
+
+    const image = hasValidImg ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("script", null, "document.write( '", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+      className: landscapeImgClassName,
+      src: (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_7__.makeBase64PreloadImgSrc)(width, height),
+      "data-src": src,
+      "data-srcset": srcset,
+      sizes: sizes,
+      alt: alt,
+      width: width,
+      height: height,
+      "data-fn": "lazyload"
+    }), "' );"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("noscript", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+      className: landscapeImgClassName,
+      src: src,
+      srcset: srcset,
+      sizes: sizes,
+      alt: alt,
+      width: width,
+      height: height,
+      loading: "lazy"
+    }))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null);
+    let portraitImage = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null);
+    if (hasValidPortraitImg) {
+      const portraitSrcset = (0,_deprecated_utils_v2_js__WEBPACK_IMPORTED_MODULE_8__.makeSrcset)({
+        calcImgSizes: calcPortraitImgSizes,
+        imgSizeIndex: portraitImgSizeIndex
+      });
+      const portraitSrc = calcPortraitImgSizes[portraitImgSizeIndex].url;
+      const portraitWidth = calcPortraitImgSizes[portraitImgSizeIndex].width;
+      const portraitHeight = calcPortraitImgSizes[portraitImgSizeIndex].height;
+      const portaitSizes = '(max-width: ' + portraitWidth + 'px) 100vw, ' + portraitWidth + 'px';
+      const portraitImgClassName = imgClassName + ' d-landscape-none';
+      portraitImage = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("script", null, "document.write( '", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+        className: portraitImgClassName,
+        src: (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_7__.makeBase64PreloadImgSrc)(portraitWidth, portraitHeight),
+        "data-src": portraitSrc,
+        "data-srcset": portraitSrcset,
+        sizes: portaitSizes,
+        alt: alt,
+        width: portraitWidth,
+        height: portraitHeight,
+        "data-fn": "lazyload"
+      }), "' );"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("noscript", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+        className: portraitImgClassName,
+        src: portraitSrc,
+        srcset: portraitSrcset,
+        sizes: portaitSizes,
+        alt: alt,
+        width: portraitWidth,
+        height: portraitHeight,
+        loading: "lazy"
+      })));
+    }
+    const aOrImage = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, zoomable || href ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+      className: aClassName,
+      ...aSaveAttributes,
+      ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
+        className: aClassName,
+        ...saveAttributes
+      })
+    }, image, portraitImage) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, image, portraitImage));
+
+    // const testOutput = (
+    //     <>
+    //         {
+    //             ! noFigureTag ?
+    //             (
+    //                 <figure { ...useBlockProps.save( { className: classNames, ...saveAttributes } ) }>
+    //                     {
+    //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
+    //                             <>
+    //                                 { 
+    //                                     aOrImage
+    //                                 }
+    //                                 {
+    //                                     figcaption && ! RichText.isEmpty( figcaption ) && (
+    //                                         <RichText.Content tagName="figcaption" className="font-italic" value={ figcaption } />
+    //                                     )
+    //                                 }
+    //                             </>
+    //                         )
+    //                     }
+    //                 </figure>
+    //             )
+    //             :
+    //             (
+    //                 <>
+    //                     { 
+    //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
+    //                             <>
+    //                                 {
+    //                                     aOrImage
+    //                                 }
+    //                             </>
+    //                         )
+    //                     }
+    //                 </>
+    //             )
+    //         }
+    //     </>
+    // );
+    // console.log( 'testOutput (deprecated v2): ' + JSON.stringify( testOutput, null, 2 ) + '\n' );
+
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !noFigureTag ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
+      ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save({
+        className: classNames,
+        ...saveAttributes
+      })
+    }, typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[imgSizeIndex] !== 'undefined' && typeof calcImgSizes[imgSizeIndex].url !== 'undefined' && calcImgSizes[imgSizeIndex].url && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, aOrImage, figcaption && !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText.isEmpty(figcaption) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText.Content, {
+      tagName: "figcaption",
+      className: "font-italic",
+      value: figcaption
+    }))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[imgSizeIndex] !== 'undefined' && typeof calcImgSizes[imgSizeIndex].url !== 'undefined' && calcImgSizes[imgSizeIndex].url && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, aOrImage)));
+  }
+};
 
 // v1 functions
 
@@ -3068,7 +3427,7 @@ const makeSourcesAttributesList = attributes => {
       if (adaptedCurrentPortraitImgIndex <= parseInt(portraitImgSizeIndex) && adaptedCurrentPortraitImgIndex > skipIndex && typeof calcPortraitImgSizes !== 'undefined' && typeof calcPortraitImgSizes[adaptedCurrentPortraitImgIndex] != 'undefined' && typeof calcPortraitImgSizes[adaptedCurrentPortraitImgIndex].url != 'undefined') {
         sourcesAttributesList.push({
           media: '(orientation: portrait) and (max-width: ' + (parseInt(index == responsivePortraitMediaIndexList.length - 1 && !!portraitImgMaxWidthBreakpoint ? portraitImgMaxWidthBreakpoint : item.breakpoint) - 0.02) + 'px)',
-          srcset: (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_7__.makeBase64PreloadImgSrc)(calcPortraitImgSizes[adaptedCurrentPortraitImgIndex].width, calcPortraitImgSizes[adaptedCurrentPortraitImgIndex].height),
+          srcset: (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_9__.makeBase64PreloadImgSrc)(calcPortraitImgSizes[adaptedCurrentPortraitImgIndex].width, calcPortraitImgSizes[adaptedCurrentPortraitImgIndex].height),
           'data-srcset': calcPortraitImgSizes[adaptedCurrentPortraitImgIndex].url,
           'data-width': calcPortraitImgSizes[adaptedCurrentPortraitImgIndex].width,
           'data-height': calcPortraitImgSizes[adaptedCurrentPortraitImgIndex].height
@@ -3080,7 +3439,7 @@ const makeSourcesAttributesList = attributes => {
     if (!!portraitImgSizeIndex && typeof calcPortraitImgSizes !== 'undefined' && typeof calcPortraitImgSizes[portraitImgSizeIndex] != 'undefined' && typeof calcPortraitImgSizes[portraitImgSizeIndex].url != 'undefined') {
       sourcesAttributesList.push({
         media: '(orientation: portrait) and (max-width: ' + (parseInt(!!portraitImgMaxWidthBreakpoint ? portraitImgMaxWidthBreakpoint : responsivePortraitMediaIndexList[responsivePortraitMediaIndexList.length - 1].breakpoint) - 0.02) + 'px)',
-        srcset: (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_7__.makeBase64PreloadImgSrc)(calcPortraitImgSizes[portraitImgSizeIndex].width, calcPortraitImgSizes[portraitImgSizeIndex].height),
+        srcset: (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_9__.makeBase64PreloadImgSrc)(calcPortraitImgSizes[portraitImgSizeIndex].width, calcPortraitImgSizes[portraitImgSizeIndex].height),
         'data-srcset': calcPortraitImgSizes[portraitImgSizeIndex].url,
         'data-width': calcPortraitImgSizes[portraitImgSizeIndex].width,
         'data-height': calcPortraitImgSizes[portraitImgSizeIndex].height
@@ -3095,7 +3454,7 @@ const makeSourcesAttributesList = attributes => {
     if (!disableResponsiveDownsizing && adaptedCurrentImgIndex < parseInt(imgSizeIndex) && adaptedCurrentImgIndex > skipIndex && typeof calcImgSizes != 'undefined' && typeof calcImgSizes[adaptedCurrentImgIndex] != 'undefined' && typeof calcImgSizes[adaptedCurrentImgIndex].url != 'undefined') {
       sourcesAttributesList.push({
         media: '(max-width: ' + (parseInt(item.breakpoint) - 0.02) + 'px)',
-        srcset: (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_7__.makeBase64PreloadImgSrc)(calcImgSizes[adaptedCurrentImgIndex].width, calcImgSizes[adaptedCurrentImgIndex].height),
+        srcset: (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_9__.makeBase64PreloadImgSrc)(calcImgSizes[adaptedCurrentImgIndex].width, calcImgSizes[adaptedCurrentImgIndex].height),
         'data-srcset': calcImgSizes[adaptedCurrentImgIndex].url,
         'data-width': calcImgSizes[adaptedCurrentImgIndex].width,
         'data-height': calcImgSizes[adaptedCurrentImgIndex].height
@@ -3116,7 +3475,6 @@ async function getImgObjFromId(imgId) {
 // /v1 functions
 
 const v1 = {
-  // get old attr
   attributes: {
     hasFigure: {
       boolean: 'string',
@@ -3264,8 +3622,9 @@ const v1 = {
   //         imgData,
   //     };
   // },
-
   save: props => {
+    // console.log( 'Hello from deprecation v1 save()!' );
+
     const {
       // className,
       attributes: {
@@ -3344,8 +3703,8 @@ const v1 = {
     // initial set, replaces old attr 'imgSizes'
     const hasOldAttrImgSizes = typeof imgSizes !== 'undefined' && Array.isArray(imgSizes) && imgSizes.length > 0;
     const hasOldAttrPortraitImgSizes = typeof portraitImgSizes !== 'undefined' && Array.isArray(portraitImgSizes) && portraitImgSizes.length > 0;
-    const calcImgSizes = hasOldAttrImgSizes ? imgSizes : (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_7__.makeImgSizesFromImgData)(imgData);
-    const calcPortraitImgSizes = hasOldAttrPortraitImgSizes ? portraitImgSizes : (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_7__.makeImgSizesFromImgData)(portraitImgData);
+    const calcImgSizes = hasOldAttrImgSizes ? imgSizes : (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_9__.makeImgSizesFromImgData)(imgData);
+    const calcPortraitImgSizes = hasOldAttrPortraitImgSizes ? portraitImgSizes : (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_9__.makeImgSizesFromImgData)(portraitImgData);
 
     // prepare img sources attributes
 
@@ -3401,7 +3760,7 @@ const v1 = {
       ...sourceAttributes
     })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
       className: imgClassName,
-      src: (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_7__.makeBase64PreloadImgSrc)(calcImgSizes[imgSizeIndex].width, calcImgSizes[imgSizeIndex].height),
+      src: (0,_deprecated_img_v1_js__WEBPACK_IMPORTED_MODULE_9__.makeBase64PreloadImgSrc)(calcImgSizes[imgSizeIndex].width, calcImgSizes[imgSizeIndex].height),
       alt: alt,
       "data-src": calcImgSizes[imgSizeIndex].url,
       width: !!displayedWidth ? displayedWidth : calcImgSizes[imgSizeIndex].width,
@@ -3421,6 +3780,15 @@ const v1 = {
 
     // console.log( 'return deprecated v1 save()' )
 
+    const testOutput = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !noFigureTag ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
+      className: classNames,
+      ...saveAttributes
+    }, typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[imgSizeIndex] !== 'undefined' && typeof calcImgSizes[imgSizeIndex].url !== 'undefined' && calcImgSizes[imgSizeIndex].url && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, aOrImage, figcaption && !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText.isEmpty(figcaption) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText.Content, {
+      tagName: "figcaption",
+      className: "font-italic",
+      value: figcaption
+    }))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[imgSizeIndex] !== 'undefined' && typeof calcImgSizes[imgSizeIndex].url !== 'undefined' && calcImgSizes[imgSizeIndex].url && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, aOrImage)));
+    console.log('testOutput (deprecated v1): ' + JSON.stringify(testOutput, null, 2) + '\n');
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !noFigureTag ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
       className: classNames,
       ...saveAttributes
@@ -3431,7 +3799,7 @@ const v1 = {
     }))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[imgSizeIndex] !== 'undefined' && typeof calcImgSizes[imgSizeIndex].url !== 'undefined' && calcImgSizes[imgSizeIndex].url && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, aOrImage)));
   }
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([v1]);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([v2, v1]);
 
 /***/ }),
 
@@ -3772,6 +4140,77 @@ const makeImgData = (imgSizes, truncWithoutSizeSlug, fileExt) => {
 //         };
 //     }
 // }
+
+/***/ }),
+
+/***/ "./src/lazy-img/deprecated/utils_v2.js":
+/*!*********************************************!*\
+  !*** ./src/lazy-img/deprecated/utils_v2.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   makeSrcset: () => (/* binding */ makeSrcset)
+/* harmony export */ });
+// export const makeSrcset = ( attributes ) => {
+
+//     const {
+//         calcImgSizes,
+//         imgSizeIndex,
+//     } = attributes;
+
+//     // console.log( 'calcImgSizes: ' + calcImgSizes );
+//     // console.log( 'imgSizeIndex: ' + imgSizeIndex );
+
+//     const srcsetList = [];
+//     calcImgSizes.forEach( ( imgSize, index ) => {
+//         if ( 
+//             ( ( imgSizeIndex == 0 && index == 0 ) || ( imgSize.width == imgSize.height ) )
+//             || ( imgSizeIndex > 0 && index > 0 )
+//         ) {
+//             // add square thumb img if is selected size (imgSizeIndex == 0) or original img has square format too, else skip
+//             srcsetList.push( imgSize.url + ' ' + imgSize.width + 'w' );
+//             if ( imgSizeIndex == 0 ) {
+//                 // skip other sizes but square
+//                 return; // do not use `break` since will cause error “Unsyntactic break.”
+//             }
+//         }
+//     } );
+
+//     return srcsetList.join( ', ' );
+// }
+
+const makeSrcset = attributes => {
+  const {
+    calcImgSizes,
+    imgSizeIndex
+  } = attributes;
+
+  // console.log( 'calcImgSizes: ' + JSON.stringify( calcImgSizes, null, 2 ) + '\n' );
+  // console.log( 'imgSizeIndex: ' + imgSizeIndex );
+
+  const srcsetList = [];
+  calcImgSizes.forEach((imgSize, index) => {
+    if (index === 0) {
+      // first loop, thumbnail image – add only if selected or if image has square format (use largest size since current loop size will always be square at first loop)
+      if (imgSizeIndex == 0 || calcImgSizes[calcImgSizes.length - 1].width == calcImgSizes[calcImgSizes.length - 1].height) {
+        // add thumbnail to srcset
+        srcsetList.push(imgSize.url + ' ' + imgSize.width + 'w');
+      }
+    } else {
+      // other loops, non thumbnail images
+      // if ( index <= imgSizeIndex ) {
+      // add if current size is smaller than selected size
+      srcsetList.push(imgSize.url + ' ' + imgSize.width + 'w');
+      // }
+    }
+  });
+
+  // console.log( 'srcsetList: ' + JSON.stringify( srcsetList, null, 2 ) + '\n' );
+
+  return srcsetList.join(', ');
+};
 
 /***/ }),
 
@@ -4964,7 +5403,7 @@ function save({
     noFigureTag
   } = attributes;
 
-  // console.log( 'Hello from v2 save()!' )
+  // console.log( 'Hello from v3 save()!' )
 
   // TEST
   // console.log( 'imgData: ' + JSON.stringify( imgData, null, 2 ) );
@@ -5073,7 +5512,8 @@ function save({
 
   const srcset = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.makeSrcset)({
     calcImgSizes,
-    imgSizeIndex
+    imgSizeIndex,
+    disableResponsiveDownsizing
   });
   const src = hasValidImg ? calcImgSizes[imgSizeIndex].url : '';
   const width = hasValidImg && !!displayedWidth ? displayedWidth : hasValidImg ? calcImgSizes[imgSizeIndex].width : '';
@@ -5144,49 +5584,18 @@ function save({
     })
   }, image, portraitImage) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, image, portraitImage));
 
-  // console.log( 'return v2 save()' )
+  // console.log( 'return save()' )
 
-  // const testOutput = (
-  //     <>
-  //         {
-  //             ! noFigureTag ?
-  //             (
-  //                 <figure { ...useBlockProps.save( { ...saveAttributes } ) }>
-  //                     {
-  //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
-  //                             <>
-  //                                 { 
-  //                                     aOrImage
-  //                                 }
-  //                                 {
-  //                                     figcaption && ! RichText.isEmpty( figcaption ) && (
-  //                                         <RichText.Content tagName="figcaption" className="font-italic" value={ figcaption } />
-  //                                     )
-  //                                 }
-  //                             </>
-  //                         )
-  //                     }
-  //                 </figure>
-  //             )
-  //             :
-  //             (
-  //                 <>
-  //                     { 
-  //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
-  //                             <>
-  //                                 {
-  //                                     aOrImage
-  //                                 }
-  //                             </>
-  //                         )
-  //                     }
-  //                 </>
-  //             )
-  //         }
-  //     </>
-  // );
-  // console.log( 'testOutput: ' + JSON.stringify( testOutput, null, 2 ) + '\n' );
-
+  const testOutput = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !noFigureTag ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
+    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
+      ...saveAttributes
+    })
+  }, typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[imgSizeIndex] !== 'undefined' && typeof calcImgSizes[imgSizeIndex].url !== 'undefined' && calcImgSizes[imgSizeIndex].url && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, aOrImage, figcaption && !_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.isEmpty(figcaption) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+    tagName: "figcaption",
+    className: "font-italic",
+    value: figcaption
+  }))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[imgSizeIndex] !== 'undefined' && typeof calcImgSizes[imgSizeIndex].url !== 'undefined' && calcImgSizes[imgSizeIndex].url && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, aOrImage)));
+  console.log('testOutput (save.js): ' + JSON.stringify(testOutput, null, 2) + '\n');
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !noFigureTag ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
       className: classNames,
@@ -5260,7 +5669,9 @@ function migrateToLazyimgV2(attributes, mediaSizes, portraitMediaSizes) {
     noFigureTag,
     imgHtml
   } = attributes;
-  console.log('---- migrateToLazyimgV2()');
+
+  // console.log( '---- migrateToLazyimgV2()' );
+
   let newAttributes = {};
   if (mediaSizes && imgData.length === 0) {
     const newImgAllData = (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_0__.getImgAllDataFromMediaSizes)(mediaSizes);
@@ -5275,12 +5686,12 @@ function migrateToLazyimgV2(attributes, mediaSizes, portraitMediaSizes) {
 
     // TODO: check size indexes, compare imgSizes.length with returnImgs.length, if equal keep, if difference count down from largest size
 
-    console.log('------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length);
+    // console.log( '------> imgSizes.length: ' + imgSizes.length + ', returnImgs.length: ' + returnImgs.length )
 
     // TODO: check imgSizeIndex more complex
 
     const imgIsBetween770And1024 = originalWidth <= 1024 && originalWidth >= 770;
-    console.log('imgIsBetween770And1024: ' + imgIsBetween770And1024);
+    // console.log( 'imgIsBetween770And1024: ' + imgIsBetween770And1024 )
     let newImgSizeIndex = typeof imgSizeIndex !== 'undefined' ? imgSizeIndex : imgSizes.length - 1;
     let newZoomImgSizeIndex = zoomImgSizeIndex;
     // some existing image size (768px) might be missing due to a bug if original image is between 1024 and 770px
@@ -5294,9 +5705,11 @@ function migrateToLazyimgV2(attributes, mediaSizes, portraitMediaSizes) {
         newZoomImgSizeIndex = (parseInt(zoomImgSizeIndex) + (returnImgs.length - imgSizes.length)).toString();
       }
     }
-    console.log('------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex);
-    console.log('------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex);
-    console.log('--------> make (first) img attr');
+    // console.log( '------> imgSizeIndex: ' + imgSizeIndex + ', newImgSizeIndex: ' + newImgSizeIndex )
+    // console.log( '------> zoomImgSizeIndex: ' + zoomImgSizeIndex + ', newZoomImgSizeIndex: ' + newZoomImgSizeIndex )
+
+    // console.log( '--------> make (first) img attr' )
+
     newAttributes = {
       imgSizes: '',
       // save empty, replaced by imgData
@@ -5318,7 +5731,7 @@ function migrateToLazyimgV2(attributes, mediaSizes, portraitMediaSizes) {
     // console.log( '--------> newAttributes (img): ' + JSON.stringify( newAttributes, null, 2 ) + '\n' );
   }
   if (portraitMediaSizes && portraitImgData.length === 0) {
-    console.log('--------> make portrait img attr');
+    // console.log( '--------> make portrait img attr' )
     const newPortraitImgAllData = (0,_functions_img_js__WEBPACK_IMPORTED_MODULE_0__.getImgAllDataFromMediaSizes)(portraitMediaSizes);
     // const portraitOriginalWidth = newPortraitImgAllData.originalWidth;
     // const portraitOriginalHeight = newPortraitImgAllData.originalHeight;
@@ -5327,14 +5740,16 @@ function migrateToLazyimgV2(attributes, mediaSizes, portraitMediaSizes) {
 
     // console.log( '----> newPortraitImgData ( ' + portraitImgId + ' ): ' + JSON.stringify( newPortraitImgData, null, 2 ) + '\n' );
 
-    console.log('------> portraitImgSizes.length: ' + portraitImgSizes.length + ', portraitReturnImgs.length: ' + portraitReturnImgs.length);
+    // console.log( '------> portraitImgSizes.length: ' + portraitImgSizes.length + ', portraitReturnImgs.length: ' + portraitReturnImgs.length )
+
     let newPortraitImgSizeIndex = typeof portraitImgSizeIndex !== 'undefined' ? portraitImgSizeIndex : portraitImgSizes.length - 1;
     // some existing image sizes due to bug in old sizes calculation on protrait formats
     // now there are all image sizes so we might need to increase imgSizeIndex
     if (parseInt(portraitImgSizeIndex) >= 2) {
       newPortraitImgSizeIndex = (parseInt(portraitImgSizeIndex) + (portraitReturnImgs.length - portraitImgSizes.length)).toString();
     }
-    console.log('------> portraitImgSizeIndex: ' + portraitImgSizeIndex + ', newPortraitImgSizeIndex: ' + newPortraitImgSizeIndex);
+    // console.log( '------> portraitImgSizeIndex: ' + portraitImgSizeIndex + ', newPortraitImgSizeIndex: ' + newPortraitImgSizeIndex )
+
     newAttributes = {
       portraitImgSizes: '',
       // save empty, replaced by portraitImgData
@@ -5452,28 +5867,36 @@ const makeSourcesAttributesList = attributes => {
 const makeSrcset = attributes => {
   const {
     calcImgSizes,
-    imgSizeIndex
+    imgSizeIndex,
+    disableResponsiveDownsizing
   } = attributes;
 
   // console.log( 'calcImgSizes: ' + JSON.stringify( calcImgSizes, null, 2 ) + '\n' );
   // console.log( 'imgSizeIndex: ' + imgSizeIndex );
 
   const srcsetList = [];
-  calcImgSizes.forEach((imgSize, index) => {
-    if (index === 0) {
-      // first loop, thumbnail image – add only if selected or if image has square format (use largest size since current loop size will always be square at first loop)
-      if (imgSizeIndex == 0 || calcImgSizes[calcImgSizes.length - 1].width == calcImgSizes[calcImgSizes.length - 1].height) {
-        // add thumbnail to srcset
-        srcsetList.push(imgSize.url + ' ' + imgSize.width + 'w');
+  if (disableResponsiveDownsizing) {
+    // exactly one src
+    srcsetList.push(calcImgSizes[imgSizeIndex].url + ' ' + calcImgSizes[imgSizeIndex].width + 'w');
+  } else {
+    // multiple sources
+    calcImgSizes.forEach((imgSize, index) => {
+      if (index === 0) {
+        // first loop, thumbnail image – add only if selected or if image has square format (use largest size since current loop size will always be square at first loop)
+        if (imgSizeIndex == 0 || calcImgSizes[calcImgSizes.length - 1].width == calcImgSizes[calcImgSizes.length - 1].height) {
+          // add thumbnail to srcset
+          srcsetList.push(imgSize.url + ' ' + imgSize.width + 'w');
+        }
+      } else {
+        // other loops, non thumbnail images
+        // never add img larger current selected size (or if allowing larger sizes than selected, never allow unscaled img index >6)
+        if (index <= imgSizeIndex) {
+          // add if current size is smaller than selected size
+          srcsetList.push(imgSize.url + ' ' + imgSize.width + 'w');
+        }
       }
-    } else {
-      // other loops, non thumbnail images
-      // if ( index <= imgSizeIndex ) {
-      // add if current size is smaller than selected size
-      srcsetList.push(imgSize.url + ' ' + imgSize.width + 'w');
-      // }
-    }
-  });
+    });
+  }
 
   // console.log( 'srcsetList: ' + JSON.stringify( srcsetList, null, 2 ) + '\n' );
 

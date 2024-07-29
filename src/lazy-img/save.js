@@ -64,7 +64,7 @@ export default function save( { attributes } ) {
         noFigureTag,
     } = attributes;
 
-    // console.log( 'Hello from v2 save()!' )
+    // console.log( 'Hello from v3 save()!' )
 
 
     // TEST
@@ -193,6 +193,7 @@ export default function save( { attributes } ) {
     const srcset = makeSrcset( {
         calcImgSizes,
         imgSizeIndex,
+        disableResponsiveDownsizing,
     } );
     const src = hasValidImg ? calcImgSizes[ imgSizeIndex ].url : '';
     const width = ( hasValidImg && !! displayedWidth ) ? displayedWidth : hasValidImg ? calcImgSizes[ imgSizeIndex ].width : '';
@@ -262,48 +263,48 @@ export default function save( { attributes } ) {
         </>
     );
 
-    // console.log( 'return v2 save()' )
+    // console.log( 'return save()' )
 
-    // const testOutput = (
-    //     <>
-    //         {
-    //             ! noFigureTag ?
-    //             (
-    //                 <figure { ...useBlockProps.save( { ...saveAttributes } ) }>
-    //                     {
-    //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
-    //                             <>
-    //                                 { 
-    //                                     aOrImage
-    //                                 }
-    //                                 {
-    //                                     figcaption && ! RichText.isEmpty( figcaption ) && (
-    //                                         <RichText.Content tagName="figcaption" className="font-italic" value={ figcaption } />
-    //                                     )
-    //                                 }
-    //                             </>
-    //                         )
-    //                     }
-    //                 </figure>
-    //             )
-    //             :
-    //             (
-    //                 <>
-    //                     { 
-    //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
-    //                             <>
-    //                                 {
-    //                                     aOrImage
-    //                                 }
-    //                             </>
-    //                         )
-    //                     }
-    //                 </>
-    //             )
-    //         }
-    //     </>
-    // );
-    // console.log( 'testOutput: ' + JSON.stringify( testOutput, null, 2 ) + '\n' );
+    const testOutput = (
+        <>
+            {
+                ! noFigureTag ?
+                (
+                    <figure { ...useBlockProps.save( { ...saveAttributes } ) }>
+                        {
+                            typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
+                                <>
+                                    { 
+                                        aOrImage
+                                    }
+                                    {
+                                        figcaption && ! RichText.isEmpty( figcaption ) && (
+                                            <RichText.Content tagName="figcaption" className="font-italic" value={ figcaption } />
+                                        )
+                                    }
+                                </>
+                            )
+                        }
+                    </figure>
+                )
+                :
+                (
+                    <>
+                        { 
+                            typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
+                                <>
+                                    {
+                                        aOrImage
+                                    }
+                                </>
+                            )
+                        }
+                    </>
+                )
+            }
+        </>
+    );
+    console.log( 'testOutput (save.js): ' + JSON.stringify( testOutput, null, 2 ) + '\n' );
 
 	return (
         <>
