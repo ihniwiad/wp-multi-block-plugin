@@ -1,1 +1,0 @@
-{"version":3,"file":"badge/index.css","mappings":";;;AAGA;EACI;EACA;EACA;AAFJ,C","sources":["webpack://multiple-blocks-plugin/./src/badge/editor.scss"],"sourcesContent":["\n// make badge inline\n\n[data-type=\"bsx-blocks/badge\"] {\n    display: inline-block;\n    vertical-align: top;\n    margin-right: 0.25em !important;\n}"],"names":[],"sourceRoot":""}

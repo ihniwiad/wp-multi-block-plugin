@@ -1,1 +1,0 @@
-{"version":3,"file":"buttons/index.css","mappings":";;;AACA;;EAEI;EACA;EACA;AAAJ,C","sources":["webpack://multiple-blocks-plugin/./src/buttons/editor.scss"],"sourcesContent":["\n[data-type=\"bsx-blocks/button\"],\n[data-type=\"bsx-blocks/button-label\"] {\n    display: inline-block;\n    vertical-align: top;\n    margin-right: 0.25em !important;\n}"],"names":[],"sourceRoot":""}
