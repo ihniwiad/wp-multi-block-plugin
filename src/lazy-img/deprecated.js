@@ -922,46 +922,46 @@ const v1 = {
 
         // console.log( 'return deprecated v1 save()' )
 
-        const testOutput = (
-            <>
-                {
-                    ! noFigureTag ?
-                    (
-                        <figure className={ classNames } { ...saveAttributes }>
-                            {
-                                typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
-                                    <>
-                                        { 
-                                            aOrImage
-                                        }
-                                        {
-                                            figcaption && ! RichText.isEmpty( figcaption ) && (
-                                                <RichText.Content tagName="figcaption" className="font-italic" value={ figcaption } />
-                                            )
-                                        }
-                                    </>
-                                )
-                            }
-                        </figure>
-                    )
-                    :
-                    (
-                        <>
-                            { 
-                                typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
-                                    <>
-                                        {
-                                            aOrImage
-                                        }
-                                    </>
-                                )
-                            }
-                        </>
-                    )
-                }
-            </>
-        );
-        console.log( 'testOutput (deprecated v1): ' + JSON.stringify( testOutput, null, 2 ) + '\n' );
+        // const testOutput = (
+        //     <>
+        //         {
+        //             ! noFigureTag ?
+        //             (
+        //                 <figure className={ classNames } { ...saveAttributes }>
+        //                     {
+        //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
+        //                             <>
+        //                                 { 
+        //                                     aOrImage
+        //                                 }
+        //                                 {
+        //                                     figcaption && ! RichText.isEmpty( figcaption ) && (
+        //                                         <RichText.Content tagName="figcaption" className="font-italic" value={ figcaption } />
+        //                                     )
+        //                                 }
+        //                             </>
+        //                         )
+        //                     }
+        //                 </figure>
+        //             )
+        //             :
+        //             (
+        //                 <>
+        //                     { 
+        //                         typeof calcImgSizes !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ] !== 'undefined' && typeof calcImgSizes[ imgSizeIndex ].url !== 'undefined' && calcImgSizes[ imgSizeIndex ].url && (
+        //                             <>
+        //                                 {
+        //                                     aOrImage
+        //                                 }
+        //                             </>
+        //                         )
+        //                     }
+        //                 </>
+        //             )
+        //         }
+        //     </>
+        // );
+        // console.log( 'testOutput (deprecated v1): ' + JSON.stringify( testOutput, null, 2 ) + '\n' );
 
         return (
             <>
