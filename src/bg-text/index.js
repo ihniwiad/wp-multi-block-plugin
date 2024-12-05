@@ -11,7 +11,7 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import { svgImg as icon } from './../_functions/icon';
+import { bgText as icon } from './../_functions/icon';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';

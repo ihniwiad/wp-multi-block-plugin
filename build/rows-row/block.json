@@ -5,6 +5,9 @@
   "version": "0.1.0",
   "title": "BSX Row",
   "category": "layout",
+  "parent": [
+    "bsx-blocks/column-rows"
+  ],
   "description": "Row within Rows for vertical layouting.",
   "example": {},
   "attributes": {

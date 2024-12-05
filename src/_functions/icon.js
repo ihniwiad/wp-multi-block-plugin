@@ -34,6 +34,13 @@ export const bannerColumnRow = (
 	</svg>
 );
 
+export const bgText = (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
+		<polygon points="12,4 12,4 12,4 "/>
+		<path d="M19,7V2H1v4v1v3v1v3v1v4h11v-4h7v-5h-2V7H19z M4,8h10v1H4V8z M9,17H4v-1h5V17z M16,13H4v-1h12V13z M16,5H4V4h12V5z"/>
+	</svg>
+);
+
 export const buttons = (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
         <path d="M16,7H4C2.9,7,2,7.9,2,9v2c0,1.11,0.9,2,2,2h12c1.1,0,2-0.89,2-2V9C18,7.9,17.1,7,16,7z M13,11c0,0,0,0-6,0v0
@@ -100,9 +107,13 @@ export const imgGallery = (
 
 export const container = (
 	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
-		<path d="M6,5H4v2h2V5z M6,9H4v2h2V9z M4,15h2v-2H4V15z M16,5h-2v2h2V5z M16,9h-2v2h2V9z M14,15h2v-2h-2V15z M2,4h16
-			c0.55,0,1-0.45,1-1c0-0.55-0.45-1-1-1H2C1.45,2,1,2.45,1,3C1,3.55,1.45,4,2,4z M18,16H2c-0.55,0-1,0.45-1,1c0,0.55,0.45,1,1,1h16
-			c0.55,0,1-0.45,1-1C19,16.45,18.55,16,18,16z"/>
+		<path d="M18,3H2C1.4,3,1,3.4,1,4v12c0,0.6,0.4,1,1,1h16c0.6,0,1-0.4,1-1V4C19,3.4,18.6,3,18,3z M17,15H3V5h14V15z"/>
+		<rect x="5" y="6" width="2" height="2"/>
+		<rect x="5" y="9" width="2" height="2"/>
+		<rect x="5" y="12" width="2" height="2"/>
+		<rect x="13" y="6" width="2" height="2"/>
+		<rect x="13" y="9" width="2" height="2"/>
+		<rect x="13" y="12" width="2" height="2"/>
 	</svg>
 );
 
@@ -276,6 +287,16 @@ export const sectionHeadingListColumns = (
 );
 export const sectionBgHeadingIconHeadingTextColumns = (
 	<svg/>
+);
+
+export const svgImg = (
+	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
+		<path d="M18.9,7.9c-0.1-0.4-0.5-0.7-0.9-0.7l-4.9-0.7L11,1.9c-0.2-0.4-0.6-0.6-1-0.6c-0.4,0-0.8,0.2-1,0.6L6.8,6.4L1.9,7.1
+			C1.5,7.2,1.2,7.5,1.1,7.9C0.9,8.3,1,8.7,1.3,9l3.6,3.5l-0.8,5c-0.1,0.4,0.1,0.8,0.4,1.1c0.3,0.2,0.8,0.3,1.2,0.1l4.4-2.3l4.4,2.3
+			c0.4,0.2,0.8,0.2,1.1-0.1c0.3-0.2,0.5-0.7,0.4-1.1l-0.8-5L18.7,9C19,8.7,19.1,8.3,18.9,7.9z M13,10.2c0,0.5-0.2,1-0.6,1.3l-2.1,2
+			c-0.1,0.1-0.2,0.1-0.3,0.1s-0.2,0-0.3-0.1l-2.1-2C7.2,11.1,7,10.7,7,10.2v-0.1c0-0.8,0.6-1.5,1.4-1.7c0.5-0.1,1.1,0.1,1.5,0.5
+			L10,9.1l0.1-0.1c0.4-0.4,0.9-0.6,1.5-0.5C12.4,8.6,13,9.3,13,10.2L13,10.2z"/>
+	</svg>
 );
 
 export const slider = (

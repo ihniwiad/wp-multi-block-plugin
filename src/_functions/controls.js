@@ -78,6 +78,7 @@ const textColorStates = [
     { value: 'light', label: __( 'Light', 'bsx-blocks' ) },
     { value: 'dark', label: __( 'Dark', 'bsx-blocks' ) },
     { value: 'muted', label: __( 'Muted', 'bsx-blocks' ) },
+    { value: 'body', label: __( 'Body', 'bsx-blocks' ) },
     { value: 'white-50', label: __( 'White transparent', 'bsx-blocks' ) },
     { value: 'black-50', label: __( 'Black transparent', 'bsx-blocks' ) },
     { value: 'inherit', label: __( 'Inherit', 'bsx-blocks' ) },

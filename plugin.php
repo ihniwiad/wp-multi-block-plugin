@@ -4,7 +4,7 @@
  * Description:       Bootstrap Blocks for a compatible Theme (e.g. BSX WordPress).
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           0.1.2
+ * Version:           0.1.3
  * Author:            ihniwiad
  * Plugin URI:        https://github.com/ihniwiad/wp-multi-block-plugin
  * License:           GPL-2.0-or-later
@@ -54,6 +54,7 @@ function bsx_blocks_init() {
     register_block_type( __DIR__ . '/build/svg-img' );
     register_block_type( __DIR__ . '/build/video' );
     register_block_type( __DIR__ . '/build/wrapper' );
+    register_block_type( __DIR__ . '/build/bg-text' );
 }
 add_action( 'init', 'bsx_blocks_init' );
 
@@ -77,26 +78,32 @@ function bsx_blocks_enqueue_block_editor_assets() {
     // global class names
     wp_enqueue_script( 'global-class-names', plugin_dir_url( __FILE__ ) . 'build/_global-class-names/index.js' );
 
-
-	// TODO: What about getting style(s) array from .env file?
-
-    // Theme style (from Theme folder)
-    wp_register_style(
-        'bsx-theme-atf-style',
-        get_template_directory_uri() . '/assets/css/atf.css'
-        // [],
-        // filemtime( get_template_directory() . '/assets/css/atf.css' ),
-    );
-    wp_enqueue_style( 'bsx-theme-atf-style' );
-    wp_register_style(
-        'bsx-theme-style',
-        get_template_directory_uri() . '/assets/css/style.css'
-        // [],
-        // filemtime( get_template_directory() . '/assets/css/style.css' ),
-    );
-    wp_enqueue_style( 'bsx-theme-style' );
 }
 add_action( 'enqueue_block_editor_assets', 'bsx_blocks_enqueue_block_editor_assets' );
 
+
+/**
+ * Add Theme styles to Plugin.
+ */
+function enqueue_theme_styles() {
+
+    $templateDir = get_template_directory(); // e.g. /Applications/MAMP/htdocs/block-development/wp-content/themes/bsx-wordpress
+    $templateDirUri = get_template_directory_uri(); // e.g. http://block-development.local/wp-content/themes/bsx-wordpress
+    $relativeTemplateDir = parse_url($templateDirUri, PHP_URL_PATH); // e.g. /wp-content/themes/bsx-wordpress
+
+    if ( is_admin() ) {
+        wp_enqueue_style( 'admin-editor',
+            $relativeTemplateDir . '/assets/css/style.min.css',
+            false,
+            filemtime( $templateDir . '/assets/css/style.min.css' )
+        );
+        wp_enqueue_style( 'admin-editor-atf',
+            $relativeTemplateDir . '/assets/css/atf.min.css',
+            false,
+            filemtime( $templateDir . '/assets/css/atf.min.css' ),
+        );
+    }
+}
+add_action( 'enqueue_block_assets', 'enqueue_theme_styles' );
 
 

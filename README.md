@@ -64,3 +64,19 @@ All of this Plugin’s files but `node_modules` will be copied to your WordPress
 * use `npm run start` to watch & build custom Block Editor blocks
 * if using a workspace outside your WordPress folder, open another tab in your terminal and use `npm run watch` to publish your builds from workspace to your WordPress folder
 
+## Updates
+
+### 0.1.3
+
+* Fix for **WordPress 6.7.1** (missing Theme styles in Block Editor).
+* New Block *Background Text* `bg-text` (multiline text with colored background).
+* Fixed Blocks *Rows* `column-rows` & *Row* `column-row`.
+
+### 0.1.2
+
+* Added deprecation migration for Block *Lazy Image* `lazy-img` from v2 to v3.
+* Updated `browserlist/caniuse`.
+
+### 0.1.1
+
+* Fixed Blocks *Button* `button` & *Wrapper* `wrapper`.
