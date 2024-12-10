@@ -21,6 +21,7 @@
 	"supports": {
 		"anchor": false,
 		"className": false,
+		"splitting": true,
 		"__experimentalSelector": "li",
 		"__unstablePasteTextInline": true,
 		"interactivity": {

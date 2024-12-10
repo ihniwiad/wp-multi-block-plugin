@@ -6,9 +6,9 @@ import {
     bannerEmpty,
     bannerContainerWithHeading,
     bannerStaticContainerWithHeading,
-    bannerColumnRow,
-    default as bannerHeadingText,
-    default as bannerHeadingTextButtonColor,
+    bannerBottomBarContainerHeading,
+    bannerContainerHeadingText,
+    bannerHeadingTextButtonColor,
 } from './../_functions/icon';
 
 
@@ -46,7 +46,7 @@ const templates = [
                     [
                         'core/heading',
                         { 
-                            placeholder: __( 'Add heading text, configure heading level...', 'bsx-blocks' ),
+                            level: 1,
                             textSize: 'display-1',
                             textColor: 'white',
                             textShadow: 'darker',
@@ -76,7 +76,7 @@ const templates = [
                     [
                         'core/heading',
                         { 
-                            placeholder: __( 'Add heading text, configure heading level...', 'bsx-blocks' ),
+                            level: 1,
                             textSize: 'display-1',
                             textColor: 'white',
                             textShadow: 'darker',
@@ -91,7 +91,7 @@ const templates = [
     {
         name: 'column-row-banner',
         title: __( 'Bottom bar Banner', 'bsx-blocks' ),
-        icon: bannerColumnRow,
+        icon: bannerBottomBarContainerHeading,
         attributes: {
             marginAfter: '5',
         },
@@ -126,7 +126,7 @@ const templates = [
                                             [
                                                 'core/heading',
                                                 { 
-                                                    placeholder: __( 'Add heading text, configure heading level...', 'bsx-blocks' ),
+                                                    level: 1,
                                                     textSize: 'display-1',
                                                     textColor: 'white',
                                                     textShadow: 'darker', 
@@ -180,7 +180,7 @@ const templates = [
     {
         name: 'heading-text-banner',
         title: __( 'Heading Text Banner', 'bsx-blocks' ),
-        icon: bannerHeadingText,
+        icon: bannerContainerHeadingText,
         attributes: {
             marginAfter: '5',
             bannerSize: '1',
@@ -207,7 +207,6 @@ const templates = [
                                 'core/heading',
                                 { 
                                     level: 1,
-                                    placeholder: __( 'Add heading text, configure heading level...', 'bsx-blocks' ),
                                     textSize: 'display-1',
                                 }
                             ],
@@ -266,7 +265,7 @@ const templates = [
                                 'core/heading',
                                 { 
                                     marginAfter: '0',
-                                    placeholder: __( 'Add heading text, configure heading level...', 'bsx-blocks' ),
+                                    level: 1,
                                 }
                             ],
                         ],

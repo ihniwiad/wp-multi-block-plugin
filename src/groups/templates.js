@@ -3,9 +3,9 @@ import { __ } from '@wordpress/i18n';
 
 // functions
 import { 
-    groupsLazyimgParagraphButton,
-    groupsLazyimgHeadingParagraph,
-    default as groupsLazyimgHeadingParagraphButton,
+    groupsImageParagraphButton,
+    groupsImageHeadingParagraph,
+    groupsImageHeadingParagraphButton,
 } from './../_functions/icon';
 
 
@@ -13,7 +13,7 @@ const templates = [
     {
         name: 'lazy-img-paragraph-button',
         title: __( 'Lazy image, paragraph, button', 'bsx-blocks' ),
-        icon: groupsLazyimgParagraphButton,
+        icon: groupsImageParagraphButton,
         attributes: {},
         template: [ 
             [ 
@@ -38,7 +38,7 @@ const templates = [
     {
         name: 'lazy-img-heading-paragraph',
         title: __( 'Lazy image, heading, paragraph', 'bsx-blocks' ),
-        icon: groupsLazyimgHeadingParagraph,
+        icon: groupsImageHeadingParagraph,
         attributes: {},
         template: [ 
             [ 
@@ -63,7 +63,7 @@ const templates = [
     {
         name: 'lazy-img-heading-paragraph-button',
         title: __( 'Lazy image, heading, paragraph, button', 'bsx-blocks' ),
-        icon: groupsLazyimgHeadingParagraphButton,
+        icon: groupsImageHeadingParagraphButton,
         attributes: {},
         template: [ 
             [ 

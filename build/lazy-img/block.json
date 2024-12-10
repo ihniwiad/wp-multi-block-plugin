@@ -126,10 +126,10 @@
       "type": "number"
     },
     "displayedWidth": {
-      "type": "text"
+      "type": "number"
     },
     "displayedHeight": {
-      "type": "text"
+      "type": "number"
     },
     "noFigureTag": {
       "type": "boolean"

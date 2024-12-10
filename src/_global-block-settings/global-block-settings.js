@@ -20,9 +20,11 @@ import {
 
 import { addClassNames } from './../_functions/add-class-names.js';
 import { 
+    idInput,
     belowNavbarToggle,
     // touchFooterToggle,
     textShadowSelect,
+    textSizeSelect,
     fontWeightSelect,
     // inverseTextColorToggle,
     // headingInheritTextColorToggle,
@@ -215,32 +217,12 @@ export const addGlobalBlockSettings = createHigherOrderComponent( ( BlockEdit ) 
                     }
                     <InspectorControls>
                         <PanelBody title={ __( 'BSX global settings', 'bsx-blocks' ) }>
-                            <TextControl 
-                                label={ __( 'ID', 'bsx-blocks' ) }
-                                value={ id } 
-                                onChange={ onChangeId }
-                                help={ __( 'Add ID if necessary (optional).', 'bsx-blocks' ) }
-                            />
-                            <SelectControl 
-                                label={ __( 'Text size (optional)', 'bsx-blocks' ) }
-                                value={ textSize }
-                                onChange={ onChangeTextSize }
-                                options={ [
-                                    { value: '', label: __( '– unset –', 'bsx-blocks' ) },
-                                    { value: 'lead', label: __( 'Larger', 'bsx-blocks' ) },
-                                    { value: 'small', label: __( 'Smaller', 'bsx-blocks' ) },
-                                    { value: 'h6', label: __( 'Heading 6 (smallest)', 'bsx-blocks' ) },
-                                    { value: 'h5', label: __( 'Heading 5', 'bsx-blocks' ) },
-                                    { value: 'h4', label: __( 'Heading 4', 'bsx-blocks' ) },
-                                    { value: 'h3', label: __( 'Heading 3', 'bsx-blocks' ) },
-                                    { value: 'h2', label: __( 'Heading 2', 'bsx-blocks' ) },
-                                    { value: 'h1', label: __( 'Heading 1 (biggest)', 'bsx-blocks' ) },
-                                    { value: 'display-4', label: __( 'Large 4 (smallest)', 'bsx-blocks' ) },
-                                    { value: 'display-3', label: __( 'Large 3', 'bsx-blocks' ) },
-                                    { value: 'display-2', label: __( 'Large 2', 'bsx-blocks' ) },
-                                    { value: 'display-1', label: __( 'Large 1 (biggest)', 'bsx-blocks' ) },
-                                ] }
-                            />
+                            {
+                                idInput( id, onChangeId )
+                            }
+                            {
+                                textSizeSelect( textSize, onChangeTextSize )
+                            }
                             {
                                 textColorSelect( textColor, onChangeTextColor )
                             }

@@ -24,6 +24,7 @@ import { addClassNames } from './../_functions/add-class-names.js';
 // import { makeSaveAttributes } from './../_functions/attributes.js';
 import { getTemplate } from './../_functions/utilities.js';
 import { 
+    idInput,
     belowNavbarToggle,
     touchFooterToggle,
     marginBeforeSelect,
@@ -155,11 +156,9 @@ export default function Edit( { attributes, setAttributes } ) {
                             </Button>
                         ) ) }
                     </div>
-                    <TextControl 
-                        label={ __( 'ID', 'bsx-blocks' ) }
-                        value={ id } 
-                        onChange={ onChangeId }
-                    />
+                    {
+                        idInput( id, onChangeId )
+                    }
                 </PanelBody>
 
                 <PanelBody title={ __( 'Margin', 'bsx-blocks' ) }>
@@ -200,6 +199,11 @@ export default function Edit( { attributes, setAttributes } ) {
 
     // use if appending inner blocks directly into outer elem
     const innerBlocksProps = useInnerBlocksProps( blockProps, {
+		// defaultBlock: { name: 'bsx-blocks/container' },
+		directInsert: true,
+		template: template,
+		templateLock: false,
+		templateInsertUpdatesSelection: true,
     } );
 
     return (

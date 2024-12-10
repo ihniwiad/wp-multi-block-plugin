@@ -16,6 +16,8 @@ export default function save( { attributes } ) {
         content,
         textColor,
         bgColor,
+        textSize,
+        fontWeight,
         marginLeft,
         marginRight,
         marginBefore,
@@ -24,6 +26,8 @@ export default function save( { attributes } ) {
 
 
     const outerClassNames = addClassNames( {
+        textSize,
+        fontWeight,
         marginLeft, 
         marginRight, 
         marginBefore,

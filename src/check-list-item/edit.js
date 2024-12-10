@@ -31,7 +31,7 @@ import { addClassNames } from './../_functions/add-class-names.js';
 import {
     useEnter,
     // useSpace,
-    useSplit,
+    // useSplit,
     useMerge,
 } from './hooks';
 import { convertToChecklistItems } from './utils';
@@ -73,79 +73,9 @@ export default function Edit( {
         // __unstableDisableDropZone: true,
     } );
 
-    // const useEnterRef = useEnter( { content, clientId } );
-    // const useSpaceRef = useSpace( clientId );
-    // const onSplit = useSplit( clientId );
-
     const useEnterRef = useEnter( { content, clientId } );
-    const onSplit = useSplit( clientId );
+    // const onSplit = useSplit( clientId );
     const onMerge = useMerge( clientId, mergeBlocks );
-
-
-
-    // console.log( 'edit() content: \n' + JSON.stringify( content, null, 2 ) );
-
-    // const onChangeContent = ( value ) => {
-    //     setAttributes( { content: value } );
-    // };
-
-    const itemClassNames = addClassNames( {
-    }, className );
-
-
-
-    // return (
-    //     <li { ...innerBlocksProps }>
-    //             <RichText
-    //                 ref={ useMergeRefs( [ useEnterRef, useSpaceRef ] ) }
-    //                 identifier="content"
-    //                 tagName="span"
-    //                 onChange={ ( nextContent ) =>
-    //                     setAttributes( { content: nextContent } )
-    //                 }
-    //                 value={ content }
-    //                 aria-label={ __( 'List text' ) }
-    //                 placeholder={ __( 'List' ) }
-                    // onSplit={ onSplit }
-                    // onMerge={ onMerge }
-    //             />
-    //             { innerBlocksProps.children }
-    //     </li>
-    // );
-
-
-    // it seems to require a parent element for the rich text editor to 
-    // work properly in the backend (be able to select parent list element
-    // or select a new block via JavaScript)
-
-
-    // return (
-    //     <>
-    //         <RichText
-    //             ref={ useMergeRefs( [ useEnterRef ] ) }
-    //             identifier="content"
-    //             tagName="li"
-    //             onChange={ ( nextContent ) =>
-    //                 setAttributes( { content: nextContent } )
-    //             }
-    //             value={ content }
-    //             aria-label={ __( 'List text' ) }
-    //             placeholder={ __( 'List' ) }
-    //             onSplit={ onSplit }
-    //             onMerge={ onMerge }
-    //             onReplace={
-    //                 onReplace
-    //                     ? ( blocks, ...args ) => {
-    //                             onReplace(
-    //                                 convertToChecklistItems( blocks ),
-    //                                 ...args
-    //                             );
-    //                       }
-    //                     : undefined
-    //             }
-    //         />
-    //     </>
-    // );
 
 
     return (
@@ -160,7 +90,7 @@ export default function Edit( {
                 value={ content }
                 aria-label={ __( 'List text' ) }
                 placeholder={ __( 'List' ) }
-                onSplit={ onSplit }
+                // onSplit={ onSplit }
                 onMerge={ onMerge }
                 onReplace={
                     onReplace

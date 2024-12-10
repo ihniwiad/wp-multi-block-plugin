@@ -59,12 +59,6 @@ export default function Edit( { attributes, setAttributes } ) {
         marginAfter,
     } = attributes;
 
-	// const hasInnerBlocks = () => {
-	// 	const block = getBlock( clientId );
-	// 	if ( typeof block.innerBlocks === 'undefined' ) return false;
-	// 	return block.innerBlocks.length > 0;
-	// }
-
 	let template = getTemplate( templates, templateName ).template;
 
     const allowedBlocks = [ 

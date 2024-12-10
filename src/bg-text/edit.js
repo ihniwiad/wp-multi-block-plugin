@@ -19,6 +19,8 @@ import {
     nodeNameSelect,
     textColorSelect,
     bgColorSelect,
+    textSizeSelect,
+    fontWeightSelect,
     marginLeftSelect,
     marginRightSelect,
     marginBeforeSelect,
@@ -48,6 +50,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         content,
         textColor,
         bgColor,
+        textSize,
+        fontWeight,
         marginLeft,
         marginRight,
         marginBefore,
@@ -60,30 +64,11 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	// 	return block.innerBlocks.length > 0;
 	// }
 
-	// let template = getTemplate( templates, templateName ).template;
-
     const onChangeNodeName = ( value ) => {
         setAttributes( { nodeName: value } );
     };
-
     const onChangeContent = ( value ) => {
         setAttributes( { content: value } );
-    };
-
-    const onChangeMarginLeft = ( value ) => {
-        setAttributes( { marginLeft: value } );
-    };
-
-    const onChangeMarginRight = ( value ) => {
-        setAttributes( { marginRight: value } );
-    };
-
-    const onChangeMarginBefore = ( value ) => {
-        setAttributes( { marginBefore: value } );
-    };
-
-    const onChangeMarginAfter = ( value ) => {
-        setAttributes( { marginAfter: value } );
     };
 
     const onChangeTextColor = ( value ) => {
@@ -93,7 +78,29 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         setAttributes( { bgColor: value } );
     };
 
+    const onChangeTextSize = ( value ) => {
+        setAttributes( { textSize: value } );
+    };
+    const onChangeFontWeight = ( value ) => {
+        setAttributes( { fontWeight: value } );
+    };
+
+    const onChangeMarginLeft = ( value ) => {
+        setAttributes( { marginLeft: value } );
+    };
+    const onChangeMarginRight = ( value ) => {
+        setAttributes( { marginRight: value } );
+    };
+    const onChangeMarginBefore = ( value ) => {
+        setAttributes( { marginBefore: value } );
+    };
+    const onChangeMarginAfter = ( value ) => {
+        setAttributes( { marginAfter: value } );
+    };
+
     const outerClassNames = addClassNames( {
+        textSize,
+        fontWeight,
         marginLeft, 
         marginRight, 
         marginBefore,
@@ -125,6 +132,12 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                 }
                 {
                     textColorSelect( textColor, onChangeTextColor )
+                }
+                {
+                    textSizeSelect( textSize, onChangeTextSize )
+                }
+                {
+                    fontWeightSelect( fontWeight, onChangeFontWeight )
                 }
             </PanelBody>
 

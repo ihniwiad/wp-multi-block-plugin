@@ -22,9 +22,11 @@ import { addClassNames } from './../_functions/add-class-names.js';
 // import { makeSaveAttributes } from './../_functions/attributes.js';
 // import { getTemplate } from './../_functions/utilities.js';
 import { 
+    idInput,
 	belowNavbarToggle,
     touchFooterToggle,
     textShadowSelect,
+    textSizeSelect,
     fontWeightSelect,
     inverseTextColorToggle,
     headingInheritTextColorToggle,
@@ -408,26 +410,9 @@ export default function Edit( { attributes, setAttributes } ) {
                     {
                         textColorSelect( textColor, onChangeTextColor )
                     }
-                    <SelectControl 
-                        label={ __( 'Text size', 'bsx-blocks' ) }
-                        value={ textSize }
-                        onChange={ onChangeTextSize }
-                        options={ [
-                            { value: '', label: __( '– unset –', 'bsx-blocks' ) },
-                            { value: 'lead', label: __( 'Larger', 'bsx-blocks' ) },
-                            { value: 'small', label: __( 'Smaller', 'bsx-blocks' ) },
-                            { value: 'h6', label: __( 'Heading 6 (smallest)', 'bsx-blocks' ) },
-                            { value: 'h5', label: __( 'Heading 5', 'bsx-blocks' ) },
-                            { value: 'h4', label: __( 'Heading 4', 'bsx-blocks' ) },
-                            { value: 'h3', label: __( 'Heading 3', 'bsx-blocks' ) },
-                            { value: 'h2', label: __( 'Heading 2', 'bsx-blocks' ) },
-                            { value: 'h1', label: __( 'Heading 1 (biggest)', 'bsx-blocks' ) },
-                            { value: 'display-4', label: __( 'Large 4 (smallest)', 'bsx-blocks' ) },
-                            { value: 'display-3', label: __( 'Large 3', 'bsx-blocks' ) },
-                            { value: 'display-2', label: __( 'Large 2', 'bsx-blocks' ) },
-                            { value: 'display-1', label: __( 'Large 1 (biggest)', 'bsx-blocks' ) },
-                        ] }
-                    />
+                    {
+                        textSizeSelect( textSize, onChangeTextSize )
+                    }
                     {
                         textShadowSelect( textShadow, onChangeTextShadow )
                     }
@@ -508,11 +493,9 @@ export default function Edit( { attributes, setAttributes } ) {
                 </PanelBody>
             </InspectorControls>
             <InspectorAdvancedControls>
-                <TextControl 
-                    label={ __( 'ID', 'bsx-blocks' ) }
-                    value={ id } 
-                    onChange={ onChangeId }
-                />
+                {
+                    idInput( id, onChangeId )
+                }
                 {
                     nodeNameSelect( nodeName, onChangeNodeName, [ 'div', 'section', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ] )
                 }

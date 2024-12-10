@@ -18,6 +18,12 @@
       "selector": ".bg-text",
       "__experimentalRole": "content"
     },
+    "textSize": {
+      "type": "string"
+    },
+    "fontWeight": {
+      "type": "string"
+    },
     "marginLeft": {
       "type": "string"
     },

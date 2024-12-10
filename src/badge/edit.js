@@ -76,8 +76,6 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	// 	return block.innerBlocks.length > 0;
 	// }
 
-	// let template = getTemplate( templates, templateName ).template;
-
     const onChangeContent = ( value ) => {
         setAttributes( { content: value } );
     };

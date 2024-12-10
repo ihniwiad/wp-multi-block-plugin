@@ -6,7 +6,7 @@
   "title": "BSX Rows",
   "category": "layout",
   "allowedBlocks": [
-    "bsx-blocks/column-rows"
+    "bsx-blocks/column-row"
   ],
   "description": "Column containing multiple Rows for vertical layouting.",
   "example": {},

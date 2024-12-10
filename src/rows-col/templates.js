@@ -3,9 +3,9 @@ import { __ } from '@wordpress/i18n';
 
 // functions
 import { 
-    rowsColFlexStatic,
-    rowsColStaticFlex,
-    default as spaceBetweenRows,
+    rowsFlexStatic,
+    rowsStaticFlex,
+    rowsSpaceBetween,
 } from './../_functions/icon';
 
 
@@ -13,7 +13,7 @@ const templates = [
     {
         name: 'default-auto',
         title: __( 'Flex, static', 'bsx-blocks' ),
-        icon: rowsColFlexStatic,
+        icon: rowsFlexStatic,
         template: [ 
             [ 
                 'bsx-blocks/column-row', 
@@ -47,7 +47,7 @@ const templates = [
     {
         name: 'auto-default',
         title: __( 'Static, flex', 'bsx-blocks' ),
-        icon: rowsColStaticFlex,
+        icon: rowsStaticFlex,
         template: [ 
             [ 
                 'bsx-blocks/column-row', 
@@ -80,8 +80,8 @@ const templates = [
     },
     {
         name: 'space-between-columns',
-        title: __( 'Space between columns', 'bsx-blocks' ),
-        icon: spaceBetweenRows,
+        title: __( 'Space between rows', 'bsx-blocks' ),
+        icon: rowsSpaceBetween,
         template: [ 
             [ 
                 'bsx-blocks/column-row', 

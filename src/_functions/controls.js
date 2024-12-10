@@ -374,7 +374,6 @@ export const right0Toggle = ( value, onChangeFunction ) => {
 }
 
 
-
 // text inputs
 
 export const relInput = ( value, onChangeFunction ) => {
@@ -492,6 +491,16 @@ export const onclickInput = ( value, onChangeFunction ) => {
     return (
         <TextControl 
             label={ __( 'Onclick (optional)', 'bsx-blocks' ) }
+            value={ value } 
+            onChange={ onChangeFunction }
+        />
+    )
+}
+
+export const idInput = ( value, onChangeFunction ) => {
+    return (
+        <TextControl 
+            label={ __( 'ID', 'bsx-blocks' ) }
             value={ value } 
             onChange={ onChangeFunction }
         />
@@ -906,6 +915,32 @@ export const textShadowSelect = ( value, onChangeFunction, allowedValues ) => {
     return (
         <SelectControl 
             label={ __( 'Text shadow', 'bsx-blocks' ) }
+            value={ value }
+            onChange={ onChangeFunction }
+            options={ filterByAllowedValueKeys( defaultValues, allowedValues ) }
+        />
+    )
+}
+
+export const textSizeSelect = ( value, onChangeFunction, allowedValues ) => {
+    const defaultValues = [
+        { value: '', label: __( '– unset –', 'bsx-blocks' ) },
+        { value: 'lead', label: __( 'Larger', 'bsx-blocks' ) },
+        { value: 'small', label: __( 'Smaller', 'bsx-blocks' ) },
+        { value: 'h6', label: __( 'Heading 6 (smallest)', 'bsx-blocks' ) },
+        { value: 'h5', label: __( 'Heading 5', 'bsx-blocks' ) },
+        { value: 'h4', label: __( 'Heading 4', 'bsx-blocks' ) },
+        { value: 'h3', label: __( 'Heading 3', 'bsx-blocks' ) },
+        { value: 'h2', label: __( 'Heading 2', 'bsx-blocks' ) },
+        { value: 'h1', label: __( 'Heading 1 (biggest)', 'bsx-blocks' ) },
+        { value: 'display-4', label: __( 'Large 4 (smallest)', 'bsx-blocks' ) },
+        { value: 'display-3', label: __( 'Large 3', 'bsx-blocks' ) },
+        { value: 'display-2', label: __( 'Large 2', 'bsx-blocks' ) },
+        { value: 'display-1', label: __( 'Large 1 (biggest)', 'bsx-blocks' ) },
+    ];
+    return (
+        <SelectControl 
+            label={ __( 'Text size', 'bsx-blocks' ) }
             value={ value }
             onChange={ onChangeFunction }
             options={ filterByAllowedValueKeys( defaultValues, allowedValues ) }

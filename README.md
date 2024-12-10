@@ -1,7 +1,8 @@
-# BSX Blocks – HowTo
+# BSX Blocks 2.0 (Multiple Blocks Plugin) – HowTo
 
-This Plugin creates Markup for a compatible WordPress Theme (e.g. [BSX WordPress](https://github.com/ihniwiad/bsx-wordpress)) as custom Block Editor (Gutenberg) Blocks. It needs to include some of your Theme’s variables to be able to style it’s blocks in the WordPress backend. Therefore you need a `.env` file providing relative paths to your Theme in your workspace.
+This Plugin creates Markup for a compatible WordPress Theme (e.g. [BSX WordPress](https://github.com/ihniwiad/bsx-wordpress)) as custom Block Editor blocks (Gutenberg). It needs to include some of your Theme’s variables to be able to style it’s blocks in the WordPress backend. Therefore you need a `.env` file providing relative paths to your Theme.
 
+This plugin is a *new version* of the older plugin [BSX Blocks](https://github.com/ihniwiad/wp-multi-block-plugin/)
 
 ## Create `.env`
 
@@ -15,7 +16,7 @@ Example workspace setting (using publishing from workspace to WordPress):
       ┗ bsx-blocks
 ...
   ┗ htdocs
-    ┗ my-projects-wordpress
+    ┗ my-project-wordpress-folder
       ┗ wp-content
         ┣ themes
         ┃ ┗ bsx-wordpress
@@ -25,7 +26,7 @@ Example workspace setting (using publishing from workspace to WordPress):
 
 You need the following variables:
 
-* `FOLDER_NAME` ... Name of your Plugins folder in 
+* `FOLDER_NAME` ... Name of your Plugins folder inside the WordPress Plugins folder
 * `THEME_PACKAGE_PATH` ... Path to your compatible Theme folder
 * `VARIABLES_PATH_AND_FILE` ... Path to your SCSS varibles file including file name (relative path inside your Theme folder)
 
@@ -37,19 +38,19 @@ THEME_PACKAGE_PATH=../../bsx-wordpress/
 VARIABLES_PATH_AND_FILE=src/scss/variables
 ```
 
-If you use a workspace outside your WordPress folder (as seen above) you will need to publish after building from workspace to your WordPress folder. Please add to `.env` so each build will publish automatic:
+If you use a workspace outside your WordPress folder (as seen above) you will need to publish your files after each build from workspace to your WordPress Plugins folder. Please add `PUBLISH_PATH` to your `.env` so each build can publish automatically.
 
 * `PUBLISH_PATH` ... Path to your WordPress Plugins folder
 
 Example: 
 
 ```
-PUBLISH_PATH=../../../../../../Applications/MAMP/htdocs/wordpress-testing/wp-content/plugins/
+PUBLISH_PATH=../../../../../../Applications/MAMP/htdocs/my-project-wordpress-folder/wp-content/plugins/
 ```
 
-All of this Plugin’s files but `node_modules` will be copied to your WordPress plugins folder (as `bsx-blocks` folder) each time you build.
+All your Plugin’s files except the `node_modules` will be copied to your WordPress Plugins folder (named as `bsx-blocks` folder) each time you build.
 
-**NOTE:** Please take care since publishing will **delete** (and copy again) a folder **outside your workspace** each time you build or change.
+**NOTE:** Please take care at your `PUBLISH_PATH` since publishing will **delete** (before copying again) a folder **outside your workspace**.
 
 
 ## Install & build
@@ -61,10 +62,17 @@ All of this Plugin’s files but `node_modules` will be copied to your WordPress
 
 ## Develop
 
-* use `npm run start` to watch & build custom Block Editor blocks
-* if using a workspace outside your WordPress folder, open another tab in your terminal and use `npm run watch` to publish your builds from workspace to your WordPress folder
+* Use `npm run start` to watch & build your Block Editor blocks.
+* If using a workspace outside your WordPress Plugins folder, open another tab in your terminal and use `npm run watch` to watch and publish your builds from workspace to your WordPress folder (for manual publish use `npm run publish`).
 
-## Updates
+
+## Versions
+
+### 0.1.4
+
+* Fixed WordPress deprecations (CSS including event, removed `onSplit`).
+* Fixed Block *Section* `section` (template selection).
+* Multiple small fixes
 
 ### 0.1.3
 

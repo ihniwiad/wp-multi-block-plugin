@@ -145,7 +145,7 @@ export default function save( { attributes } ) {
 	return (
         <TagName { ...useBlockProps.save( { className: bannerClassName, ...saveAttributes } ) }>
             {
-                typeof template[ 0 ] !== 'undefined' && typeof template[ 0 ][ 1 ] !== 'undefined' && typeof template[ 0 ][ 1 ].isBannerInner !== 'undefined' && template[ 0 ][ 1 ].isBannerInner ? (
+                typeof template !== 'undefined' && template[ 0 ] !== 'undefined' && typeof template[ 0 ][ 1 ] !== 'undefined' && typeof template[ 0 ][ 1 ].isBannerInner !== 'undefined' && template[ 0 ][ 1 ].isBannerInner ? (
                     <InnerBlocks.Content />
                 )
                 :

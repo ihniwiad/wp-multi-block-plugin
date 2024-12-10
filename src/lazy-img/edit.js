@@ -87,14 +87,14 @@ import {
 
 async function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMediaSizes, calcImgSizes, calcPortraitImgSizes ) {
 
-    console.log( 'useMigrateOnLoad()' )
+    // console.log( 'useMigrateOnLoad()' )
 
     const {
         imgId,
         imgSizes,
         imgData,
         imgSizeIndex,
-        url,
+        // url,
         // width,
         // height,
         origWidth,
@@ -166,7 +166,7 @@ async function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMedia
 
 
         if ( mediaSizes?.original ) {
-            console.log( '---- has original size' )
+            // console.log( '---- has original size' )
 
             const sourceUrl = mediaSizes?.original.source_url;
 
@@ -185,7 +185,7 @@ async function useMigrateOnLoad( attributes, clientId, mediaSizes, portraitMedia
 
         }
         else {
-            console.log( '---- NOT has original size' )
+            // console.log( '---- NOT has original size' )
         }
 
         // console.log( '--------> make img attr' )
@@ -314,7 +314,7 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
         imgSizes,
         imgData,
         imgSizeIndex,
-        url,
+        // url,
         // width,
         // height,
         origWidth,
@@ -455,35 +455,41 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
                 newZoomImgSizeIndex = ( newImgAllData.imgs.length - 1 ).toString();
             }
 
-            // avoid creating deprecated (empty) attr 'imgSizes'
-            if ( imgSizes && imgSizes.length > 0 ) {
-                // delete value of 'imgSizes'
-                setAttributes( {
-                    imgId: img.id,
+            const imgSelectedWidth = newImgAllData.imgs[ newImgSizeIndex ].width;
+            const imgSelectedHeight = newImgAllData.imgs[ newImgSizeIndex ].height;
+
+            setAttributes( {
+                imgId: img.id,
+                imgData: newImgData,
+                imgSizeIndex: newImgSizeIndex.toString(),
+                origWidth: originalWidth,
+                origHeight: originalHeight,
+                alt: img.alt,
+                zoomImgSizeIndex: newZoomImgSizeIndex,
+                // remove deprecated attributes if set
+                ...(imgSizes && imgSizes.length > 0) && {
                     imgSizes: '', // save empty, replaced by imgData
-                    imgData: newImgData,
-                    imgSizeIndex: newImgSizeIndex.toString(),
                     url: '', // save empty, replaced by imgData
-                    width: '', // save empty, replaced by imgDat
-                    height: '', // save empty, replaced by imgDat
-                    origWidth: originalWidth,
-                    origHeight: originalHeight,
-                    alt: img.alt,
-                    zoomImgSizeIndex: newZoomImgSizeIndex,
-                } );
-            }
-            else {
-                // skip 'imgSizes'
-                setAttributes( {
-                    imgId: img.id,
-                    imgData: newImgData,
-                    imgSizeIndex: newImgSizeIndex.toString(),
-                    origWidth: originalWidth,
-                    origHeight: originalHeight,
-                    alt: img.alt,
-                    zoomImgSizeIndex: newZoomImgSizeIndex,
-                } );
-            }
+                    width: '', // save empty, replaced by imgData
+                    height: '', // save empty, replaced by imgData
+                },
+                // displayedWidth or originalHeight might be preset before image is uploaded
+                ...(!displayedWidth && !displayedHeight && !scale) && {
+                    scale: 1,
+                },
+                ...(scale && !displayedWidth && !displayedHeight) && {
+                    displayedWidth: imgSelectedWidth * scale,
+                    displayedHeight: imgSelectedHeight * scale,
+                },
+                ...(displayedWidth) && {
+                    scale: displayedWidth / imgSelectedWidth,
+                    displayedHeight: imgSelectedHeight * displayedWidth / imgSelectedWidth,
+                },
+                ...(displayedHeight) && {
+                    scale: displayedHeight / imgSelectedHeight,
+                    displayedWidth: imgSelectedWidth * displayedHeight / imgSelectedHeight,
+                },
+            } );
             
         }
     };
@@ -739,10 +745,9 @@ function Edit( { attributes, setAttributes, clientId, mediaSizes, portraitMediaS
     } );
 
     const src = hasValidImg ? calcImgSizes[ imgSizeIndex ].url : '';
-    const width = ( hasValidImg && !! displayedWidth ) ? displayedWidth : hasValidImg ? calcImgSizes[ imgSizeIndex ].width : '';
-    const height = ( hasValidImg && !! displayedHeight ) ? displayedHeight : hasValidImg ? calcImgSizes[ imgSizeIndex ].height : '';
+    const width = ( hasValidImg && displayedWidth ) ? displayedWidth : hasValidImg ? calcImgSizes[ imgSizeIndex ].width : '';
+    const height = ( hasValidImg && displayedHeight ) ? displayedHeight : hasValidImg ? calcImgSizes[ imgSizeIndex ].height : '';
     const sizes = ( width && height ) ? '(max-width: ' + width + 'px) 100vw, ' + width + 'px' : '';
-
 
     const image = hasValidImg ? (
         <img className={ imgClassName } src={ src } srcset={ srcset } sizes={ sizes } alt={ alt } width={ width } height={ height } loading="lazy" />
@@ -1239,7 +1244,7 @@ export default withSelect( ( select, props ) => {
 
     // check if img has to be updated
     if ( hasDeprecatedAttrImgSizes || hasMissingSize768 ) {
-        console.log( '-- get media' )
+        // console.log( '-- get media' )
         // mediaSizes = select( 'core' ).getMedia( imgId )?.media_details?.sizes;
         const media = select( 'core' ).getMedia( imgId );
         const originalImage = media?.media_details?.original_image;
