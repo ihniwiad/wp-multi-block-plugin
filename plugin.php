@@ -4,7 +4,7 @@
  * Description:       Bootstrap Blocks for a compatible Theme (e.g. BSX WordPress).
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           0.1.4
+ * Version:           0.1.5
  * Author:            ihniwiad
  * Plugin URI:        https://github.com/ihniwiad/wp-multi-block-plugin
  * License:           GPL-2.0-or-later
@@ -82,22 +82,23 @@ function bsx_blocks_enqueue_theme_styles() {
 
     // Include non blocks CSS data
 
-    // global editor style
-    wp_register_style( 'global-editor-style', plugin_dir_url( __FILE__ ) . 'build/_global-editor-style/index.css' );
-    wp_enqueue_style( 'global-editor-style' );
-
-    // global block settings
-    wp_register_style( 'global-block-settings-style', plugin_dir_url( __FILE__ ) . 'build/_global-block-settings/index.css' );
-    wp_enqueue_style( 'global-block-settings-style' );
-
-
-    // Theme styles
-
-    $templateDir = get_template_directory(); // e.g. /Applications/MAMP/htdocs/block-development/wp-content/themes/bsx-wordpress
-    $templateDirUri = get_template_directory_uri(); // e.g. http://block-development.local/wp-content/themes/bsx-wordpress
-    $relativeTemplateDir = parse_url($templateDirUri, PHP_URL_PATH); // e.g. /wp-content/themes/bsx-wordpress
-
     if ( is_admin() ) {
+
+        // global editor style
+        wp_register_style( 'global-editor-style', plugin_dir_url( __FILE__ ) . 'build/_global-editor-style/index.css' );
+        wp_enqueue_style( 'global-editor-style' );
+
+        // global block settings
+        wp_register_style( 'global-block-settings-style', plugin_dir_url( __FILE__ ) . 'build/_global-block-settings/index.css' );
+        wp_enqueue_style( 'global-block-settings-style' );
+
+
+        // Theme styles
+
+        $templateDir = get_template_directory(); // e.g. /Applications/MAMP/htdocs/block-development/wp-content/themes/bsx-wordpress
+        $templateDirUri = get_template_directory_uri(); // e.g. http://block-development.local/wp-content/themes/bsx-wordpress
+        $relativeTemplateDir = parse_url($templateDirUri, PHP_URL_PATH); // e.g. /wp-content/themes/bsx-wordpress
+
         wp_enqueue_style( 'admin-editor',
             $relativeTemplateDir . '/assets/css/style.min.css',
             false,

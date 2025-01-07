@@ -1,6 +1,6 @@
 {
 	"name": "multiple-blocks-plugin",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "Example block scaffolded with Create Block tool.",
 	"author": "ihniwiad, The WordPress Contributors",
 	"repository": "https://github.com/ihniwiad/wp-multi-block-plugin",
