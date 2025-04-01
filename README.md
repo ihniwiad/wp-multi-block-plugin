@@ -68,11 +68,15 @@ All your Plugin’s files except the `node_modules` will be copied to your WordP
 
 ## Versions
 
+### 0.1.6
+
+* Removed empty Block scripts.
+
 ### 0.1.4
 
 * Fixed WordPress deprecations (CSS including event, removed `onSplit`).
 * Fixed Block *Section* `section` (template selection).
-* Multiple small fixes
+* Multiple small fixes.
 
 ### 0.1.3
 
