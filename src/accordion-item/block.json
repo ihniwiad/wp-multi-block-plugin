@@ -1,23 +1,23 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 3,
-	"name": "bsx-blocks/accordion-item",
-	"version": "0.1.0",
-	"title": "BSX Accordion Item",
-	"category": "layout",
-	"parent": [ "bsx-blocks/accordion" ],
-	"description": "Create an accordion item inside an accordion.",
-	"example": {},
-	"attributes": {
-		"uniqueId": {
-			"type": "string"
-		},
-		"title": {
-			"type": "string",
-			"source": "html",
-			"selector": "button span",
-			"__experimentalRole": "content"
-		},
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bsx-blocks/accordion-item",
+    "version": "0.1.0",
+    "title": "BSX Accordion Item",
+    "category": "layout",
+    "parent": [ "bsx-blocks/accordion" ],
+    "description": "Create an accordion item inside an accordion.",
+    "example": {},
+    "attributes": {
+        "uniqueId": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string",
+            "source": "html",
+            "selector": "button span",
+            "__experimentalRole": "content"
+        },
         "headingLevel": {
             "type": "number",
             "default": 3
@@ -26,24 +26,30 @@
             "type": "boolean",
             "default": false
         },
-		"paddingBefore": {
-			"type": "string"
-		},
-		"paddingAfter": {
-			"type": "string"
-		},
-		"paddingRight": {
-			"type": "string"
-		},
-		"paddingLeft": {
-			"type": "string"
-		}
-	},
-	"supports": {
-		"html": false,
-		"className": false
-	},
-	"textdomain": "bsx-blocks",
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css"
+        "headingId": {
+            "type": "string",
+            "selector": "h2, h3, h4, h5, h6",
+            "source": "attribute",
+            "attribute": "id"
+        },
+        "paddingBefore": {
+            "type": "string"
+        },
+        "paddingAfter": {
+            "type": "string"
+        },
+        "paddingRight": {
+            "type": "string"
+        },
+        "paddingLeft": {
+            "type": "string"
+        }
+    },
+    "supports": {
+        "html": false,
+        "className": false
+    },
+    "textdomain": "bsx-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css"
 }

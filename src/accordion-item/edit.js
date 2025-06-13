@@ -24,6 +24,7 @@ import { addClassNames } from './../_functions/add-class-names.js';
 // import { makeSaveAttributes } from './../_functions/attributes.js';
 // import { getTemplate } from './../_functions/utilities.js';
 import { 
+    idInput,
     paddingBeforeSelect,
     paddingAfterSelect,
     paddingLeftSelect,
@@ -53,6 +54,7 @@ export default function Edit( { attributes, clientId, setAttributes } ) {
         title,
         headingLevel,
         open,
+        headingId,
         paddingBefore,
         paddingAfter,
         paddingLeft,
@@ -107,9 +109,11 @@ export default function Edit( { attributes, clientId, setAttributes } ) {
     const onChangeOpen = ( value ) => {
         setAttributes( { open: value } );
     };
-
+    const onChangeHeadingId = ( value ) => {
+        setAttributes( { headingId: value } );
+    };
+    
     const liClassName = addClassNames( { 
-        open,
         paddingBefore, 
         paddingAfter, 
         paddingLeft, 
@@ -136,6 +140,9 @@ export default function Edit( { attributes, clientId, setAttributes } ) {
                     onChange={ onChangeOpen }
                     help={ __( 'If enabled, the accordion item is opened by default.', 'bsx-blocks' ) }
                 />
+                {
+                    idInput( headingId, onChangeHeadingId )
+                }
             </PanelBody>
             <PanelBody title={ __( 'Padding', 'bsx-blocks' ) }>
                 {
@@ -199,8 +206,8 @@ export default function Edit( { attributes, clientId, setAttributes } ) {
 	return (
 		<TagName { ...blockProps } data-acc-itm="">
             <section>
-                <HeadingTagName class="my-0">
-                    <button class={ btnClassName } id={triggerId} data-bsx="acc" aria-controls={ contentId } aria-expanded="true">
+                <HeadingTagName class="my-0" id={ headingId }>
+                    <button class={ btnClassName } id={ triggerId } data-bsx="acc" aria-controls={ contentId } aria-expanded="true">
                         <RichText
                             identifier="title"
                             tagName="span"
@@ -214,7 +221,7 @@ export default function Edit( { attributes, clientId, setAttributes } ) {
                         /><span class="acc-header-icon"></span>
                     </button>
                 </HeadingTagName>
-                <div class="bsx-acc-content open" id={ contentId } role="region" aria-labeledby={triggerId}>
+                <div class="bsx-acc-content open" id={ contentId } role="region" aria-labeledby={ triggerId }>
                     <div class="bsx-acc-content-inner" data-acc-cnt-inr="">
                         <InnerBlocks/>
                     </div>

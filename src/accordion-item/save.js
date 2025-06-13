@@ -16,6 +16,7 @@ export default function save( { attributes, clientId } ) {
         title,
         headingLevel,
         open,
+        headingId,
         paddingBefore,
         paddingAfter,
         paddingLeft,
@@ -89,12 +90,12 @@ export default function save( { attributes, clientId } ) {
 	return (
 		<TagName { ...useBlockProps.save( { className: liClassName, ...saveAttributes } ) } data-acc-itm="" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
             <section>
-                <HeadingTagName class="h4 my-0">
-                    <button class={ btnClassName } id={triggerId} data-bsx="acc" aria-controls={ contentId } aria-expanded={ open ? 'true' : 'false' } itemprop="name">
+                <HeadingTagName class="h4 my-0" id={ headingId }>
+                    <button class={ btnClassName } id={ triggerId } data-bsx="acc" aria-controls={ contentId } aria-expanded={ open ? 'true' : 'false' } itemprop="name">
                         <span class="acc-header-text" itemprop="name"><RichText.Content value={ title } /></span><span class="acc-header-icon"></span>
                     </button>
                 </HeadingTagName>
-                <div class={ contentClassName } id={ contentId } role="region" aria-labeledby={triggerId} itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                <div class={ contentClassName } id={ contentId } role="region" aria-labeledby={ triggerId } itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                     <div class="bsx-acc-content-inner" itemprop="text" data-acc-cnt-inr="">
                         <InnerBlocks.Content />
                     </div>

@@ -28,6 +28,12 @@
       "type": "boolean",
       "default": false
     },
+    "headingId": {
+      "type": "string",
+      "selector": "h2, h3, h4, h5, h6",
+      "source": "attribute",
+      "attribute": "id"
+    },
     "paddingBefore": {
       "type": "string"
     },
