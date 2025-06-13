@@ -1,6 +1,6 @@
 {
 	"name": "multiple-blocks-plugin",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"description": "Example block scaffolded with Create Block tool.",
 	"author": "ihniwiad, The WordPress Contributors",
 	"repository": "https://github.com/ihniwiad/wp-multi-block-plugin",
@@ -20,6 +20,7 @@
 		"watch": "gulp watch"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.53.0",
 		"@wordpress/scripts": "^27.2.0",
 		"dotenv": "^8.2.0",
 		"gulp": "^4.0.2",
@@ -27,5 +28,6 @@
 		"gulp-rename": "^1.4.0",
 		"gulp-string-replace": "^1.1.2",
 		"gulp-watch": "^4.3.11"
-	}
+	},
+	"dependencies": {}
 }

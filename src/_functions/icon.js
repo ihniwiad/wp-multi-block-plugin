@@ -1,4 +1,27 @@
 
+// Fallback – TODO: Replace
+export const accordion = (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
+		<rect x="1" y="16" width="18" height="1"/>
+		<path d="M1.75,14h7.49C9.66,14,10,13.7,10,13.33v-0.66C10,12.3,9.66,12,9.25,12H1.75C1.34,12,1,12.3,1,12.67v0.66
+			C1,13.7,1.34,14,1.75,14z"/>
+		<path d="M17.04,14.06l1.83-1.83c0.27-0.27,0.08-0.73-0.3-0.73h-3.66c-0.38,0-0.57,0.46-0.3,0.73l1.83,1.83
+			C16.61,14.22,16.88,14.22,17.04,14.06z"/>
+		<rect x="1" y="8" width="18" height="1"/>
+		<path d="M1.75,6h7.49C9.66,6,10,5.7,10,5.33V4.67C10,4.3,9.66,4,9.25,4H1.75C1.34,4,1,4.3,1,4.67v0.66C1,5.7,1.34,6,1.75,6z"/>
+		<path d="M16.44,6.06c0.17,0.17,0.44,0.17,0.6,0l1.83-1.83c0.27-0.27,0.08-0.73-0.3-0.73h-3.66c-0.38,0-0.57,0.46-0.3,0.73
+			L16.44,6.06z"/>
+    </svg>
+);
+
+// Fallback – TODO: Replace
+export const accordionItem = (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">
+		<path d="M16.44,10.05c0.17,0.17,0.44,0.17,0.6,0l1.83-1.83c0.27-0.27,0.08-0.73-0.3-0.73h-3.66c-0.38,0-0.57,0.46-0.3,0.73
+			L16.44,10.05z M1.75,9.99h7.49c0.42,0,0.75-0.3,0.75-0.67V8.66c0-0.37-0.34-0.67-0.75-0.67H1.75C1.34,7.99,1,8.29,1,8.66v0.66
+			C1,9.69,1.34,9.99,1.75,9.99z M1,11.99v1h18v-1H1z"/>
+    </svg>
+);
 
 export const badge = (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" role="img" focusable="false">

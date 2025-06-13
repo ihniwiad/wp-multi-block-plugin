@@ -181,6 +181,19 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     const blockProps = useBlockProps( { className: ulClassNames } );
 	// console.log( 'blockProps: ' + JSON.stringify( blockProps, null, 2 ) );
 
+    const CustomAppender = () => (
+        <Button
+            variant="primary"
+            onClick={ () => wp.data.dispatch( 'core/block-editor' ).insertBlock(
+                wp.blocks.createBlock( 'bsx-blocks/icon-list-item' ),
+                undefined,
+                clientId
+            ) }
+        >
+            { __( 'Add Icon List Item', 'bsx-blocks' ) }
+        </Button>
+    );
+
 	// use if appending inner blocks directly into outer elem
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
 		defaultBlock: DEFAULT_BLOCK,
@@ -188,6 +201,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		template: TEMPLATE,
 		templateLock: false,
 		templateInsertUpdatesSelection: true,
+        renderAppender: CustomAppender, // Custom appender button
 		// ...( Platform.isNative && {
 		// 	marginVertical: NATIVE_MARGIN_SPACING,
 		// 	marginHorizontal: NATIVE_MARGIN_SPACING,

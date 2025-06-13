@@ -62,11 +62,18 @@ All your Plugin’s files except the `node_modules` will be copied to your WordP
 
 ## Develop
 
+* Use *Node 16* (`nvm use 16`).
 * Use `npm run start` to watch & build your Block Editor blocks.
 * If using a workspace outside your WordPress Plugins folder, open another tab in your terminal and use `npm run watch` to watch and publish your builds from workspace to your WordPress folder (for manual publish use `npm run publish`).
 
 
 ## Versions
+
+### 0.1.7
+
+* Added Block *Accordion* with *Accordion Item*.
+* Added custom appender to Block *Icon List*.
+* Updated `caniuse-lite`.
 
 ### 0.1.6
 

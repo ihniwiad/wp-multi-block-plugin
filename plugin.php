@@ -4,7 +4,7 @@
  * Description:       Bootstrap Blocks for a compatible Theme (e.g. BSX WordPress).
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           0.1.6
+ * Version:           0.1.7
  * Author:            ihniwiad
  * Plugin URI:        https://github.com/ihniwiad/wp-multi-block-plugin
  * License:           GPL-2.0-or-later
@@ -31,6 +31,8 @@ function bsx_blocks_init() {
 
 	// register_block_type( __DIR__ . '/build/block-1' );
     // register_block_type( __DIR__ . '/build/__test-img-from-id' );
+    register_block_type( __DIR__ . '/build/accordion' );
+    register_block_type( __DIR__ . '/build/accordion-item' );
     register_block_type( __DIR__ . '/build/badge' );
     register_block_type( __DIR__ . '/build/banner' );
     register_block_type( __DIR__ . '/build/button' );

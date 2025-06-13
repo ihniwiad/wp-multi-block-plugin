@@ -54,6 +54,7 @@ export function addClassNames( attributes, classNamesString ) {
         isLeft0,
         isRight0,
         position,
+        open,
     } = attributes;
 
     const classNames = ( typeof classNamesString != 'undefined' && classNamesString.trim().length > 0 ) ? classNamesString.split( ' ' ) : [];
@@ -309,6 +310,9 @@ export function addClassNames( attributes, classNamesString ) {
         classNames.push( 'position-' + position );
     }
 
+    if ( !! open ) {
+        classNames.push( 'open' );
+    }
 
 
     return classNames.join( ' ' );

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bsx-blocks/accordion",
+  "version": "0.1.0",
+  "title": "BSX Accordion",
+  "category": "layout",
+  "allowedBlocks": [
+    "bsx-blocks/accordion-item"
+  ],
+  "description": "Create an accordion.",
+  "example": {},
+  "attributes": {
+    "openSingle": {
+      "type": "boolean",
+      "default": false
+    },
+    "marginLeft": {
+      "type": "string"
+    },
+    "marginRight": {
+      "type": "string"
+    },
+    "marginBefore": {
+      "type": "string"
+    },
+    "marginAfter": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "html": false,
+    "className": false
+  },
+  "textdomain": "bsx-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css"
+}
