@@ -62,12 +62,17 @@ All your Plugin’s files except the `node_modules` will be copied to your WordP
 
 ## Develop
 
-* Use *Node 16* (`nvm use 16`).
+* Use *Node 18* (`nvm use 18`).
 * Use `npm run start` to watch & build your Block Editor blocks.
 * If using a workspace outside your WordPress Plugins folder, open another tab in your terminal and use `npm run watch` to watch and publish your builds from workspace to your WordPress folder (for manual publish use `npm run publish`).
 
 
 ## Versions
+
+### 0.1.8
+
+* Removed *Lazy Image* unwanted (WordPress random added) `sizes` attribute additional value `auto` conflicting image rendering dimensions.
+* Removed unwanted WordPress inline styles conflicting e.g. images.
 
 ### 0.1.7
 

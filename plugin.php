@@ -4,7 +4,7 @@
  * Description:       Bootstrap Blocks for a compatible Theme (e.g. BSX WordPress).
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           0.1.7
+ * Version:           0.1.8
  * Author:            ihniwiad
  * Plugin URI:        https://github.com/ihniwiad/wp-multi-block-plugin
  * License:           GPL-2.0-or-later
@@ -16,6 +16,61 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
+}
+
+// Remove unwanted inline <style> tags by ID from HTML output (frontend only, as early as possible)
+
+if ( ! is_admin() ) {
+    // Start output buffer as early as possible
+    add_action( 'init', function() {
+        ob_start( function( $html ) {
+            $style_ids_to_remove = array(
+                'wp-img-auto-sizes-contain-inline-css',
+                'classic-theme-styles-inline-css',
+                'wp-block-heading-inline-css',
+                'wp-block-paragraph-inline-css',
+                // Add more IDs as needed
+            );
+            foreach ( $style_ids_to_remove as $style_id ) {
+                // Remove <style> tags with single or double quotes
+                $html = preg_replace(
+                    '#<style[^>]+id=[\'\"]' . preg_quote( $style_id, '#' ) . '[\'\"][^>]*>.*?</style>#is',
+                    '',
+                    $html
+                );
+            }
+            return $html;
+        } );
+    }, 0 );
+    // Flush output buffer as late as possible
+    add_action( 'shutdown', function() {
+        if ( ob_get_level() > 0 ) {
+            ob_end_flush();
+        }
+    }, 0 );
+}
+
+// Remove unwanted image “sizes” attribute value “auto” (frontend only)
+if ( ! is_admin() ) {
+    add_filter( 'the_content', function( $content ) {
+        // ---
+        // Remove unwanted 'auto, ' prefix from sizes attribute in images (late filter)
+        //
+        // WordPress (since 6.4+) sometimes prepends 'auto, ' to the sizes attribute of <img> tags in the final HTML output,
+        // especially for custom blocks or images where the layout context is unclear to the core logic. This can cause
+        // conflicts with custom responsive image handling and unwanted CSS side effects (e.g. contain-intrinsic-size).
+        //
+        // This filter runs very late (priority 99) on the_content and removes the 'auto, ' prefix from all sizes attributes
+        // in the final post content, ensuring that only the intended sizes value remains. This is robust, performant, and
+        // works regardless of how or when WordPress or plugins add the prefix.
+        // ---
+        $content = preg_replace(
+            '/sizes="auto,\\s*/',
+            'sizes="',
+            $content
+        );
+        return $content;
+    }, 99 );
 }
 
 /**
