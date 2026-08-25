@@ -42,6 +42,7 @@ import {
     // borderSelect,
     // borderStateSelect,
     textColorSelect,
+    // textAlignSelect, // Currently not used here since using WP internal textAlign attribute (or style.typography.textAlign) instead of custom attribute
 } from './../_functions/controls.js';
 
 
@@ -77,6 +78,7 @@ export const addGlobalBlockSettings = createHigherOrderComponent( ( BlockEdit ) 
             textColor,
             fontWeight,
             textShadow,
+            // textAlign,
             belowNavbar,
             marginBefore,
             marginAfter,
@@ -114,6 +116,7 @@ export const addGlobalBlockSettings = createHigherOrderComponent( ( BlockEdit ) 
             textColor,
             fontWeight,
             textShadow,
+            // textAlign,
             belowNavbar,
             marginBefore,
             marginAfter,
@@ -154,6 +157,9 @@ export const addGlobalBlockSettings = createHigherOrderComponent( ( BlockEdit ) 
         const onChangeTextShadow = ( value ) => {
             setAttributes( { textShadow: value } );
         };
+        // const onChangeTextAlign = ( value ) => {
+        //     setAttributes( { textAlign: value } );
+        // };
 
         const onChangeBelowNavbar = ( value ) => {
             setAttributes( { belowNavbar: value } );
@@ -232,6 +238,9 @@ export const addGlobalBlockSettings = createHigherOrderComponent( ( BlockEdit ) 
                             {
                                 textShadowSelect( textShadow, onChangeTextShadow )
                             }
+                            {/* {
+                                textAlignSelect( textAlign, onChangeTextAlign )
+                            } */}
                             {
                                 marginBeforeSelect( marginBefore, onChangeMarginBefore )
                             }
@@ -355,6 +364,14 @@ export function addAttribute( settings ) {
             } );
         }
     
+        // if ( typeof settings.attributes.textAlign === 'undefined' ) {
+        //     settings.attributes = Object.assign( settings.attributes, {
+        //         textAlign: {
+        //             type: 'string',
+        //         },
+        //     } );
+        // }
+    
         if ( typeof settings.attributes.marginBefore === 'undefined' ) {
             settings.attributes = Object.assign( settings.attributes, {
                 marginBefore: { 
@@ -469,6 +486,7 @@ export function addSaveProps( extraProps, blockType, attributes ) {
         textColor,
         fontWeight,
         textShadow,
+        // textAlign, // Our own attribute would overwrite WP internal textAlign attribute (attributes.style.typography.textAlign). Currently we don’t need it since we set our CSS classes to the WP internal textAlign attribute.
         belowNavbar,
         marginBefore,
         marginAfter,
@@ -534,7 +552,7 @@ export function addSaveProps( extraProps, blockType, attributes ) {
         //     }
         // }
 
-        // check wp internal attributes, add custom class names for certain ones
+        // check wp internal attributes, add custom class names for specific
         // NOTE: added class name will be updated but never removed (as WP currently does too)
 
         // textAlign
@@ -544,8 +562,11 @@ export function addSaveProps( extraProps, blockType, attributes ) {
             'right',
         ];
         const alignPrefix = 'text-';
-        const textAlignAttrVal = attributes.textAlign != undefined ? attributes.textAlign : attributes.align;
-        
+        // const textAlignAttrVal = attributes.textAlign != undefined ? attributes.textAlign : attributes.align;
+
+        // Note: WP 7.1+ uses style.typography.textAlign instead of textAlign or align
+        const textAlignAttrVal = attributes.style?.typography?.textAlign != undefined ? attributes.style.typography.textAlign : attributes.textAlign != undefined ? attributes.textAlign : attributes.align;
+         
         if ( !! textAlignAttrVal && alignAllowedValues.includes( textAlignAttrVal ) ) {
             classNames.push( alignPrefix + textAlignAttrVal );
         }
@@ -605,6 +626,7 @@ export function addSaveProps( extraProps, blockType, attributes ) {
             textColor,
             fontWeight,
             textShadow,
+            // textAlign,
             belowNavbar,
             marginBefore,
             marginAfter,

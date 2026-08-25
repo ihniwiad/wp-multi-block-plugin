@@ -69,6 +69,10 @@ All your Plugin’s files except the `node_modules` will be copied to your WordP
 
 ## Versions
 
+### 1.0.0
+
+* Fixed *WordPress 7.1+* missing text align style (now stored in `attributes.style.typography.textAlign`).
+
 ### 0.1.8
 
 * Removed *Lazy Image* unwanted (WordPress random added) `sizes` attribute additional value `auto` conflicting image rendering dimensions.
